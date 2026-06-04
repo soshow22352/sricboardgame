@@ -3,220 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>桌遊雅集</title>
+<title>鴉宅桌遊館</title>
 
 <style>
-/* =========================
-   中式古風基底
-========================= */
 body{
     margin:0;
-    font-family: "Noto Serif TC", "Microsoft JhengHei", serif;
+    font-family:"Noto Serif TC","Microsoft JhengHei",serif;
     background:#f3efe6;
-    color:#2c2a28;
+    color:#2b2a28;
 }
 
-/* 水墨背景感 */
+/* 背景宣紙感 */
 body::before{
     content:"";
     position:fixed;
-    top:0;left:0;right:0;bottom:0;
-    background: radial-gradient(circle at top, #ffffff 0%, #e8dfcf 100%);
+    inset:0;
+    background:radial-gradient(circle at top,#fff 0%,#e6dccb 100%);
     z-index:-1;
 }
 
-/* =========================
-   Header（卷軸風）
-========================= */
+/* ===== Header ===== */
 header{
-    background: linear-gradient(90deg,#3b2f2a,#5a4638,#3b2f2a);
+    background:url("https://upload.wikimedia.org/wikipedia/commons/3/3a/Raven_on_branch.png") left center no-repeat,
+               linear-gradient(90deg,#2b2320,#4a3a31,#2b2320);
+    background-size:80px,cover;
     color:#f5e9d3;
     text-align:center;
-    padding:25px 10px;
-    letter-spacing:2px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+    padding:30px 10px;
 }
 
 header h1{
     margin:0;
-    font-size:26px;
+    font-size:28px;
+    letter-spacing:3px;
 }
 
-/* =========================
-   容器
-========================= */
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:15px;
+header p{
+    margin:5px 0 0;
+    font-size:14px;
+    opacity:0.8;
 }
 
-/* =========================
-   篩選區（古風按鈕）
-========================= */
-.filter-bar{
+/* ===== Tabs ===== */
+.tabs{
     display:flex;
-    flex-wrap:wrap;
+    justify-content:center;
     gap:10px;
     margin:15px 0;
 }
 
-select,input{
-    padding:8px 10px;
-    border-radius:6px;
-    border:1px solid #c7b79b;
-    background:#f8f3e8;
-    font-family:inherit;
+.tab{
+    padding:8px 14px;
+    background:#e8dfcf;
+    border-radius:8px;
+    cursor:pointer;
+    border:1px solid #cbb89c;
 }
 
-/* =========================
-   卡片（書卷感）
-========================= */
+.tab.active{
+    background:#4a3a31;
+    color:#fff;
+}
+
+/* ===== Filter ===== */
+.filter-bar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    margin:10px;
+}
+
+select,input{
+    padding:6px 10px;
+    border-radius:6px;
+    border:1px solid #cbb89c;
+    background:#f7f2e9;
+}
+
+/* ===== Grid ===== */
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-    gap:16px;
+    gap:14px;
+    max-width:1200px;
+    margin:20px auto;
+    padding:0 15px;
 }
 
+/* ===== Card ===== */
 .card{
     background:#fbf7ef;
-    border:1px solid #d8cbb0;
+    border:1px solid #d6c8ae;
     border-radius:10px;
     overflow:hidden;
-    box-shadow:0 3px 10px rgba(0,0,0,0.08);
-    transition:0.2s;
-}
-
-.card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 6px 18px rgba(0,0,0,0.15);
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
 }
 
 .card img{
     width:100%;
     height:160px;
     object-fit:cover;
-    filter:sepia(0.2) contrast(1.05);
 }
 
 .card-body{
-    padding:12px;
-}
-
-.card h3{
-    margin:0 0 6px 0;
-    font-size:18px;
-    color:#3a2f28;
+    padding:10px;
 }
 
 .tag{
     display:inline-block;
-    padding:2px 8px;
-    font-size:12px;
+    padding:2px 6px;
     background:#e9dfcf;
+    font-size:12px;
     border-radius:4px;
     margin:2px;
-    color:#5a4638;
 }
 
-/* =========================
-   小字
-========================= */
-.info{
-    font-size:13px;
-    color:#6b5b4b;
-    margin-top:6px;
+/* ===== Rules ===== */
+.rule-img{
+    max-width:900px;
+    margin:20px auto;
+    display:block;
+    border:1px solid #cbb89c;
+    box-shadow:0 2px 12px rgba(0,0,0,0.15);
 }
+
+/* hide */
+.hidden{display:none;}
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>🎴 桌遊雅集</h1>
-    <p>以棋會友，以遊入境</p>
+    <h1>🐦 鴉宅桌遊館</h1>
+    <p>以緣相聚、以遊會友</p>
 </header>
 
-<div class="container">
+<!-- Tabs -->
+<div class="tabs">
+    <div class="tab active" onclick="switchTab('games')">🎲 桌遊列表</div>
+    <div class="tab" onclick="switchTab('recommend')">⭐ 推薦名單</div>
+    <div class="tab" onclick="switchTab('rules')">📜 規範</div>
+</div>
 
-<!-- FILTER -->
-<div class="filter-bar">
-
+<!-- Filters -->
+<div class="filter-bar" id="filterBar">
     <input id="search" placeholder="搜尋桌遊...">
 
     <select id="typeFilter">
         <option value="">全部類型</option>
     </select>
 
-    <!-- 時間篩選（已恢復） -->
     <select id="timeFilter">
         <option value="">全部時間</option>
         <option value="30">30分鐘內</option>
         <option value="60">30–60分鐘</option>
         <option value="120">60分鐘以上</option>
     </select>
-
 </div>
 
 <!-- GRID -->
 <div id="grid" class="grid"></div>
 
+<!-- RULE IMAGE -->
+<div id="rules" class="hidden">
+    <img class="rule-img" src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Raven_on_branch.png">
 </div>
 
 <script>
 
-/* =========================
-   CSV 資料來源
-========================= */
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
 
 let games = [];
+let currentTab = "games";
 
-/* =========================
-   CSV parser（穩定版）
-========================= */
+/* parse */
 function parseCSV(text){
     const rows = text.trim().split("\n").map(r => r.split(","));
 
     return rows.slice(1).map(r => ({
-        name: r[0],
-        players: r[1],
-        time: parseInt(r[2]) || 0,
-        type: r[3],
-        difficulty: r[4],
-        feature: r[5],
-        note: r[6],
-        img: r[7] || ""
+        name:r[0],
+        players:r[1],
+        time:parseInt(r[2])||0,
+        type:r[3],
+        difficulty:r[4],
+        feature:r[5],
+        note:r[6],
+        img:r[7]||""
     }));
 }
 
-/* =========================
-   Render
-========================= */
+/* render */
 function render(list){
 
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
 
-    list.forEach(g => {
+    list.forEach(g=>{
 
         const card = document.createElement("div");
-        card.className = "card";
+        card.className="card";
 
-        card.innerHTML = `
+        card.innerHTML=`
             <img src="${g.img || 'https://picsum.photos/300/200'}">
-
             <div class="card-body">
                 <h3>${g.name}</h3>
-
-                <div class="info">👥 ${g.players} ｜ ⏱ ${g.time} 分</div>
-
+                <div>👥 ${g.players} ｜ ⏱ ${g.time}分</div>
                 <div>
                     <span class="tag">${g.type}</span>
                     <span class="tag">${g.difficulty}</span>
                 </div>
-
-                <div class="info">${g.feature || ""}</div>
+                <div style="font-size:13px;color:#666;margin-top:5px;">
+                    ${g.feature||""}
+                </div>
             </div>
         `;
 
@@ -224,64 +224,80 @@ function render(list){
     });
 }
 
-/* =========================
-   Filter
-========================= */
+/* filter */
 function filter(){
 
-    let result = [...games];
+    let list = [...games];
 
-    const search = document.getElementById("search").value.toLowerCase();
-    const type = document.getElementById("typeFilter").value;
-    const time = document.getElementById("timeFilter").value;
+    const s = search.value.toLowerCase();
+    const t = typeFilter.value;
+    const time = timeFilter.value;
 
-    if(search){
-        result = result.filter(g => 
-            g.name.toLowerCase().includes(search)
-        );
+    if(currentTab==="recommend"){
+        list = list.filter(g => (g.note||"").includes("推薦"));
     }
 
-    if(type){
-        result = result.filter(g => g.type === type);
+    if(s){
+        list = list.filter(g => g.name.toLowerCase().includes(s));
     }
 
-    if(time === "30"){
-        result = result.filter(g => g.time <= 30);
+    if(t){
+        list = list.filter(g => g.type===t);
     }
 
-    if(time === "60"){
-        result = result.filter(g => g.time > 30 && g.time <= 60);
+    if(time==="30"){
+        list = list.filter(g => g.time<=30);
+    }
+    if(time==="60"){
+        list = list.filter(g => g.time>30 && g.time<=60);
+    }
+    if(time==="120"){
+        list = list.filter(g => g.time>60);
     }
 
-    if(time === "120"){
-        result = result.filter(g => g.time > 60);
-    }
-
-    render(result);
+    render(list);
 }
 
-/* =========================
-   Init
-========================= */
+/* tab */
+function switchTab(tab){
+
+    currentTab = tab;
+
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    event.target.classList.add("active");
+
+    document.getElementById("filterBar").classList.toggle("hidden", tab!=="games");
+
+    if(tab==="rules"){
+        document.getElementById("grid").classList.add("hidden");
+        document.getElementById("rules").classList.remove("hidden");
+    }else{
+        document.getElementById("grid").classList.remove("hidden");
+        document.getElementById("rules").classList.add("hidden");
+
+        filter();
+    }
+}
+
+/* init */
 fetch(CSV_URL)
-.then(r => r.text())
-.then(text => {
+.then(r=>r.text())
+.then(text=>{
 
-    games = parseCSV(text);
+    games=parseCSV(text);
 
-    // 類型選單
-    const types = [...new Set(games.map(g => g.type))];
-    const typeFilter = document.getElementById("typeFilter");
+    const types=[...new Set(games.map(g=>g.type))];
+    const typeFilter=document.getElementById("typeFilter");
 
     types.forEach(t=>{
-        const opt = document.createElement("option");
-        opt.value = t;
-        opt.textContent = t;
-        typeFilter.appendChild(opt);
+        const o=document.createElement("option");
+        o.value=t;
+        o.textContent=t;
+        typeFilter.appendChild(o);
     });
 
     document.querySelectorAll("input,select")
-    .forEach(el => el.addEventListener("input", filter));
+    .forEach(el=>el.addEventListener("input",filter));
 
     render(games);
 });
