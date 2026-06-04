@@ -1,195 +1,116 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的桌遊收藏</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    h1 {
-      text-align: center;
-      color: white;
-      margin-bottom: 30px;
-      font-size: 2.5em;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-    
-    #loading {
-      text-align: center;
-      color: white;
-      font-size: 1.2em;
-    }
-    
-    #games {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    
-    .game-card {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    
-    .game-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 12px rgba(0,0,0,0.2);
-    }
-    
-    .game-card h2 {
-      color: #667eea;
-      margin-bottom: 10px;
-      font-size: 1.3em;
-    }
-    
-    .game-info {
-      margin: 8px 0;
-      color: #555;
-      font-size: 0.95em;
-    }
-    
-    .game-info strong {
-      color: #764ba2;
-      display: inline-block;
-      width: 80px;
-    }
-    
-    .stats {
-      text-align: center;
-      margin-top: 30px;
-      color: white;
-      font-size: 1.1em;
-    }
-    
-    .error {
-      background: #ff6b6b;
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
-      margin: 20px 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>振銘桌遊收藏</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial;
+    background:#f5f1e8;
+}
+
+header{
+    background:#3b2f2a;
+    color:white;
+    padding:25px;
+    text-align:center;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:16px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+
+.card h3{
+    margin:0 0 8px 0;
+}
+
+.tag{
+    display:inline-block;
+    padding:3px 8px;
+    background:#eee;
+    border-radius:8px;
+    font-size:12px;
+    margin-right:5px;
+    margin-top:5px;
+}
+</style>
 </head>
+
 <body>
 
+<header>
+    <h1>🎲 桌遊收藏館</h1>
+    <p>Google Sheet 即時同步</p>
+</header>
+
 <div class="container">
-  <h1>🎲 我的桌遊收藏</h1>
-  
-  <div id="loading">正在載入資料中...</div>
-  <div id="error"></div>
-  <div id="games"></div>
-  <div id="stats"></div>
+    <div id="games" class="grid"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
-// Google Sheets CSV 匯出 URL
-const SHEET_ID = '11B2F_OC-8NTJyalXLWZc6yYIPHyzSKej0V4u3QpbGDg';
-const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
 
 fetch(CSV_URL)
-  .then(response => {
-    if (!response.ok) throw new Error('無法載入試算表');
-    return response.text();
-  })
-  .then(csv => {
-    // 使用 Papa Parse 解析 CSV
-    Papa.parse(csv, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        displayGames(results.data);
-      },
-      error: (error) => {
-        showError('解析資料失敗: ' + error.message);
-      }
+.then(res => res.text())
+.then(data => {
+
+    const rows = data.split("\n").map(r => r.split(","));
+
+    const headers = rows[0];
+    const games = rows.slice(1);
+
+    const container = document.getElementById("games");
+
+    games.forEach(g => {
+
+        const name = g[0];
+        const players = g[1];
+        const time = g[2];
+        const type = g[3];
+        const difficulty = g[4];
+        const feature = g[5];
+        const note = g[6];
+
+        if(!name) return;
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>${name}</h3>
+            <div>👥 ${players}</div>
+            <div>⏱ ${time}</div>
+            <div class="tag">${type}</div>
+            <div class="tag">${difficulty}</div>
+            <div style="margin-top:8px;font-size:13px;color:#555;">
+                ${feature || ""}
+            </div>
+        `;
+
+        container.appendChild(card);
     });
-  })
-  .catch(error => {
-    showError('載入資料失敗: ' + error.message);
-    console.error(error);
-  });
 
-function displayGames(games) {
-  const gamesContainer = document.getElementById('games');
-  const statsContainer = document.getElementById('stats');
-  const loadingContainer = document.getElementById('loading');
-  
-  // 隱藏載入提示
-  loadingContainer.style.display = 'none';
-  
-  if (!games || games.length === 0) {
-    showError('沒有找到桌遊資料');
-    return;
-  }
-  
-  // 清空容器
-  gamesContainer.innerHTML = '';
-  
-  // 渲染每個遊戲卡片
-  games.forEach(game => {
-    if (Object.values(game).some(v => v)) { // 確保不是空行
-      const card = createGameCard(game);
-      gamesContainer.appendChild(card);
-    }
-  });
-  
-  // 顯示統計
-  statsContainer.innerHTML = `<p>總共收藏: <strong>${games.filter(g => Object.values(g).some(v => v)).length}</strong> 款桌遊</p>`;
-}
+});
 
-function createGameCard(game) {
-  const card = document.createElement('div');
-  card.className = 'game-card';
-  
-  let html = '';
-  
-  // 遊戲名稱（使用第一列作為標題）
-  const keys = Object.keys(game);
-  const title = game[keys[0]] || '未命名';
-  
-  html += `<h2>${title}</h2>`;
-  
-  // 其他資訊
-  keys.slice(1).forEach(key => {
-    const value = game[key];
-    if (value && key.trim()) {
-      html += `<div class="game-info"><strong>${key}:</strong> ${value}</div>`;
-    }
-  });
-  
-  card.innerHTML = html;
-  return card;
-}
-
-function showError(message) {
-  const errorContainer = document.getElementById('error');
-  const loadingContainer = document.getElementById('loading');
-  loadingContainer.style.display = 'none';
-  errorContainer.innerHTML = `<div class="error">❌ ${message}</div>`;
-}
 </script>
 
 </body>
