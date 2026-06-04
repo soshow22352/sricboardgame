@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>鴉宅桌遊館收藏</title>
+<title>桌遊收藏 V3</title>
 
 <style>
 body{
@@ -13,43 +13,87 @@ body{
 }
 
 header{
-    background:#3b2f2a;
+    background:#2f2a26;
     color:white;
-    padding:25px;
+    padding:20px;
     text-align:center;
 }
 
 .container{
-    max-width:1100px;
+    max-width:1200px;
     margin:auto;
-    padding:20px;
+    padding:15px;
 }
 
+/* FILTER BAR */
+.filter-bar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:15px 0;
+}
+
+select,input{
+    padding:8px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+/* GRID */
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-    gap:16px;
+    gap:15px;
 }
 
+/* CARD */
 .card{
     background:white;
     border-radius:12px;
-    padding:15px;
+    overflow:hidden;
     box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    display:flex;
+    flex-direction:column;
 }
 
-.card h3{
-    margin:0 0 8px 0;
+.card img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+}
+
+.card-body{
+    padding:10px;
 }
 
 .tag{
     display:inline-block;
-    padding:3px 8px;
+    padding:3px 6px;
     background:#eee;
-    border-radius:8px;
+    border-radius:6px;
     font-size:12px;
-    margin-right:5px;
-    margin-top:5px;
+    margin:2px;
+}
+
+.actions{
+    display:flex;
+    justify-content:space-between;
+    margin-top:8px;
+}
+
+button{
+    border:none;
+    padding:5px 8px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* ❤️ */
+.heart{
+    color:#999;
+}
+.heart.active{
+    color:red;
 }
 </style>
 </head>
@@ -57,208 +101,189 @@ header{
 <body>
 
 <header>
-    <h1>🎲 鴉宅桌遊館收藏</h1>
-    <p>新莊自宅桌遊團</p>
+    <h1>🎲 桌遊收藏平台 V3</h1>
+    <p>Google Sheet 驅動 + 篩選 + 收藏 + 排序</p>
 </header>
-<div style="max-width:1100px;margin:20px auto;padding:0 20px;">
 
-    <div style="display:flex;flex-wrap:wrap;gap:10px;">
-
-        <!-- 類型 -->
-        <select id="typeFilter">
-            <option value="">全部類型</option>
-        </select>
-
-        <!-- 人數 -->
-        <select id="playerFilter">
-            <option value="">全部人數</option>
-            <option value="2-4">2-4人</option>
-            <option value="5-8">5-8人</option>
-            <option value="9+">9人以上</option>
-        </select>
-
-        <!-- 時間 -->
-        <select id="timeFilter">
-            <option value="">全部時間</option>
-            <option value="30">30分鐘內</option>
-            <option value="60">30-60分鐘</option>
-            <option value="120">60分鐘以上</option>
-        </select>
-
-        <!-- 搜尋 -->
-        <input id="searchInput" placeholder="搜尋桌遊..." 
-        style="padding:6px;border-radius:6px;border:1px solid #ccc;">
-
-    </div>
-
-</div>
 <div class="container">
-    <div id="games" class="grid"></div>
+
+<!-- FILTER -->
+<div class="filter-bar">
+    <input id="search" placeholder="搜尋桌遊...">
+
+    <select id="typeFilter">
+        <option value="">全部類型</option>
+    </select>
+
+    <select id="playerFilter">
+        <option value="">人數</option>
+        <option value="2-4">2-4人</option>
+        <option value="5-8">5-8人</option>
+        <option value="9">9人以上</option>
+    </select>
+
+    <select id="timeFilter">
+        <option value="">時間</option>
+        <option value="30">30分鐘內</option>
+        <option value="60">30-60分鐘</option>
+        <option value="120">60分鐘以上</option>
+    </select>
+
+    <select id="sort">
+        <option value="">排序</option>
+        <option value="name">名稱</option>
+        <option value="time">時間</option>
+    </select>
+</div>
+
+<!-- GRID -->
+<div id="grid" class="grid"></div>
+
 </div>
 
 <script>
 
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
 
-fetch(CSV_URL)
-.then(res => res.text())
-let allGames = [];
+let games = [];
+let favorites = JSON.parse(localStorage.getItem("fav") || "[]");
 
-    function renderGames(list){
+/* ========= CSV PARSER（避免 split bug） ========= */
+function parseCSV(text){
+    const rows = text.trim().split("\n").map(r => r.split(","));
+    const headers = rows[0];
 
-    const container = document.getElementById("games");
-    container.innerHTML = "";
+    return rows.slice(1).map(r => ({
+        name: r[0],
+        players: r[1],
+        time: parseInt(r[2]) || 0,
+        type: r[3],
+        difficulty: r[4],
+        feature: r[5],
+        note: r[6],
+        img: r[7] || "",
+    }));
+}
+
+/* ========= RENDER ========= */
+function render(list){
+
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
 
     list.forEach(g => {
+
+        const isFav = favorites.includes(g.name);
 
         const card = document.createElement("div");
         card.className = "card";
 
         card.innerHTML = `
-            <img src="${g.img || 'https://picsum.photos/300/400'}" 
-            style="width:100%;height:180px;object-fit:cover;border-radius:10px 10px 0 0;">
+            <img src="${g.img || 'https://picsum.photos/300/200'}">
 
-            <div style="padding:10px;">
+            <div class="card-body">
                 <h3>${g.name}</h3>
+
                 <div>👥 ${g.players}</div>
                 <div>⏱ ${g.time} 分</div>
 
-                <div class="tag">${g.type}</div>
-                <div class="tag">${g.difficulty}</div>
+                <div>
+                    <span class="tag">${g.type}</span>
+                    <span class="tag">${g.difficulty}</span>
+                </div>
 
-                <div style="font-size:13px;color:#666;margin-top:6px;">
+                <div style="font-size:12px;color:#666;margin-top:5px;">
                     ${g.feature || ""}
                 </div>
+
+                <div class="actions">
+                    <button onclick="toggleFav('${g.name}')"
+                        class="heart ${isFav ? 'active' : ''}">
+                        ❤️
+                    </button>
+                </div>
+
             </div>
         `;
 
-        container.appendChild(card);
+        grid.appendChild(card);
     });
 }
 
-    function initFilters(){
+/* ========= FILTER ========= */
+function filter(){
 
-    const typeSet = new Set(allGames.map(g => g.type));
+    let result = [...games];
 
+    const search = document.getElementById("search").value.toLowerCase();
+    const type = document.getElementById("typeFilter").value;
+    const player = document.getElementById("playerFilter").value;
+    const time = document.getElementById("timeFilter").value;
+    const sort = document.getElementById("sort").value;
+
+    if(search){
+        result = result.filter(g => g.name.toLowerCase().includes(search));
+    }
+
+    if(type){
+        result = result.filter(g => g.type === type);
+    }
+
+    if(time === "30"){
+        result = result.filter(g => g.time <= 30);
+    }
+    if(time === "60"){
+        result = result.filter(g => g.time > 30 && g.time <= 60);
+    }
+    if(time === "120"){
+        result = result.filter(g => g.time > 60);
+    }
+
+    if(sort === "name"){
+        result.sort((a,b)=>a.name.localeCompare(b.name));
+    }
+    if(sort === "time"){
+        result.sort((a,b)=>a.time-b.time);
+    }
+
+    render(result);
+}
+
+/* ========= FAVORITE ========= */
+function toggleFav(name){
+
+    if(favorites.includes(name)){
+        favorites = favorites.filter(n => n !== name);
+    } else {
+        favorites.push(name);
+    }
+
+    localStorage.setItem("fav", JSON.stringify(favorites));
+    filter();
+}
+
+/* ========= INIT ========= */
+fetch(CSV_URL)
+.then(r => r.text())
+.then(text => {
+
+    games = parseCSV(text);
+
+    // 類型下拉
+    const types = [...new Set(games.map(g => g.type))];
     const typeFilter = document.getElementById("typeFilter");
 
-    typeSet.forEach(t => {
+    types.forEach(t=>{
         const opt = document.createElement("option");
         opt.value = t;
         opt.textContent = t;
         typeFilter.appendChild(opt);
     });
 
-    document.querySelectorAll("select, input")
-    .forEach(el => el.addEventListener("change", filterGames));
+    document.querySelectorAll("input,select")
+    .forEach(el => el.addEventListener("input", filter));
 
-    document.getElementById("searchInput")
-    .addEventListener("input", filterGames);
-}
-
-    function filterGames(){
-
-    const type = document.getElementById("typeFilter").value;
-    const player = document.getElementById("playerFilter").value;
-    const time = document.getElementById("timeFilter").value;
-    const search = document.getElementById("searchInput").value.toLowerCase();
-
-    let filtered = allGames;
-
-    // 類型
-    if(type){
-        filtered = filtered.filter(g => g.type === type);
-    }
-
-    // 搜尋
-    if(search){
-        filtered = filtered.filter(g => 
-            g.name.toLowerCase().includes(search)
-        );
-    }
-
-    // 時間
-    if(time === "30"){
-        filtered = filtered.filter(g => g.time <= 30);
-    }
-    if(time === "60"){
-        filtered = filtered.filter(g => g.time > 30 && g.time <= 60);
-    }
-    if(time === "120"){
-        filtered = filtered.filter(g => g.time > 60);
-    }
-
-    renderGames(filtered);
-}
-fetch(CSV_URL)
-.then(res => res.text())
-.then(data => {
-
-    const rows = data.trim().split("\n").map(r => r.split(","));
-    const headers = rows[0];
-
-    const games = rows.slice(1).map(g => {
-        return {
-            name: g[0],
-            players: g[1],
-            time: parseInt(g[2]) || 0,
-            type: g[3],
-            difficulty: g[4],
-            feature: g[5],
-            note: g[6],
-            img: g[7]
-        };
-    });
-
-    allGames = games;
-
-    initFilters();
-    renderGames(games);
-});
-
-    const rows = data.split("\n").map(r => r.split(","));
-
-    const headers = rows[0];
-    const games = rows.slice(1);
-
-    const container = document.getElementById("games");
-
-    games.forEach(g => {
-
-        const name = g[0];
-        const players = g[1];
-        const time = g[2];
-        const type = g[3];
-        const difficulty = g[4];
-        const feature = g[5];
-        const note = g[6];
-        const img = g[7];
-
-        if(!name) return;
-
-        const card = document.createElement("div");
-        card.className = "card";
-
-      card.innerHTML = `
-    <img src="${img || 'https://picsum.photos/300/400'}" style="width:100%;height:200px;object-fit:cover;border-radius:10px 10px 0 0;">
-    
-    <div style="padding:10px;">
-        <h3>${name}</h3>
-        <div>👥 ${players}</div>
-        <div>⏱ ${time}</div>
-
-        <div class="tag">${type}</div>
-        <div class="tag">${difficulty}</div>
-
-        <div style="margin-top:8px;font-size:13px;color:#555;">
-            ${feature || ""}
-        </div>
-    </div>
-`;
-
-        container.appendChild(card);
-    });
-
+    render(games);
 });
 
 </script>
