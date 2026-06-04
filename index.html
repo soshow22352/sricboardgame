@@ -60,7 +60,38 @@ header{
     <h1>🎲 鴉宅桌遊館收藏</h1>
     <p>新莊自宅桌遊團</p>
 </header>
+<div style="max-width:1100px;margin:20px auto;padding:0 20px;">
 
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+
+        <!-- 類型 -->
+        <select id="typeFilter">
+            <option value="">全部類型</option>
+        </select>
+
+        <!-- 人數 -->
+        <select id="playerFilter">
+            <option value="">全部人數</option>
+            <option value="2-4">2-4人</option>
+            <option value="5-8">5-8人</option>
+            <option value="9+">9人以上</option>
+        </select>
+
+        <!-- 時間 -->
+        <select id="timeFilter">
+            <option value="">全部時間</option>
+            <option value="30">30分鐘內</option>
+            <option value="60">30-60分鐘</option>
+            <option value="120">60分鐘以上</option>
+        </select>
+
+        <!-- 搜尋 -->
+        <input id="searchInput" placeholder="搜尋桌遊..." 
+        style="padding:6px;border-radius:6px;border:1px solid #ccc;">
+
+    </div>
+
+</div>
 <div class="container">
     <div id="games" class="grid"></div>
 </div>
@@ -71,7 +102,119 @@ const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-Ym
 
 fetch(CSV_URL)
 .then(res => res.text())
+let allGames = [];
+
+    function renderGames(list){
+
+    const container = document.getElementById("games");
+    container.innerHTML = "";
+
+    list.forEach(g => {
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <img src="${g.img || 'https://picsum.photos/300/400'}" 
+            style="width:100%;height:180px;object-fit:cover;border-radius:10px 10px 0 0;">
+
+            <div style="padding:10px;">
+                <h3>${g.name}</h3>
+                <div>👥 ${g.players}</div>
+                <div>⏱ ${g.time} 分</div>
+
+                <div class="tag">${g.type}</div>
+                <div class="tag">${g.difficulty}</div>
+
+                <div style="font-size:13px;color:#666;margin-top:6px;">
+                    ${g.feature || ""}
+                </div>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+    function initFilters(){
+
+    const typeSet = new Set(allGames.map(g => g.type));
+
+    const typeFilter = document.getElementById("typeFilter");
+
+    typeSet.forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t;
+        opt.textContent = t;
+        typeFilter.appendChild(opt);
+    });
+
+    document.querySelectorAll("select, input")
+    .forEach(el => el.addEventListener("change", filterGames));
+
+    document.getElementById("searchInput")
+    .addEventListener("input", filterGames);
+}
+
+    function filterGames(){
+
+    const type = document.getElementById("typeFilter").value;
+    const player = document.getElementById("playerFilter").value;
+    const time = document.getElementById("timeFilter").value;
+    const search = document.getElementById("searchInput").value.toLowerCase();
+
+    let filtered = allGames;
+
+    // 類型
+    if(type){
+        filtered = filtered.filter(g => g.type === type);
+    }
+
+    // 搜尋
+    if(search){
+        filtered = filtered.filter(g => 
+            g.name.toLowerCase().includes(search)
+        );
+    }
+
+    // 時間
+    if(time === "30"){
+        filtered = filtered.filter(g => g.time <= 30);
+    }
+    if(time === "60"){
+        filtered = filtered.filter(g => g.time > 30 && g.time <= 60);
+    }
+    if(time === "120"){
+        filtered = filtered.filter(g => g.time > 60);
+    }
+
+    renderGames(filtered);
+}
+fetch(CSV_URL)
+.then(res => res.text())
 .then(data => {
+
+    const rows = data.trim().split("\n").map(r => r.split(","));
+    const headers = rows[0];
+
+    const games = rows.slice(1).map(g => {
+        return {
+            name: g[0],
+            players: g[1],
+            time: parseInt(g[2]) || 0,
+            type: g[3],
+            difficulty: g[4],
+            feature: g[5],
+            note: g[6],
+            img: g[7]
+        };
+    });
+
+    allGames = games;
+
+    initFilters();
+    renderGames(games);
+});
 
     const rows = data.split("\n").map(r => r.split(","));
 
