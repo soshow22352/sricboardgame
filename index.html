@@ -10,51 +10,53 @@
 <style>
 body{margin:0;background:#120c08;color:#f6e2b8;font-family:"Noto Serif TC",serif;}
 body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at top,#54351f 0%,#120c08 70%),url("https://www.transparenttextures.com/patterns/old-map.png");z-index:-1;}
+
 header{
     text-align:center;
-    padding:25px 10px;
+    padding:18px 10px 8px;
 }
-.raven-icon{width:92px;height:92px;filter:drop-shadow(0 0 12px rgba(255,218,103,.9));}
-header h1{margin:0;font-family:"MedievalSharp","Noto Serif TC",serif;font-size:76px;letter-spacing:10px;color:#ffe49a;text-shadow:0 0 12px rgba(255,225,130,.95),0 0 28px rgba(255,190,70,.45),4px 4px 0 #211006;}
-header p{margin-top:12px;font-family:"Cinzel","Noto Serif TC",serif;font-size:30px;letter-spacing:5px;color:#fff0c9;}
+
 .hero-banner{
     width:100%;
-    max-width:1200px;
+    max-width:1150px;
+    height:260px;
+    object-fit:cover;
+    object-position:center;
     display:block;
     margin:auto;
-
     border:2px solid #b89045;
     border-radius:18px;
-
-    box-shadow:
-        0 0 30px rgba(0,0,0,.6),
-        0 0 20px rgba(216,170,76,.2);
-}
-.official-link{display:inline-block;margin-top:18px;padding:10px 22px;border-radius:999px;background:#1f8f45;color:white;text-decoration:none;font-weight:bold;}
-
-.official-link:hover{
-
-    transform:translateY(-2px);
-
-    background:
-        linear-gradient(
-            180deg,
-            #3b3b3b,
-            #151515
-        );
-
-    box-shadow:
-        0 0 15px rgba(216,170,76,.5);
+    box-shadow:0 0 30px rgba(0,0,0,.6),0 0 20px rgba(216,170,76,.2);
 }
 
-.tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:22px 0;}
-.tab{padding:11px 22px;border:1px solid #d8aa4c;background:#2b2119;color:#f4e2bd;border-radius:8px;cursor:pointer;}
-.tab.active{background:#d8aa4c;color:#1b130d;font-weight:bold;}
+.tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:20px 0;}
+.tab,.official-tab{
+    padding:11px 22px;
+    border:1px solid #d8aa4c;
+    background:#2b2119;
+    color:#f4e2bd;
+    border-radius:8px;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:16px;
+    font-family:"Noto Serif TC",serif;
+}
+.tab.active{
+    background:#d8aa4c;
+    color:#1b130d;
+    font-weight:bold;
+}
+.official-tab:hover,.tab:hover{
+    background:#3a2a1e;
+    box-shadow:0 0 12px rgba(216,170,76,.35);
+}
+
 .filter-box{max-width:1150px;margin:0 auto 18px;padding:15px;background:rgba(43,33,25,.9);border:1px solid #8e6b35;border-radius:12px;}
 .filter-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
 select{padding:8px 10px;border-radius:6px;border:1px solid #d8aa4c;background:#241a13;color:#f4e2bd;}
 .tag-filter{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;justify-content:center;}
 .tag-check{border:1px solid #7e6131;padding:5px 10px;border-radius:999px;background:#1f1711;font-size:13px;}
+
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:18px;max-width:1200px;margin:20px auto;padding:0 15px;}
 .card{position:relative;background:#2b2119;border:1px solid #9a7436;border-radius:12px;overflow:hidden;box-shadow:0 5px 18px rgba(0,0,0,.38);cursor:pointer;transition:.2s;}
 .card:hover{transform:translateY(-5px);box-shadow:0 8px 28px rgba(216,170,76,.28);}
@@ -64,12 +66,15 @@ select{padding:8px 10px;border-radius:6px;border:1px solid #d8aa4c;background:#2
 .tag{display:inline-block;padding:3px 7px;margin:3px;border-radius:5px;background:#5a3c20;color:#f4e2bd;font-size:12px;}
 .info{font-size:13px;color:#d9c49b;margin-top:6px;}
 .badge{position:absolute;top:10px;right:10px;background:#d8aa4c;color:#1b130d;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:bold;}
+
 .rules-wrap{max-width:880px;margin:25px auto;padding:22px;background:linear-gradient(145deg,#2b2119,#1a120d);border:2px solid #d8aa4c;border-radius:18px;}
 .rules-title{text-align:center;color:#ffd86b;font-size:34px;letter-spacing:4px;}
 .rule-img{width:100%;border:2px solid #d8aa4c;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.6);}
+
 .photo-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;max-width:1200px;margin:20px auto;padding:0 15px;}
 .photo-wall img{width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid #9a7436;box-shadow:0 5px 18px rgba(0,0,0,.4);cursor:pointer;transition:.2s;}
 .photo-wall img:hover{transform:scale(1.03);box-shadow:0 8px 28px rgba(216,170,76,.28);}
+
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:20px;z-index:99;}
 .modal-content{max-width:850px;width:100%;background:#241a13;border:2px solid #d8aa4c;border-radius:16px;overflow:hidden;position:relative;}
 .modal-content img{width:100%;max-height:390px;object-fit:contain;background:#120c08;padding:10px;box-sizing:border-box;}
@@ -80,26 +85,18 @@ select{padding:8px 10px;border-radius:6px;border:1px solid #d8aa4c;background:#2
 .youtube-btn{display:inline-block;margin-top:16px;padding:10px 18px;background:#b62222;color:white;border-radius:8px;text-decoration:none;font-weight:bold;}
 .close{position:absolute;top:10px;right:14px;font-size:32px;color:#ffd86b;cursor:pointer;z-index:100;}
 .hidden{display:none;}
-@media(max-width:600px){header h1{font-size:42px;letter-spacing:5px;}header p{font-size:20px;}.raven-icon{width:58px;height:58px;}}
+
+@media(max-width:600px){
+    .hero-banner{height:145px;border-radius:12px;}
+    .tab,.official-tab{padding:9px 14px;font-size:14px;}
+}
 </style>
 </head>
 
 <body>
 
 <header>
-     <img
-        src="images/banner/banner.jpg"
-        class="hero-banner"
-        alt="鴉宅桌遊館">
-
-    <a
-        class="official-link"
-        href="https://line.me/R/ti/p/@187jgojd"
-        target="_blank">
-
-        加入官方帳號
-
-    </a>
+    <img src="images/banner/banner.jpg" class="hero-banner" alt="鴉宅桌遊館">
 </header>
 
 <div class="tabs">
@@ -107,6 +104,7 @@ select{padding:8px 10px;border-radius:6px;border:1px solid #d8aa4c;background:#2
     <button class="tab" onclick="switchTab('recommend', this)">👑 團長推薦</button>
     <button class="tab" onclick="switchTab('photos', this)">📷 活動相片</button>
     <button class="tab" onclick="switchTab('rules', this)">📜 注意事項</button>
+    <a class="official-tab" href="https://line.me/R/ti/p/@187jgojd" target="_blank">加入官方帳號</a>
 </div>
 
 <div id="filterBox" class="filter-box">
@@ -256,17 +254,11 @@ function loadPhotos(){
     .then(r => r.text())
     .then(text => {
         const rows = parseCSV(text);
-
-        if(!rows.length){
-            photosBox.innerHTML = `<div class="info">活動相片工作表沒有資料。</div>`;
-            return;
-        }
-
         const headers = rows[0];
         const imgIndex = idx(headers, "圖片");
 
         if(imgIndex === -1){
-            photosBox.innerHTML = `<div class="info">找不到「圖片」欄位，請確認活動相片工作表第一列表頭是：圖片</div>`;
+            photosBox.innerHTML = `<div class="info">找不到「圖片」欄位。</div>`;
             return;
         }
 
@@ -275,27 +267,22 @@ function loadPhotos(){
             .filter(Boolean);
 
         if(photoList.length === 0){
-            photosBox.innerHTML = `<div class="info">尚未找到圖片網址，請在「活動相片」工作表的「圖片」欄貼上圖片連結。</div>`;
+            photosBox.innerHTML = `<div class="info">目前尚無活動相片。</div>`;
             return;
         }
 
         photosBox.innerHTML = "";
-
         photoList.forEach(src=>{
             const img = document.createElement("img");
             img.src = src;
             img.loading = "lazy";
             img.onclick = () => openPhotoModal(src);
-            img.onerror = () => {
-                img.style.display = "none";
-                console.warn("圖片載入失敗：", src);
-            };
+            img.onerror = () => img.style.display = "none";
             photosBox.appendChild(img);
         });
     })
-    .catch(err=>{
-        console.error(err);
-        photosBox.innerHTML = `<div class="info">活動相片讀取失敗，請確認「活動相片」工作表已公開發布。</div>`;
+    .catch(()=>{
+        photosBox.innerHTML = `<div class="info">活動相片讀取失敗。</div>`;
     });
 }
 
