@@ -130,12 +130,9 @@ select{padding:8px 10px;border-radius:6px;border:1px solid #d8aa4c;background:#2
 
 <script>
 const GAME_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
-
-/* 這裡讀取 Google Sheet 的「活動相片」工作表 */
 const PHOTO_CSV_URL = "https://docs.google.com/spreadsheets/d/11B2F_OC-8NTJyalXLWZc6yYIPHyzSKej0V4u3QpbGDg/gviz/tq?tqx=out:csv&sheet=%E6%B4%BB%E5%8B%95%E7%9B%B8%E7%89%87";
 
 let games = [];
-let photosLoaded = false;
 let currentTab = "games";
 
 function parseCSV(text){
@@ -158,6 +155,10 @@ function parseCSV(text){
     return rows;
 }
 
+function idx(headers, name){
+    return headers.findIndex(h => h.trim() === name);
+}
+
 function splitTags(str){
     return (str || "").split(/[|,，、]/).map(t=>t.trim()).filter(Boolean);
 }
@@ -168,8 +169,22 @@ function parseTime(str){
     return Math.max(...nums.map(Number));
 }
 
-function idx(headers, name){
-    return headers.findIndex(h => h.trim() === name);
+function normalizeImageUrl(url){
+    if(!url) return "";
+    url = url.trim();
+
+    const driveMatch1 = url.match(/\/file\/d\/([^/]+)/);
+    const driveMatch2 = url.match(/[?&]id=([^&]+)/);
+
+    if(driveMatch1){
+        return `https://drive.google.com/thumbnail?id=${driveMatch1[1]}&sz=w1600`;
+    }
+
+    if(driveMatch2){
+        return `https://drive.google.com/thumbnail?id=${driveMatch2[1]}&sz=w1600`;
+    }
+
+    return url;
 }
 
 function render(list){
@@ -188,7 +203,7 @@ function render(list){
 
         card.innerHTML = `
             ${g.note.includes("推薦") ? `<div class="badge">👑 推薦</div>` : ""}
-            <img src="${g.img || 'https://picsum.photos/400/250'}" alt="${g.name}">
+            <img src="${normalizeImageUrl(g.img) || 'https://picsum.photos/400/250'}" alt="${g.name}">
             <div class="card-body">
                 <h3>${g.name}</h3>
                 <div class="info">👥 ${g.minPlayers}–${g.maxPlayers}人 ｜ ⏱ ${g.timeText}</div>
@@ -209,26 +224,46 @@ function loadPhotos(){
     .then(r => r.text())
     .then(text => {
         const rows = parseCSV(text);
-        const headers = rows[0];
-        const imgIndex = idx(headers, "圖片");
 
-        const photoList = rows.slice(1)
-            .map(r => r[imgIndex])
-            .filter(src => src && src.startsWith("http"));
-
-        if(photoList.length === 0){
-            photosBox.innerHTML = `<div class="info">活動相片尚未上傳，請在「活動相片」工作表的「圖片」欄貼上圖片網址。</div>`;
+        if(!rows.length){
+            photosBox.innerHTML = `<div class="info">活動相片工作表沒有資料。</div>`;
             return;
         }
 
-        photosBox.innerHTML = photoList.map(src=>`
-            <img src="${src}" onclick="openPhotoModal('${src}')" onerror="this.style.display='none'">
-        `).join("");
+        const headers = rows[0];
+        const imgIndex = idx(headers, "圖片");
 
-        photosLoaded = true;
+        if(imgIndex === -1){
+            photosBox.innerHTML = `<div class="info">找不到「圖片」欄位，請確認活動相片工作表第一列表頭是：圖片</div>`;
+            return;
+        }
+
+        const photoList = rows.slice(1)
+            .map(r => normalizeImageUrl(r[imgIndex]))
+            .filter(Boolean);
+
+        if(photoList.length === 0){
+            photosBox.innerHTML = `<div class="info">尚未找到圖片網址，請在「活動相片」工作表的「圖片」欄貼上圖片連結。</div>`;
+            return;
+        }
+
+        photosBox.innerHTML = "";
+
+        photoList.forEach(src=>{
+            const img = document.createElement("img");
+            img.src = src;
+            img.loading = "lazy";
+            img.onclick = () => openPhotoModal(src);
+            img.onerror = () => {
+                img.style.display = "none";
+                console.warn("圖片載入失敗：", src);
+            };
+            photosBox.appendChild(img);
+        });
     })
-    .catch(()=>{
-        photosBox.innerHTML = `<div class="info">活動相片讀取失敗，請確認「活動相片」工作表已發布且欄位名稱為「圖片」。</div>`;
+    .catch(err=>{
+        console.error(err);
+        photosBox.innerHTML = `<div class="info">活動相片讀取失敗，請確認「活動相片」工作表已公開發布。</div>`;
     });
 }
 
@@ -276,7 +311,7 @@ function switchTab(tab, btn){
 }
 
 function openModal(g){
-    document.getElementById("modalImg").src = g.img || "https://picsum.photos/800/400";
+    document.getElementById("modalImg").src = normalizeImageUrl(g.img) || "https://picsum.photos/800/400";
     document.getElementById("modalName").textContent = g.name;
     document.getElementById("modalMeta").textContent = `適合人數：${g.minPlayers}–${g.maxPlayers}人　｜　遊戲時間：${g.timeText}`;
     document.getElementById("modalTags").innerHTML = g.tags.map(t=>`<span class="tag">${t}</span>`).join("");
