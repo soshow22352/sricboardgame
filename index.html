@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>鴉宅桌遊館</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=MedievalSharp&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+
 <style>
 body{
     margin:0;
-    font-family:"Microsoft JhengHei",serif;
-    background:#17100c;
-    color:#f4e2bd;
+    background:#120c08;
+    color:#f6e2b8;
+    font-family:"Noto Serif TC",serif;
 }
 
 body::before{
@@ -18,63 +20,61 @@ body::before{
     position:fixed;
     inset:0;
     background:
-        radial-gradient(circle at top,#54351f 0%,#17100c 68%),
+        radial-gradient(circle at top,#54351f 0%,#120c08 70%),
         url("https://www.transparenttextures.com/patterns/old-map.png");
     z-index:-1;
 }
 
 header{
     text-align:center;
-    padding:55px 10px 36px;
-    background:linear-gradient(90deg,#0f0906,#4a2a15,#0f0906);
-    border-bottom:4px solid #f0c35a;
-    box-shadow:0 4px 28px rgba(0,0,0,.75);
+    padding:60px 10px 40px;
+    background:linear-gradient(90deg,#080504,#3d2212,#080504);
+    border-bottom:4px solid #e0b354;
+    box-shadow:0 5px 30px rgba(0,0,0,.8);
 }
 
 .logo-title{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:20px;
+    gap:24px;
 }
 
 .raven-icon{
-    width:82px;
-    height:82px;
-    filter:
-        drop-shadow(0 0 10px rgba(255,216,107,.8))
-        drop-shadow(0 0 22px rgba(240,195,90,.45));
+    width:92px;
+    height:92px;
+    filter:drop-shadow(0 0 12px rgba(255,218,103,.9));
 }
 
 header h1{
     margin:0;
-    font-size:68px;
-    letter-spacing:9px;
-    color:#ffe08a;
+    font-family:"MedievalSharp","Noto Serif TC",serif;
+    font-size:76px;
+    letter-spacing:10px;
+    color:#ffe49a;
     text-shadow:
-        0 0 10px rgba(255,224,138,.95),
-        0 0 25px rgba(255,224,138,.45),
-        4px 4px 0 #241106;
+        0 0 12px rgba(255,225,130,.95),
+        0 0 28px rgba(255,190,70,.45),
+        4px 4px 0 #211006;
 }
 
 header p{
     margin-top:12px;
-    font-size:26px;
+    font-family:"Cinzel","Noto Serif TC",serif;
+    font-size:30px;
     letter-spacing:5px;
-    color:#ffe8b8;
-    text-shadow:0 0 10px rgba(0,0,0,.9);
+    color:#fff0c9;
 }
 
 .official-link{
     display:inline-block;
-    margin-top:16px;
-    padding:9px 20px;
+    margin-top:18px;
+    padding:10px 22px;
     border-radius:999px;
     background:#1f8f45;
     color:white;
     text-decoration:none;
     font-weight:bold;
-    box-shadow:0 0 15px rgba(31,143,69,.45);
 }
 
 .tabs{
@@ -82,11 +82,11 @@ header p{
     justify-content:center;
     flex-wrap:wrap;
     gap:10px;
-    margin:20px 0;
+    margin:22px 0;
 }
 
 .tab{
-    padding:10px 20px;
+    padding:11px 22px;
     border:1px solid #d8aa4c;
     background:#2b2119;
     color:#f4e2bd;
@@ -136,7 +136,6 @@ select{
     border:1px solid #7e6131;
     padding:5px 10px;
     border-radius:999px;
-    cursor:pointer;
     background:#1f1711;
     font-size:13px;
 }
@@ -163,7 +162,7 @@ select{
 
 .card:hover{
     transform:translateY(-5px);
-    box-shadow:0 8px 28px rgba(216,170,76,.25);
+    box-shadow:0 8px 28px rgba(216,170,76,.28);
 }
 
 .card img{
@@ -171,8 +170,8 @@ select{
     height:180px;
     object-fit:contain;
     object-position:center;
-    background:#140d09;
-    padding:6px;
+    background:#120c08;
+    padding:8px;
     box-sizing:border-box;
 }
 
@@ -220,30 +219,51 @@ select{
     background:linear-gradient(145deg,#2b2119,#1a120d);
     border:2px solid #d8aa4c;
     border-radius:18px;
-    box-shadow:0 8px 30px rgba(0,0,0,.55);
 }
 
 .rules-title{
     text-align:center;
     color:#ffd86b;
-    font-size:30px;
+    font-size:34px;
     letter-spacing:4px;
-    margin:0 0 18px;
 }
 
 .rule-img{
     width:100%;
-    border:2px solid #7e6131;
+    border:2px solid #d8aa4c;
     border-radius:12px;
-    background:#1a120d;
-    filter:sepia(.2) contrast(1.04) brightness(.92);
-    box-shadow:inset 0 0 25px rgba(0,0,0,.5),0 6px 22px rgba(0,0,0,.55);
+    box-shadow:0 8px 28px rgba(0,0,0,.6);
+}
+
+.photo-wall{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:14px;
+    max-width:1200px;
+    margin:20px auto;
+    padding:0 15px;
+}
+
+.photo-wall img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #9a7436;
+    box-shadow:0 5px 18px rgba(0,0,0,.4);
+    cursor:pointer;
+    transition:.2s;
+}
+
+.photo-wall img:hover{
+    transform:scale(1.03);
+    box-shadow:0 8px 28px rgba(216,170,76,.28);
 }
 
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.78);
+    background:rgba(0,0,0,.82);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -258,7 +278,6 @@ select{
     border:2px solid #d8aa4c;
     border-radius:16px;
     overflow:hidden;
-    box-shadow:0 0 35px rgba(216,170,76,.35);
     position:relative;
 }
 
@@ -266,10 +285,23 @@ select{
     width:100%;
     max-height:390px;
     object-fit:contain;
-    object-position:center;
     background:#120c08;
     padding:10px;
     box-sizing:border-box;
+}
+
+.photo-modal-content{
+    max-width:1000px;
+    background:transparent;
+    border:none;
+    box-shadow:none;
+}
+
+.photo-modal-content img{
+    max-height:85vh;
+    border:2px solid #d8aa4c;
+    border-radius:14px;
+    background:#120c08;
 }
 
 .modal-body{
@@ -279,7 +311,6 @@ select{
 .modal-body h2{
     color:#ffd86b;
     font-size:36px;
-    margin:0 0 10px;
 }
 
 .youtube-btn{
@@ -306,9 +337,9 @@ select{
 .hidden{display:none;}
 
 @media(max-width:600px){
-    header h1{font-size:40px;letter-spacing:4px;}
-    header p{font-size:19px;}
-    .raven-icon{width:54px;height:54px;}
+    header h1{font-size:42px;letter-spacing:5px;}
+    header p{font-size:20px;}
+    .raven-icon{width:58px;height:58px;}
 }
 </style>
 </head>
@@ -317,11 +348,12 @@ select{
 
 <header>
     <div class="logo-title">
-        <svg class="raven-icon" viewBox="0 0 100 100">
-            <path d="M18 72 C28 49 42 35 62 24 C55 23 46 25 38 31 C49 15 68 11 82 19 C72 24 69 33 73 42 C77 50 70 61 58 65 C48 68 36 73 24 90 C26 80 31 72 38 66 C31 64 25 66 18 72Z" fill="#050505"/>
-            <path d="M77 23 L96 30 L78 37 Z" fill="#050505"/>
-            <circle cx="72" cy="27" r="3" fill="#ffd86b"/>
-            <path d="M38 31 C24 30 12 22 6 10 C19 14 32 18 45 28 Z" fill="#050505"/>
+        <svg class="raven-icon" viewBox="0 0 120 120">
+            <path d="M20 82 C35 55 52 35 78 23 C68 22 57 25 47 34 C59 12 88 12 103 28 C88 32 83 43 88 55 C94 70 78 82 61 85 C48 88 36 97 28 111 C27 96 35 85 44 78 C35 74 27 76 20 82Z" fill="#050505"/>
+            <path d="M98 29 L118 38 L97 47 Z" fill="#050505"/>
+            <circle cx="91" cy="34" r="4" fill="#ffd86b"/>
+            <path d="M48 35 C30 34 15 24 4 7 C25 12 43 19 59 31 Z" fill="#050505"/>
+            <path d="M58 84 C68 101 79 111 99 116 C78 118 57 109 45 91 Z" fill="#050505"/>
         </svg>
         <h1>鴉宅桌遊館</h1>
     </div>
@@ -332,6 +364,7 @@ select{
 <div class="tabs">
     <button class="tab active" onclick="switchTab('games', this)">🎲 桌遊列表</button>
     <button class="tab" onclick="switchTab('recommend', this)">👑 團長推薦</button>
+    <button class="tab" onclick="switchTab('photos', this)">📷 活動相片</button>
     <button class="tab" onclick="switchTab('rules', this)">📜 注意事項</button>
 </div>
 
@@ -359,9 +392,11 @@ select{
 
 <div id="grid" class="grid"></div>
 
+<div id="photos" class="photo-wall hidden"></div>
+
 <div id="rules" class="rules-wrap hidden">
     <h2 class="rules-title">冒險者須知</h2>
-    <img class="rule-img" src="https://i.meee.com.tw/vK19Mqx.png" alt="鴉宅桌遊館注意事項">
+    <img class="rule-img" src="images/rules/rules-v2.png" alt="鴉宅桌遊館注意事項">
 </div>
 
 <div id="modal" class="modal hidden" onclick="closeModal(event)">
@@ -378,8 +413,28 @@ select{
     </div>
 </div>
 
+<div id="photoModal" class="modal hidden" onclick="hidePhotoModal()">
+    <div class="modal-content photo-modal-content">
+        <div class="close" onclick="hidePhotoModal()">×</div>
+        <img id="photoModalImg" src="">
+    </div>
+</div>
+
 <script>
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
+
+/*
+活動相片放在 photos 資料夾後，在這裡新增檔名即可。
+例如你上傳：
+photos/event-001.jpg
+photos/event-002.jpg
+photos/event-003.jpg
+*/
+const PHOTO_LIST = [
+    "photos/event-001.jpg",
+    "photos/event-002.jpg",
+    "photos/event-003.jpg"
+];
 
 let games = [];
 let currentTab = "games";
@@ -460,6 +515,14 @@ function render(list){
     });
 }
 
+function renderPhotos(){
+    const photos = document.getElementById("photos");
+
+    photos.innerHTML = PHOTO_LIST.map(src=>`
+        <img src="${src}" onclick="openPhotoModal('${src}')" onerror="this.style.display='none'">
+    `).join("");
+}
+
 function filter(){
     let list = [...games];
     const player = document.getElementById("playerFilter").value;
@@ -495,20 +558,13 @@ function switchTab(tab, btn){
     document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
     btn.classList.add("active");
 
-    const filterBox = document.getElementById("filterBox");
-    const grid = document.getElementById("grid");
-    const rules = document.getElementById("rules");
+    document.getElementById("filterBox").classList.toggle("hidden", tab === "rules" || tab === "photos");
+    document.getElementById("grid").classList.toggle("hidden", tab === "rules" || tab === "photos");
+    document.getElementById("rules").classList.toggle("hidden", tab !== "rules");
+    document.getElementById("photos").classList.toggle("hidden", tab !== "photos");
 
-    if(tab === "rules"){
-        filterBox.classList.add("hidden");
-        grid.classList.add("hidden");
-        rules.classList.remove("hidden");
-    }else{
-        filterBox.classList.remove("hidden");
-        grid.classList.remove("hidden");
-        rules.classList.add("hidden");
-        filter();
-    }
+    if(tab === "photos") renderPhotos();
+    if(tab === "games" || tab === "recommend") filter();
 }
 
 function openModal(g){
@@ -527,6 +583,15 @@ function hideModal(){
 
 function closeModal(e){
     if(e.target.id === "modal") hideModal();
+}
+
+function openPhotoModal(src){
+    document.getElementById("photoModalImg").src = src;
+    document.getElementById("photoModal").classList.remove("hidden");
+}
+
+function hidePhotoModal(){
+    document.getElementById("photoModal").classList.add("hidden");
 }
 
 fetch(CSV_URL)
