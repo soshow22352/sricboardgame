@@ -12,8 +12,6 @@ body{
     background:#f3efe6;
     color:#2b2a28;
 }
-
-/* 背景宣紙感 */
 body::before{
     content:"";
     position:fixed;
@@ -22,7 +20,7 @@ body::before{
     z-index:-1;
 }
 
-/* ===== Header ===== */
+/* Header */
 header{
     background:url("https://upload.wikimedia.org/wikipedia/commons/3/3a/Raven_on_branch.png") left center no-repeat,
                linear-gradient(90deg,#2b2320,#4a3a31,#2b2320);
@@ -31,27 +29,25 @@ header{
     text-align:center;
     padding:30px 10px;
 }
-
 header h1{
     margin:0;
     font-size:28px;
     letter-spacing:3px;
 }
-
 header p{
     margin:5px 0 0;
     font-size:14px;
     opacity:0.8;
 }
 
-/* ===== Tabs ===== */
+/* Tabs */
 .tabs{
     display:flex;
     justify-content:center;
     gap:10px;
     margin:15px 0;
+    flex-wrap:wrap;
 }
-
 .tab{
     padding:8px 14px;
     background:#e8dfcf;
@@ -59,29 +55,58 @@ header p{
     cursor:pointer;
     border:1px solid #cbb89c;
 }
-
 .tab.active{
     background:#4a3a31;
     color:#fff;
 }
 
-/* ===== Filter ===== */
+/* Filter */
 .filter-bar{
     display:flex;
     flex-wrap:wrap;
     gap:10px;
     justify-content:center;
-    margin:10px;
-}
-
-select,input{
-    padding:6px 10px;
-    border-radius:6px;
-    border:1px solid #cbb89c;
+    align-items:center;
+    margin:15px;
+    padding:10px;
     background:#f7f2e9;
+    border-radius:10px;
+    border:1px solid #cbb89c;
+}
+.filter-group{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    min-width:120px;
+}
+.filter-group label{
+    font-size:13px;
+    color:#666;
+}
+.tags-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    max-width:600px;
+    justify-content:center;
+}
+.tag-btn{
+    padding:4px 10px;
+    background:#e9dfcf;
+    border:1px solid #cbb89c;
+    border-radius:20px;
+    font-size:13px;
+    cursor:pointer;
+    white-space:nowrap;
+}
+.tag-btn.active{
+    background:#4a3a31;
+    color:#fff;
+    border-color:#2b2320;
 }
 
-/* ===== Grid ===== */
+/* Grid */
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
@@ -90,8 +115,6 @@ select,input{
     margin:20px auto;
     padding:0 15px;
 }
-
-/* ===== Card ===== */
 .card{
     background:#fbf7ef;
     border:1px solid #d6c8ae;
@@ -99,17 +122,14 @@ select,input{
     overflow:hidden;
     box-shadow:0 2px 10px rgba(0,0,0,0.08);
 }
-
 .card img{
     width:100%;
     height:160px;
     object-fit:cover;
 }
-
 .card-body{
     padding:10px;
 }
-
 .tag{
     display:inline-block;
     padding:2px 6px;
@@ -119,7 +139,7 @@ select,input{
     margin:2px;
 }
 
-/* ===== Rules ===== */
+/* Rules */
 .rule-img{
     max-width:900px;
     margin:20px auto;
@@ -127,8 +147,6 @@ select,input{
     border:1px solid #cbb89c;
     box-shadow:0 2px 12px rgba(0,0,0,0.15);
 }
-
-/* hide */
 .hidden{display:none;}
 </style>
 </head>
@@ -149,18 +167,27 @@ select,input{
 
 <!-- Filters -->
 <div class="filter-bar" id="filterBar">
-    <input id="search" placeholder="搜尋桌遊...">
+    <input id="search" placeholder="搜尋桌遊名稱..." style="min-width:180px;">
 
-    <select id="typeFilter">
-        <option value="">全部類型</option>
-    </select>
+    <div class="filter-group">
+        <label>人數</label>
+        <input id="playerFilter" placeholder="例如: 2-4 或 3" style="width:110px;">
+    </div>
 
-    <select id="timeFilter">
-        <option value="">全部時間</option>
-        <option value="30">30分鐘內</option>
-        <option value="60">30–60分鐘</option>
-        <option value="120">60分鐘以上</option>
-    </select>
+    <div class="filter-group">
+        <label>遊戲時間</label>
+        <select id="timeFilter">
+            <option value="">全部時間</option>
+            <option value="30">30分鐘內</option>
+            <option value="60">30–60分鐘</option>
+            <option value="120">60分鐘以上</option>
+        </select>
+    </div>
+
+    <div class="filter-group" style="min-width:300px;">
+        <label>類型（可複選）</label>
+        <div class="tags-container" id="typeTags"></div>
+    </div>
 </div>
 
 <!-- GRID -->
@@ -172,41 +199,38 @@ select,input{
 </div>
 
 <script>
-
+// CSV 來源（你的 Google Sheet）
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
 
 let games = [];
 let currentTab = "games";
+let selectedTypes = new Set();
 
-/* parse */
+// 解析 CSV
 function parseCSV(text){
     const rows = text.trim().split("\n").map(r => r.split(","));
-
     return rows.slice(1).map(r => ({
-        name:r[0],
-        players:r[1],
-        time:parseInt(r[2])||0,
-        type:r[3],
-        difficulty:r[4],
-        feature:r[5],
-        note:r[6],
-        img:r[7]||""
+        name: r[0] || "",
+        players: r[1] || "",
+        time: parseInt(r[2]) || 0,
+        type: r[3] || "",
+        difficulty: r[4] || "",
+        feature: r[5] || "",
+        note: r[6] || "",
+        img: r[7] || ""
     }));
 }
 
-/* render */
+// 渲染卡片
 function render(list){
-
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
 
-    list.forEach(g=>{
-
+    list.forEach(g => {
         const card = document.createElement("div");
-        card.className="card";
-
-        card.innerHTML=`
-            <img src="${g.img || 'https://picsum.photos/300/200'}">
+        card.className = "card";
+        card.innerHTML = `
+            <img src="${g.img || 'https://picsum.photos/300/200'}" alt="${g.name}">
             <div class="card-body">
                 <h3>${g.name}</h3>
                 <div>👥 ${g.players} ｜ ⏱ ${g.time}分</div>
@@ -219,89 +243,132 @@ function render(list){
                 </div>
             </div>
         `;
-
         grid.appendChild(card);
     });
 }
 
-/* filter */
+// 篩選邏輯
 function filter(){
-
     let list = [...games];
 
-    const s = search.value.toLowerCase();
-    const t = typeFilter.value;
-    const time = timeFilter.value;
+    const searchTerm = document.getElementById("search").value.toLowerCase().trim();
+    const playerInput = document.getElementById("playerFilter").value.trim();
+    const timeVal = document.getElementById("timeFilter").value;
 
-    if(currentTab==="recommend"){
+    // 推薦名單
+    if(currentTab === "recommend"){
         list = list.filter(g => (g.note||"").includes("推薦"));
     }
 
-    if(s){
-        list = list.filter(g => g.name.toLowerCase().includes(s));
+    // 搜尋名稱
+    if(searchTerm){
+        list = list.filter(g => g.name.toLowerCase().includes(searchTerm));
     }
 
-    if(t){
-        list = list.filter(g => g.type===t);
+    // 多標籤（類型）
+    if(selectedTypes.size > 0){
+        list = list.filter(g => selectedTypes.has(g.type));
     }
 
-    if(time==="30"){
-        list = list.filter(g => g.time<=30);
+    // 人數篩選
+    if(playerInput){
+        const num = parseInt(playerInput);
+        if(!isNaN(num)){
+            list = list.filter(g => {
+                const p = g.players;
+                if(p.includes("-")){
+                    const [min, max] = p.split("-").map(n=>parseInt(n));
+                    return num >= (min||0) && num <= (max||99);
+                }
+                return p.includes(playerInput) || parseInt(p) >= num;
+            });
+        }
     }
-    if(time==="60"){
-        list = list.filter(g => g.time>30 && g.time<=60);
-    }
-    if(time==="120"){
-        list = list.filter(g => g.time>60);
-    }
+
+    // 時間篩選
+    if(timeVal === "30") list = list.filter(g => g.time <= 30);
+    if(timeVal === "60") list = list.filter(g => g.time > 30 && g.time <= 60);
+    if(timeVal === "120") list = list.filter(g => g.time > 60);
 
     render(list);
 }
 
-/* tab */
+// 切換分頁
 function switchTab(tab){
-
     currentTab = tab;
-
-    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
     event.target.classList.add("active");
 
-    document.getElementById("filterBar").classList.toggle("hidden", tab!=="games");
+    const filterBar = document.getElementById("filterBar");
+    const grid = document.getElementById("grid");
+    const rules = document.getElementById("rules");
 
-    if(tab==="rules"){
-        document.getElementById("grid").classList.add("hidden");
-        document.getElementById("rules").classList.remove("hidden");
-    }else{
-        document.getElementById("grid").classList.remove("hidden");
-        document.getElementById("rules").classList.add("hidden");
-
+    filterBar.classList.toggle("hidden", tab !== "games");
+    
+    if(tab === "rules"){
+        grid.classList.add("hidden");
+        rules.classList.remove("hidden");
+    } else {
+        grid.classList.remove("hidden");
+        rules.classList.add("hidden");
         filter();
     }
 }
 
-/* init */
-fetch(CSV_URL)
-.then(r=>r.text())
-.then(text=>{
-
-    games=parseCSV(text);
-
-    const types=[...new Set(games.map(g=>g.type))];
-    const typeFilter=document.getElementById("typeFilter");
-
-    types.forEach(t=>{
-        const o=document.createElement("option");
-        o.value=t;
-        o.textContent=t;
-        typeFilter.appendChild(o);
+// 建立類型標籤（多選）
+function createTypeTags(types){
+    const container = document.getElementById("typeTags");
+    container.innerHTML = `<span class="tag-btn active" data-type="">全部</span>`;
+    
+    types.forEach(t => {
+        if(!t) return;
+        const btn = document.createElement("span");
+        btn.className = "tag-btn";
+        btn.textContent = t;
+        btn.dataset.type = t;
+        btn.addEventListener("click", () => {
+            if(t === ""){ // 全部
+                selectedTypes.clear();
+                document.querySelectorAll(".tag-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+            } else {
+                document.querySelector('[data-type=""]').classList.remove("active");
+                if(selectedTypes.has(t)){
+                    selectedTypes.delete(t);
+                    btn.classList.remove("active");
+                } else {
+                    selectedTypes.add(t);
+                    btn.classList.add("active");
+                }
+            }
+            filter();
+        });
+        container.appendChild(btn);
     });
+}
 
-    document.querySelectorAll("input,select")
-    .forEach(el=>el.addEventListener("input",filter));
+// 初始化
+fetch(CSV_URL)
+.then(r => r.text())
+.then(text => {
+    games = parseCSV(text);
 
+    // 產生類型標籤
+    const types = [...new Set(games.map(g => g.type))].sort();
+    createTypeTags(types);
+
+    // 事件監聽
+    document.getElementById("search").addEventListener("input", filter);
+    document.getElementById("playerFilter").addEventListener("input", filter);
+    document.getElementById("timeFilter").addEventListener("change", filter);
+
+    // 預設顯示全部
     render(games);
+})
+.catch(err => {
+    console.error(err);
+    document.getElementById("grid").innerHTML = "<p style='text-align:center;grid-column:1/-1;color:red;'>載入桌遊資料失敗，請稍後再試</p>";
 });
-
 </script>
 
 </body>
