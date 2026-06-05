@@ -8,366 +8,458 @@
 <style>
 body{
     margin:0;
-    font-family:"Noto Serif TC","Microsoft JhengHei",serif;
-    background:#f3efe6;
-    color:#2b2a28;
+    font-family:"Microsoft JhengHei", serif;
+    background:#191410;
+    color:#f4e2bd;
 }
+
 body::before{
     content:"";
     position:fixed;
     inset:0;
-    background:radial-gradient(circle at top,#fff 0%,#e6dccb 100%);
+    background:
+        radial-gradient(circle at top,#3b2a1d 0%,#191410 65%),
+        url("https://www.transparenttextures.com/patterns/old-map.png");
+    opacity:.95;
     z-index:-1;
 }
 
-/* Header */
 header{
-    background:url("https://upload.wikimedia.org/wikipedia/commons/3/3a/Raven_on_branch.png") left center no-repeat,
-               linear-gradient(90deg,#2b2320,#4a3a31,#2b2320);
-    background-size:80px,cover;
-    color:#f5e9d3;
     text-align:center;
-    padding:30px 10px;
-}
-header h1{
-    margin:0;
-    font-size:28px;
-    letter-spacing:3px;
-}
-header p{
-    margin:5px 0 0;
-    font-size:14px;
-    opacity:0.8;
+    padding:38px 10px 28px;
+    background:linear-gradient(90deg,#120d0a,#3b2415,#120d0a);
+    border-bottom:3px solid #b58b3b;
+    box-shadow:0 4px 18px rgba(0,0,0,.5);
 }
 
-/* Tabs */
+.logo-title{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:14px;
+}
+
+.raven-icon{
+    width:58px;
+    height:58px;
+    filter:drop-shadow(0 0 8px #000);
+}
+
+header h1{
+    margin:0;
+    font-size:46px;
+    letter-spacing:6px;
+    color:#f7d98b;
+    text-shadow:0 0 8px #000;
+}
+
+header p{
+    margin-top:8px;
+    font-size:18px;
+    color:#d9c49b;
+}
+
 .tabs{
     display:flex;
     justify-content:center;
     gap:10px;
-    margin:15px 0;
     flex-wrap:wrap;
-}
-.tab{
-    padding:8px 14px;
-    background:#e8dfcf;
-    border-radius:8px;
-    cursor:pointer;
-    border:1px solid #cbb89c;
-}
-.tab.active{
-    background:#4a3a31;
-    color:#fff;
+    margin:18px 0;
 }
 
-/* Filter */
+.tab{
+    padding:9px 18px;
+    border:1px solid #b58b3b;
+    background:#2b2119;
+    color:#f4e2bd;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.tab.active{
+    background:#b58b3b;
+    color:#1b130d;
+    font-weight:bold;
+}
+
+.filter-box{
+    max-width:1150px;
+    margin:0 auto 18px;
+    padding:15px;
+    background:rgba(43,33,25,.88);
+    border:1px solid #8e6b35;
+    border-radius:12px;
+}
+
 .filter-bar{
     display:flex;
     flex-wrap:wrap;
     gap:10px;
     justify-content:center;
-    align-items:center;
-    margin:15px;
-    padding:10px;
-    background:#f7f2e9;
-    border-radius:10px;
-    border:1px solid #cbb89c;
-}
-.filter-group{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:5px;
-    min-width:120px;
-}
-.filter-group label{
-    font-size:13px;
-    color:#666;
-}
-.tags-container{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    max-width:600px;
-    justify-content:center;
-}
-.tag-btn{
-    padding:4px 10px;
-    background:#e9dfcf;
-    border:1px solid #cbb89c;
-    border-radius:20px;
-    font-size:13px;
-    cursor:pointer;
-    white-space:nowrap;
-}
-.tag-btn.active{
-    background:#4a3a31;
-    color:#fff;
-    border-color:#2b2320;
 }
 
-/* Grid */
+input,select{
+    padding:8px 10px;
+    border-radius:6px;
+    border:1px solid #b58b3b;
+    background:#241a13;
+    color:#f4e2bd;
+}
+
+.tag-filter{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:14px;
+    justify-content:center;
+}
+
+.tag-check{
+    border:1px solid #7e6131;
+    padding:5px 10px;
+    border-radius:999px;
+    cursor:pointer;
+    background:#1f1711;
+    font-size:13px;
+}
+
+.tag-check input{
+    margin-right:4px;
+}
+
 .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-    gap:14px;
+    grid-template-columns:repeat(auto-fill,minmax(245px,1fr));
+    gap:18px;
     max-width:1200px;
     margin:20px auto;
     padding:0 15px;
 }
+
 .card{
-    background:#fbf7ef;
-    border:1px solid #d6c8ae;
-    border-radius:10px;
+    background:#2b2119;
+    border:1px solid #9a7436;
+    border-radius:12px;
     overflow:hidden;
-    box-shadow:0 2px 10px rgba(0,0,0,0.08);
-}
-.card img{
-    width:100%;
-    height:160px;
-    object-fit:cover;
-}
-.card-body{
-    padding:10px;
-}
-.tag{
-    display:inline-block;
-    padding:2px 6px;
-    background:#e9dfcf;
-    font-size:12px;
-    border-radius:4px;
-    margin:2px;
+    box-shadow:0 5px 18px rgba(0,0,0,.35);
 }
 
-/* Rules */
-.rule-img{
-    max-width:900px;
-    margin:20px auto;
-    display:block;
-    border:1px solid #cbb89c;
-    box-shadow:0 2px 12px rgba(0,0,0,0.15);
+.card img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
 }
+
+.card-body{
+    padding:13px;
+}
+
+.card h3{
+    margin:0 0 8px;
+    color:#f7d98b;
+}
+
+.tag{
+    display:inline-block;
+    padding:3px 7px;
+    margin:3px;
+    border-radius:5px;
+    background:#5a3c20;
+    color:#f4e2bd;
+    font-size:12px;
+}
+
+.info{
+    font-size:13px;
+    color:#d9c49b;
+    margin-top:6px;
+}
+
+.rules-wrap{
+    max-width:900px;
+    margin:25px auto;
+    padding:15px;
+}
+
+.rule-img{
+    width:100%;
+    border:2px solid #b58b3b;
+    border-radius:12px;
+    box-shadow:0 6px 22px rgba(0,0,0,.5);
+}
+
 .hidden{display:none;}
+
+@media(max-width:600px){
+    header h1{font-size:32px;}
+    .raven-icon{width:44px;height:44px;}
+}
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>🐦 鴉宅桌遊館</h1>
+    <div class="logo-title">
+        <svg class="raven-icon" viewBox="0 0 100 100">
+            <path d="M75 18 C58 18 47 28 41 39 C31 41 23 48 20 59 C29 55 36 55 43 60 C35 65 28 75 24 88 C38 78 52 73 67 75 C59 67 61 58 70 51 C77 45 83 34 75 18Z" fill="#050505"/>
+            <path d="M70 23 L94 30 L73 36 Z" fill="#050505"/>
+            <circle cx="66" cy="28" r="3" fill="#d6b15e"/>
+        </svg>
+        <h1>鴉宅桌遊館</h1>
+    </div>
     <p>以緣相聚、以遊會友</p>
 </header>
 
-<!-- Tabs -->
 <div class="tabs">
-    <div class="tab active" onclick="switchTab('games')">🎲 桌遊列表</div>
-    <div class="tab" onclick="switchTab('recommend')">⭐ 推薦名單</div>
-    <div class="tab" onclick="switchTab('rules')">📜 規範</div>
+    <button class="tab active" onclick="switchTab('games', this)">🎲 桌遊列表</button>
+    <button class="tab" onclick="switchTab('recommend', this)">⭐ 推薦名單</button>
+    <button class="tab" onclick="switchTab('rules', this)">📜 團規範</button>
 </div>
 
-<!-- Filters -->
-<div class="filter-bar" id="filterBar">
-    <input id="search" placeholder="搜尋桌遊名稱..." style="min-width:180px;">
+<div id="filterBox" class="filter-box">
+    <div class="filter-bar">
+        <input id="search" placeholder="搜尋桌遊...">
 
-    <div class="filter-group">
-        <label>人數</label>
-        <input id="playerFilter" placeholder="例如: 2-4 或 3" style="width:110px;">
-    </div>
+        <select id="playerFilter">
+            <option value="">全部人數</option>
+            <option value="1">1人</option>
+            <option value="2">2人</option>
+            <option value="3">3人</option>
+            <option value="4">4人</option>
+            <option value="5">5人</option>
+            <option value="6">6人</option>
+            <option value="7">7人</option>
+            <option value="8">8人</option>
+            <option value="9">9人以上</option>
+        </select>
 
-    <div class="filter-group">
-        <label>遊戲時間</label>
         <select id="timeFilter">
             <option value="">全部時間</option>
             <option value="30">30分鐘內</option>
-            <option value="60">30–60分鐘</option>
-            <option value="120">60分鐘以上</option>
+            <option value="60">31–60分鐘</option>
+            <option value="120">61分鐘以上</option>
         </select>
     </div>
 
-    <div class="filter-group" style="min-width:300px;">
-        <label>類型（可複選）</label>
-        <div class="tags-container" id="typeTags"></div>
-    </div>
+    <div id="tagFilter" class="tag-filter"></div>
 </div>
 
-<!-- GRID -->
 <div id="grid" class="grid"></div>
 
-<!-- RULE IMAGE -->
-<div id="rules" class="hidden">
-    <img class="rule-img" src="https://i.meee.com.tw/vK19Mqx.png">
+<div id="rules" class="rules-wrap hidden">
+    <img class="rule-img" src="https://i.meee.com.tw/vK19Mqx.png" alt="鴉宅桌遊館規範">
 </div>
 
 <script>
-// CSV 來源（你的 Google Sheet）
 const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
 
 let games = [];
 let currentTab = "games";
-let selectedTypes = new Set();
 
-// 解析 CSV
 function parseCSV(text){
-    const rows = text.trim().split("\n").map(r => r.split(","));
-    return rows.slice(1).map(r => ({
-        name: r[0] || "",
-        players: r[1] || "",
-        time: parseInt(r[2]) || 0,
-        type: r[3] || "",
-        difficulty: r[4] || "",
-        feature: r[5] || "",
-        note: r[6] || "",
-        img: r[7] || ""
-    }));
+    const rows = [];
+    let row = [];
+    let cell = "";
+    let quote = false;
+
+    for(let i=0;i<text.length;i++){
+        const c = text[i];
+        const n = text[i+1];
+
+        if(c === '"' && quote && n === '"'){
+            cell += '"';
+            i++;
+        }else if(c === '"'){
+            quote = !quote;
+        }else if(c === "," && !quote){
+            row.push(cell.trim());
+            cell = "";
+        }else if((c === "\n" || c === "\r") && !quote){
+            if(cell || row.length){
+                row.push(cell.trim());
+                rows.push(row);
+                row = [];
+                cell = "";
+            }
+            if(c === "\r" && n === "\n") i++;
+        }else{
+            cell += c;
+        }
+    }
+
+    if(cell || row.length){
+        row.push(cell.trim());
+        rows.push(row);
+    }
+
+    return rows;
 }
 
-// 渲染卡片
+function splitTags(str){
+    return (str || "")
+        .split(/[|,，、]/)
+        .map(t => t.trim())
+        .filter(Boolean);
+}
+
+function parseTime(str){
+    const nums = String(str || "").match(/\d+/g);
+    if(!nums) return 0;
+    return Math.max(...nums.map(Number));
+}
+
+function getHeaderIndex(headers, name){
+    return headers.findIndex(h => h.trim() === name);
+}
+
 function render(list){
     const grid = document.getElementById("grid");
     grid.innerHTML = "";
 
-    list.forEach(g => {
+    if(list.length === 0){
+        grid.innerHTML = `<div class="info">沒有符合條件的桌遊。</div>`;
+        return;
+    }
+
+    list.forEach(g=>{
         const card = document.createElement("div");
         card.className = "card";
+
         card.innerHTML = `
-            <img src="${g.img || 'https://picsum.photos/300/200'}" alt="${g.name}">
+            <img src="${g.img || 'https://picsum.photos/400/250'}" alt="${g.name}">
             <div class="card-body">
                 <h3>${g.name}</h3>
-                <div>👥 ${g.players} ｜ ⏱ ${g.time}分</div>
+                <div class="info">👥 ${g.minPlayers}–${g.maxPlayers}人 ｜ ⏱ ${g.timeText}</div>
                 <div>
-                    <span class="tag">${g.type}</span>
-                    <span class="tag">${g.difficulty}</span>
+                    ${g.tags.map(t => `<span class="tag">${t}</span>`).join("")}
                 </div>
-                <div style="font-size:13px;color:#666;margin-top:5px;">
-                    ${g.feature||""}
-                </div>
+                <div class="info">${g.feature || ""}</div>
             </div>
         `;
+
         grid.appendChild(card);
     });
 }
 
-// 篩選邏輯
 function filter(){
     let list = [...games];
 
-    const searchTerm = document.getElementById("search").value.toLowerCase().trim();
-    const playerInput = document.getElementById("playerFilter").value.trim();
-    const timeVal = document.getElementById("timeFilter").value;
+    const keyword = document.getElementById("search").value.trim().toLowerCase();
+    const player = document.getElementById("playerFilter").value;
+    const time = document.getElementById("timeFilter").value;
 
-    // 推薦名單
+    const checkedTags = [...document.querySelectorAll(".tagOption:checked")]
+        .map(i => i.value);
+
     if(currentTab === "recommend"){
-        list = list.filter(g => (g.note||"").includes("推薦"));
+        list = list.filter(g => (g.note || "").includes("推薦"));
     }
 
-    // 搜尋名稱
-    if(searchTerm){
-        list = list.filter(g => g.name.toLowerCase().includes(searchTerm));
+    if(keyword){
+        list = list.filter(g =>
+            g.name.toLowerCase().includes(keyword) ||
+            g.feature.toLowerCase().includes(keyword) ||
+            g.tags.join(" ").toLowerCase().includes(keyword)
+        );
     }
 
-    // 多標籤（類型）
-    if(selectedTypes.size > 0){
-        list = list.filter(g => selectedTypes.has(g.type));
-    }
-
-    // 人數篩選
-    if(playerInput){
-        const num = parseInt(playerInput);
-        if(!isNaN(num)){
-            list = list.filter(g => {
-                const p = g.players;
-                if(p.includes("-")){
-                    const [min, max] = p.split("-").map(n=>parseInt(n));
-                    return num >= (min||0) && num <= (max||99);
-                }
-                return p.includes(playerInput) || parseInt(p) >= num;
-            });
+    if(player){
+        const p = Number(player);
+        if(p >= 9){
+            list = list.filter(g => g.maxPlayers >= 9);
+        }else{
+            list = list.filter(g => p >= g.minPlayers && p <= g.maxPlayers);
         }
     }
 
-    // 時間篩選
-    if(timeVal === "30") list = list.filter(g => g.time <= 30);
-    if(timeVal === "60") list = list.filter(g => g.time > 30 && g.time <= 60);
-    if(timeVal === "120") list = list.filter(g => g.time > 60);
+    if(time === "30"){
+        list = list.filter(g => g.time <= 30);
+    }else if(time === "60"){
+        list = list.filter(g => g.time > 30 && g.time <= 60);
+    }else if(time === "120"){
+        list = list.filter(g => g.time > 60);
+    }
+
+    if(checkedTags.length){
+        list = list.filter(g =>
+            checkedTags.every(tag => g.tags.includes(tag))
+        );
+    }
 
     render(list);
 }
 
-// 切換分頁
-function switchTab(tab){
+function switchTab(tab, btn){
     currentTab = tab;
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    event.target.classList.add("active");
 
-    const filterBar = document.getElementById("filterBar");
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    btn.classList.add("active");
+
+    const filterBox = document.getElementById("filterBox");
     const grid = document.getElementById("grid");
     const rules = document.getElementById("rules");
 
-    filterBar.classList.toggle("hidden", tab !== "games");
-    
     if(tab === "rules"){
+        filterBox.classList.add("hidden");
         grid.classList.add("hidden");
         rules.classList.remove("hidden");
-    } else {
+    }else{
+        filterBox.classList.remove("hidden");
         grid.classList.remove("hidden");
         rules.classList.add("hidden");
         filter();
     }
 }
 
-// 建立類型標籤（多選）
-function createTypeTags(types){
-    const container = document.getElementById("typeTags");
-    container.innerHTML = `<span class="tag-btn active" data-type="">全部</span>`;
-    
-    types.forEach(t => {
-        if(!t) return;
-        const btn = document.createElement("span");
-        btn.className = "tag-btn";
-        btn.textContent = t;
-        btn.dataset.type = t;
-        btn.addEventListener("click", () => {
-            if(t === ""){ // 全部
-                selectedTypes.clear();
-                document.querySelectorAll(".tag-btn").forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-            } else {
-                document.querySelector('[data-type=""]').classList.remove("active");
-                if(selectedTypes.has(t)){
-                    selectedTypes.delete(t);
-                    btn.classList.remove("active");
-                } else {
-                    selectedTypes.add(t);
-                    btn.classList.add("active");
-                }
-            }
-            filter();
-        });
-        container.appendChild(btn);
-    });
-}
-
-// 初始化
 fetch(CSV_URL)
 .then(r => r.text())
 .then(text => {
-    games = parseCSV(text);
+    const rows = parseCSV(text);
+    const headers = rows[0];
 
-    // 產生類型標籤
-    const types = [...new Set(games.map(g => g.type))].sort();
-    createTypeTags(types);
+    const idxName = getHeaderIndex(headers, "桌遊名稱");
+    const idxMin = getHeaderIndex(headers, "最少人數");
+    const idxMax = getHeaderIndex(headers, "最多人數");
+    const idxTime = getHeaderIndex(headers, "時間");
+    const idxTags = getHeaderIndex(headers, "標籤");
+    const idxFeature = getHeaderIndex(headers, "特點");
+    const idxNote = getHeaderIndex(headers, "備註");
+    const idxImg = getHeaderIndex(headers, "圖片");
 
-    // 事件監聽
-    document.getElementById("search").addEventListener("input", filter);
-    document.getElementById("playerFilter").addEventListener("input", filter);
-    document.getElementById("timeFilter").addEventListener("change", filter);
+    games = rows.slice(1).map(r => ({
+        name: r[idxName] || "",
+        minPlayers: Number(r[idxMin]) || 1,
+        maxPlayers: Number(r[idxMax]) || Number(r[idxMin]) || 99,
+        timeText: r[idxTime] || "",
+        time: parseTime(r[idxTime]),
+        tags: splitTags(r[idxTags]),
+        feature: r[idxFeature] || "",
+        note: r[idxNote] || "",
+        img: r[idxImg] || ""
+    })).filter(g => g.name);
 
-    // 預設顯示全部
+    const allTags = [...new Set(games.flatMap(g => g.tags))].sort();
+    const tagFilter = document.getElementById("tagFilter");
+
+    tagFilter.innerHTML = allTags.map(tag => `
+        <label class="tag-check">
+            <input class="tagOption" type="checkbox" value="${tag}">
+            ${tag}
+        </label>
+    `).join("");
+
+    document.querySelectorAll("input,select").forEach(el=>{
+        el.addEventListener("input", filter);
+        el.addEventListener("change", filter);
+    });
+
     render(games);
 })
 .catch(err => {
+    document.getElementById("grid").innerHTML =
+        `<div class="info">資料載入失敗，請確認 Google Sheet 是否已發布為 CSV。</div>`;
     console.error(err);
-    document.getElementById("grid").innerHTML = "<p style='text-align:center;grid-column:1/-1;color:red;'>載入桌遊資料失敗，請稍後再試</p>";
 });
 </script>
 
