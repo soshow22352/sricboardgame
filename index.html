@@ -8,339 +8,48 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=MedievalSharp&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 
 <style>
-body{
-    margin:0;
-    background:#120c08;
-    color:#f6e2b8;
-    font-family:"Noto Serif TC",serif;
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:
-        radial-gradient(circle at top,#54351f 0%,#120c08 70%),
-        url("https://www.transparenttextures.com/patterns/old-map.png");
-    z-index:-1;
-}
-
-header{
-    text-align:center;
-    padding:60px 10px 40px;
-    background:linear-gradient(90deg,#080504,#3d2212,#080504);
-    border-bottom:4px solid #e0b354;
-    box-shadow:0 5px 30px rgba(0,0,0,.8);
-}
-
-.logo-title{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:24px;
-}
-
-.raven-icon{
-    width:92px;
-    height:92px;
-    filter:drop-shadow(0 0 12px rgba(255,218,103,.9));
-}
-
-header h1{
-    margin:0;
-    font-family:"MedievalSharp","Noto Serif TC",serif;
-    font-size:76px;
-    letter-spacing:10px;
-    color:#ffe49a;
-    text-shadow:
-        0 0 12px rgba(255,225,130,.95),
-        0 0 28px rgba(255,190,70,.45),
-        4px 4px 0 #211006;
-}
-
-header p{
-    margin-top:12px;
-    font-family:"Cinzel","Noto Serif TC",serif;
-    font-size:30px;
-    letter-spacing:5px;
-    color:#fff0c9;
-}
-
-.official-link{
-    display:inline-block;
-    margin-top:18px;
-    padding:10px 22px;
-    border-radius:999px;
-    background:#1f8f45;
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.tabs{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-    margin:22px 0;
-}
-
-.tab{
-    padding:11px 22px;
-    border:1px solid #d8aa4c;
-    background:#2b2119;
-    color:#f4e2bd;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-.tab.active{
-    background:#d8aa4c;
-    color:#1b130d;
-    font-weight:bold;
-}
-
-.filter-box{
-    max-width:1150px;
-    margin:0 auto 18px;
-    padding:15px;
-    background:rgba(43,33,25,.9);
-    border:1px solid #8e6b35;
-    border-radius:12px;
-}
-
-.filter-bar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
-}
-
-select{
-    padding:8px 10px;
-    border-radius:6px;
-    border:1px solid #d8aa4c;
-    background:#241a13;
-    color:#f4e2bd;
-}
-
-.tag-filter{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:14px;
-    justify-content:center;
-}
-
-.tag-check{
-    border:1px solid #7e6131;
-    padding:5px 10px;
-    border-radius:999px;
-    background:#1f1711;
-    font-size:13px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(245px,1fr));
-    gap:18px;
-    max-width:1200px;
-    margin:20px auto;
-    padding:0 15px;
-}
-
-.card{
-    position:relative;
-    background:#2b2119;
-    border:1px solid #9a7436;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 5px 18px rgba(0,0,0,.38);
-    cursor:pointer;
-    transition:.2s;
-}
-
-.card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 8px 28px rgba(216,170,76,.28);
-}
-
-.card img{
-    width:100%;
-    height:180px;
-    object-fit:contain;
-    object-position:center;
-    background:#120c08;
-    padding:8px;
-    box-sizing:border-box;
-}
-
-.card-body{
-    padding:13px;
-}
-
-.card h3{
-    margin:0 0 8px;
-    color:#ffd86b;
-}
-
-.tag{
-    display:inline-block;
-    padding:3px 7px;
-    margin:3px;
-    border-radius:5px;
-    background:#5a3c20;
-    color:#f4e2bd;
-    font-size:12px;
-}
-
-.info{
-    font-size:13px;
-    color:#d9c49b;
-    margin-top:6px;
-}
-
-.badge{
-    position:absolute;
-    top:10px;
-    right:10px;
-    background:#d8aa4c;
-    color:#1b130d;
-    padding:5px 9px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.rules-wrap{
-    max-width:880px;
-    margin:25px auto;
-    padding:22px;
-    background:linear-gradient(145deg,#2b2119,#1a120d);
-    border:2px solid #d8aa4c;
-    border-radius:18px;
-}
-
-.rules-title{
-    text-align:center;
-    color:#ffd86b;
-    font-size:34px;
-    letter-spacing:4px;
-}
-
-.rule-img{
-    width:100%;
-    border:2px solid #d8aa4c;
-    border-radius:12px;
-    box-shadow:0 8px 28px rgba(0,0,0,.6);
-}
-
-.photo-wall{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-    gap:14px;
-    max-width:1200px;
-    margin:20px auto;
-    padding:0 15px;
-}
-
-.photo-wall img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-    border-radius:12px;
-    border:1px solid #9a7436;
-    box-shadow:0 5px 18px rgba(0,0,0,.4);
-    cursor:pointer;
-    transition:.2s;
-}
-
-.photo-wall img:hover{
-    transform:scale(1.03);
-    box-shadow:0 8px 28px rgba(216,170,76,.28);
-}
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.82);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:99;
-}
-
-.modal-content{
-    max-width:850px;
-    width:100%;
-    background:#241a13;
-    border:2px solid #d8aa4c;
-    border-radius:16px;
-    overflow:hidden;
-    position:relative;
-}
-
-.modal-content img{
-    width:100%;
-    max-height:390px;
-    object-fit:contain;
-    background:#120c08;
-    padding:10px;
-    box-sizing:border-box;
-}
-
-.photo-modal-content{
-    max-width:1000px;
-    background:transparent;
-    border:none;
-    box-shadow:none;
-}
-
-.photo-modal-content img{
-    max-height:85vh;
-    border:2px solid #d8aa4c;
-    border-radius:14px;
-    background:#120c08;
-}
-
-.modal-body{
-    padding:22px;
-}
-
-.modal-body h2{
-    color:#ffd86b;
-    font-size:36px;
-}
-
-.youtube-btn{
-    display:inline-block;
-    margin-top:16px;
-    padding:10px 18px;
-    background:#b62222;
-    color:white;
-    border-radius:8px;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.close{
-    position:absolute;
-    top:10px;
-    right:14px;
-    font-size:32px;
-    color:#ffd86b;
-    cursor:pointer;
-    z-index:100;
-}
-
+body{margin:0;background:#120c08;color:#f6e2b8;font-family:"Noto Serif TC",serif;}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at top,#54351f 0%,#120c08 70%),url("https://www.transparenttextures.com/patterns/old-map.png");z-index:-1;}
+header{text-align:center;padding:60px 10px 40px;background:linear-gradient(90deg,#080504,#3d2212,#080504);border-bottom:4px solid #e0b354;box-shadow:0 5px 30px rgba(0,0,0,.8);}
+.logo-title{display:flex;justify-content:center;align-items:center;gap:24px;}
+.raven-icon{width:92px;height:92px;filter:drop-shadow(0 0 12px rgba(255,218,103,.9));}
+header h1{margin:0;font-family:"MedievalSharp","Noto Serif TC",serif;font-size:76px;letter-spacing:10px;color:#ffe49a;text-shadow:0 0 12px rgba(255,225,130,.95),0 0 28px rgba(255,190,70,.45),4px 4px 0 #211006;}
+header p{margin-top:12px;font-family:"Cinzel","Noto Serif TC",serif;font-size:30px;letter-spacing:5px;color:#fff0c9;}
+.official-link{display:inline-block;margin-top:18px;padding:10px 22px;border-radius:999px;background:#1f8f45;color:white;text-decoration:none;font-weight:bold;}
+.tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:22px 0;}
+.tab{padding:11px 22px;border:1px solid #d8aa4c;background:#2b2119;color:#f4e2bd;border-radius:8px;cursor:pointer;}
+.tab.active{background:#d8aa4c;color:#1b130d;font-weight:bold;}
+.filter-box{max-width:1150px;margin:0 auto 18px;padding:15px;background:rgba(43,33,25,.9);border:1px solid #8e6b35;border-radius:12px;}
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+select{padding:8px 10px;border-radius:6px;border:1px solid #d8aa4c;background:#241a13;color:#f4e2bd;}
+.tag-filter{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;justify-content:center;}
+.tag-check{border:1px solid #7e6131;padding:5px 10px;border-radius:999px;background:#1f1711;font-size:13px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:18px;max-width:1200px;margin:20px auto;padding:0 15px;}
+.card{position:relative;background:#2b2119;border:1px solid #9a7436;border-radius:12px;overflow:hidden;box-shadow:0 5px 18px rgba(0,0,0,.38);cursor:pointer;transition:.2s;}
+.card:hover{transform:translateY(-5px);box-shadow:0 8px 28px rgba(216,170,76,.28);}
+.card img{width:100%;height:180px;object-fit:contain;object-position:center;background:#120c08;padding:8px;box-sizing:border-box;}
+.card-body{padding:13px;}
+.card h3{margin:0 0 8px;color:#ffd86b;}
+.tag{display:inline-block;padding:3px 7px;margin:3px;border-radius:5px;background:#5a3c20;color:#f4e2bd;font-size:12px;}
+.info{font-size:13px;color:#d9c49b;margin-top:6px;}
+.badge{position:absolute;top:10px;right:10px;background:#d8aa4c;color:#1b130d;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:bold;}
+.rules-wrap{max-width:880px;margin:25px auto;padding:22px;background:linear-gradient(145deg,#2b2119,#1a120d);border:2px solid #d8aa4c;border-radius:18px;}
+.rules-title{text-align:center;color:#ffd86b;font-size:34px;letter-spacing:4px;}
+.rule-img{width:100%;border:2px solid #d8aa4c;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.6);}
+.photo-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;max-width:1200px;margin:20px auto;padding:0 15px;}
+.photo-wall img{width:100%;height:220px;object-fit:cover;border-radius:12px;border:1px solid #9a7436;box-shadow:0 5px 18px rgba(0,0,0,.4);cursor:pointer;transition:.2s;}
+.photo-wall img:hover{transform:scale(1.03);box-shadow:0 8px 28px rgba(216,170,76,.28);}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;padding:20px;z-index:99;}
+.modal-content{max-width:850px;width:100%;background:#241a13;border:2px solid #d8aa4c;border-radius:16px;overflow:hidden;position:relative;}
+.modal-content img{width:100%;max-height:390px;object-fit:contain;background:#120c08;padding:10px;box-sizing:border-box;}
+.photo-modal-content{max-width:1000px;background:transparent;border:none;box-shadow:none;}
+.photo-modal-content img{max-height:85vh;border:2px solid #d8aa4c;border-radius:14px;background:#120c08;}
+.modal-body{padding:22px;}
+.modal-body h2{color:#ffd86b;font-size:36px;}
+.youtube-btn{display:inline-block;margin-top:16px;padding:10px 18px;background:#b62222;color:white;border-radius:8px;text-decoration:none;font-weight:bold;}
+.close{position:absolute;top:10px;right:14px;font-size:32px;color:#ffd86b;cursor:pointer;z-index:100;}
 .hidden{display:none;}
-
-@media(max-width:600px){
-    header h1{font-size:42px;letter-spacing:5px;}
-    header p{font-size:20px;}
-    .raven-icon{width:58px;height:58px;}
-}
+@media(max-width:600px){header h1{font-size:42px;letter-spacing:5px;}header p{font-size:20px;}.raven-icon{width:58px;height:58px;}}
 </style>
 </head>
 
@@ -391,7 +100,6 @@ select{
 </div>
 
 <div id="grid" class="grid"></div>
-
 <div id="photos" class="photo-wall hidden"></div>
 
 <div id="rules" class="rules-wrap hidden">
@@ -421,22 +129,18 @@ select{
 </div>
 
 <script>
-const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
+const GAME_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
 
 /*
-活動相片放在 photos 資料夾後，在這裡新增檔名即可。
-例如你上傳：
-photos/event-001.jpg
-photos/event-002.jpg
-photos/event-003.jpg
+活動相片 CSV：
+你的「活動相片」工作表需要有一欄叫「圖片」。
+如果照片沒出現，請把這裡換成活動相片工作表自己的 gid：
+.../pub?gid=你的活動相片gid&single=true&output=csv
 */
-const PHOTO_LIST = [
-    "photos/event-001.jpg",
-    "photos/event-002.jpg",
-    "photos/event-003.jpg"
-];
+const PHOTO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?output=csv";
 
 let games = [];
+let photoList = [];
 let currentTab = "games";
 
 function parseCSV(text){
@@ -515,10 +219,41 @@ function render(list){
     });
 }
 
+function loadPhotos(){
+    const photos = document.getElementById("photos");
+    photos.innerHTML = `<div class="info">活動相片載入中...</div>`;
+
+    fetch(PHOTO_CSV_URL)
+    .then(r=>r.text())
+    .then(text=>{
+        const rows = parseCSV(text);
+        const headers = rows[0] || [];
+
+        let imgIndex = idx(headers, "圖片");
+        if(imgIndex === -1) imgIndex = idx(headers, "照片");
+        if(imgIndex === -1) imgIndex = idx(headers, "圖片網址");
+        if(imgIndex === -1) imgIndex = 0;
+
+        photoList = rows.slice(1)
+            .map(r => (r[imgIndex] || "").trim())
+            .filter(src => src.startsWith("http") || src.startsWith("photos/") || src.startsWith("images/"));
+
+        renderPhotos();
+    })
+    .catch(()=>{
+        photos.innerHTML = `<div class="info">活動相片載入失敗，請確認活動相片工作表是否已發布成 CSV。</div>`;
+    });
+}
+
 function renderPhotos(){
     const photos = document.getElementById("photos");
 
-    photos.innerHTML = PHOTO_LIST.map(src=>`
+    if(photoList.length === 0){
+        photos.innerHTML = `<div class="info">目前尚未新增活動相片。</div>`;
+        return;
+    }
+
+    photos.innerHTML = photoList.map(src=>`
         <img src="${src}" onclick="openPhotoModal('${src}')" onerror="this.style.display='none'">
     `).join("");
 }
@@ -555,6 +290,7 @@ function filter(){
 
 function switchTab(tab, btn){
     currentTab = tab;
+
     document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
     btn.classList.add("active");
 
@@ -563,7 +299,7 @@ function switchTab(tab, btn){
     document.getElementById("rules").classList.toggle("hidden", tab !== "rules");
     document.getElementById("photos").classList.toggle("hidden", tab !== "photos");
 
-    if(tab === "photos") renderPhotos();
+    if(tab === "photos") loadPhotos();
     if(tab === "games" || tab === "recommend") filter();
 }
 
@@ -594,7 +330,7 @@ function hidePhotoModal(){
     document.getElementById("photoModal").classList.add("hidden");
 }
 
-fetch(CSV_URL)
+fetch(GAME_CSV_URL)
 .then(r=>r.text())
 .then(text=>{
     const rows = parseCSV(text);
