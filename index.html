@@ -10,12 +10,43 @@
 <style>
 body{margin:0;background:#120c08;color:#f6e2b8;font-family:"Noto Serif TC",serif;}
 body::before{content:"";position:fixed;inset:0;background:radial-gradient(circle at top,#54351f 0%,#120c08 70%),url("https://www.transparenttextures.com/patterns/old-map.png");z-index:-1;}
-header{text-align:center;padding:60px 10px 40px;background:linear-gradient(90deg,#080504,#3d2212,#080504);border-bottom:4px solid #e0b354;box-shadow:0 5px 30px rgba(0,0,0,.8);}
-.logo-title{display:flex;justify-content:center;align-items:center;gap:24px;}
+header{
+    text-align:center;
+    padding:25px 10px;
+}
 .raven-icon{width:92px;height:92px;filter:drop-shadow(0 0 12px rgba(255,218,103,.9));}
 header h1{margin:0;font-family:"MedievalSharp","Noto Serif TC",serif;font-size:76px;letter-spacing:10px;color:#ffe49a;text-shadow:0 0 12px rgba(255,225,130,.95),0 0 28px rgba(255,190,70,.45),4px 4px 0 #211006;}
 header p{margin-top:12px;font-family:"Cinzel","Noto Serif TC",serif;font-size:30px;letter-spacing:5px;color:#fff0c9;}
+.hero-banner{
+    width:100%;
+    max-width:1200px;
+    display:block;
+    margin:auto;
+
+    border:2px solid #b89045;
+    border-radius:18px;
+
+    box-shadow:
+        0 0 30px rgba(0,0,0,.6),
+        0 0 20px rgba(216,170,76,.2);
+}
 .official-link{display:inline-block;margin-top:18px;padding:10px 22px;border-radius:999px;background:#1f8f45;color:white;text-decoration:none;font-weight:bold;}
+
+.official-link:hover{
+
+    transform:translateY(-2px);
+
+    background:
+        linear-gradient(
+            180deg,
+            #3b3b3b,
+            #151515
+        );
+
+    box-shadow:
+        0 0 15px rgba(216,170,76,.5);
+}
+
 .tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:22px 0;}
 .tab{padding:11px 22px;border:1px solid #d8aa4c;background:#2b2119;color:#f4e2bd;border-radius:8px;cursor:pointer;}
 .tab.active{background:#d8aa4c;color:#1b130d;font-weight:bold;}
@@ -56,18 +87,19 @@ select{padding:8px 10px;border-radius:6px;border:1px solid #d8aa4c;background:#2
 <body>
 
 <header>
-    <div class="logo-title">
-        <svg class="raven-icon" viewBox="0 0 120 120">
-            <path d="M20 82 C35 55 52 35 78 23 C68 22 57 25 47 34 C59 12 88 12 103 28 C88 32 83 43 88 55 C94 70 78 82 61 85 C48 88 36 97 28 111 C27 96 35 85 44 78 C35 74 27 76 20 82Z" fill="#050505"/>
-            <path d="M98 29 L118 38 L97 47 Z" fill="#050505"/>
-            <circle cx="91" cy="34" r="4" fill="#ffd86b"/>
-            <path d="M48 35 C30 34 15 24 4 7 C25 12 43 19 59 31 Z" fill="#050505"/>
-            <path d="M58 84 C68 101 79 111 99 116 C78 118 57 109 45 91 Z" fill="#050505"/>
-        </svg>
-        <h1>鴉宅桌遊館</h1>
-    </div>
-    <p>新莊在地桌遊團</p>
-    <a class="official-link" href="https://line.me/R/ti/p/@187jgojd" target="_blank">加入官方帳號 @187jgojd</a>
+     <img
+        src="images/banner/banner.jpg"
+        class="hero-banner"
+        alt="鴉宅桌遊館">
+
+    <a
+        class="official-link"
+        href="https://line.me/R/ti/p/@187jgojd"
+        target="_blank">
+
+        加入官方帳號
+
+    </a>
 </header>
 
 <div class="tabs">
