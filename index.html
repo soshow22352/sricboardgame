@@ -9,7 +9,7 @@
 body{
     margin:0;
     font-family:"Microsoft JhengHei", serif;
-    background:#191410;
+    background:#17100c;
     color:#f4e2bd;
 }
 
@@ -18,58 +18,61 @@ body::before{
     position:fixed;
     inset:0;
     background:
-        radial-gradient(circle at top,#3b2a1d 0%,#191410 65%),
+        radial-gradient(circle at top,#4a2d19 0%,#17100c 68%),
         url("https://www.transparenttextures.com/patterns/old-map.png");
-    opacity:.95;
     z-index:-1;
 }
 
 header{
     text-align:center;
-    padding:38px 10px 28px;
-    background:linear-gradient(90deg,#120d0a,#3b2415,#120d0a);
-    border-bottom:3px solid #b58b3b;
-    box-shadow:0 4px 18px rgba(0,0,0,.5);
+    padding:42px 10px 30px;
+    background:linear-gradient(90deg,#0f0906,#3d2313,#0f0906);
+    border-bottom:3px solid #d8aa4c;
+    box-shadow:0 4px 22px rgba(0,0,0,.65);
 }
 
 .logo-title{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:14px;
+    gap:18px;
 }
 
 .raven-icon{
-    width:58px;
-    height:58px;
-    filter:drop-shadow(0 0 8px #000);
+    width:70px;
+    height:70px;
+    filter:drop-shadow(0 0 10px rgba(255,216,107,.55));
 }
 
 header h1{
     margin:0;
-    font-size:46px;
-    letter-spacing:6px;
-    color:#f7d98b;
-    text-shadow:0 0 8px #000;
+    font-size:58px;
+    letter-spacing:8px;
+    color:#ffd86b;
+    text-shadow:
+        0 0 8px rgba(255,216,107,.9),
+        0 0 22px rgba(255,216,107,.35),
+        3px 3px 0 #2a160b;
 }
 
 header p{
-    margin-top:8px;
-    font-size:18px;
-    color:#d9c49b;
+    margin-top:10px;
+    font-size:20px;
+    letter-spacing:4px;
+    color:#f6deb1;
 }
 
 .tabs{
     display:flex;
     justify-content:center;
-    gap:10px;
     flex-wrap:wrap;
-    margin:18px 0;
+    gap:10px;
+    margin:20px 0;
 }
 
 .tab{
-    padding:9px 18px;
-    border:1px solid #b58b3b;
+    padding:10px 20px;
+    border:1px solid #d8aa4c;
     background:#2b2119;
     color:#f4e2bd;
     border-radius:8px;
@@ -77,7 +80,7 @@ header p{
 }
 
 .tab.active{
-    background:#b58b3b;
+    background:#d8aa4c;
     color:#1b130d;
     font-weight:bold;
 }
@@ -86,7 +89,7 @@ header p{
     max-width:1150px;
     margin:0 auto 18px;
     padding:15px;
-    background:rgba(43,33,25,.88);
+    background:rgba(43,33,25,.9);
     border:1px solid #8e6b35;
     border-radius:12px;
 }
@@ -98,10 +101,10 @@ header p{
     justify-content:center;
 }
 
-input,select{
+select{
     padding:8px 10px;
     border-radius:6px;
-    border:1px solid #b58b3b;
+    border:1px solid #d8aa4c;
     background:#241a13;
     color:#f4e2bd;
 }
@@ -123,10 +126,6 @@ input,select{
     font-size:13px;
 }
 
-.tag-check input{
-    margin-right:4px;
-}
-
 .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(245px,1fr));
@@ -137,11 +136,19 @@ input,select{
 }
 
 .card{
+    position:relative;
     background:#2b2119;
     border:1px solid #9a7436;
     border-radius:12px;
     overflow:hidden;
-    box-shadow:0 5px 18px rgba(0,0,0,.35);
+    box-shadow:0 5px 18px rgba(0,0,0,.38);
+    cursor:pointer;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 8px 28px rgba(216,170,76,.25);
 }
 
 .card img{
@@ -156,7 +163,7 @@ input,select{
 
 .card h3{
     margin:0 0 8px;
-    color:#f7d98b;
+    color:#ffd86b;
 }
 
 .tag{
@@ -175,6 +182,18 @@ input,select{
     margin-top:6px;
 }
 
+.badge{
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:#d8aa4c;
+    color:#1b130d;
+    padding:5px 9px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:bold;
+}
+
 .rules-wrap{
     max-width:900px;
     margin:25px auto;
@@ -183,16 +202,65 @@ input,select{
 
 .rule-img{
     width:100%;
-    border:2px solid #b58b3b;
+    border:2px solid #d8aa4c;
     border-radius:12px;
-    box-shadow:0 6px 22px rgba(0,0,0,.5);
+    box-shadow:0 6px 22px rgba(0,0,0,.55);
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:99;
+}
+
+.modal-content{
+    max-width:850px;
+    width:100%;
+    background:#241a13;
+    border:2px solid #d8aa4c;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 0 35px rgba(216,170,76,.35);
+    position:relative;
+}
+
+.modal-content img{
+    width:100%;
+    max-height:360px;
+    object-fit:cover;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.modal-body h2{
+    color:#ffd86b;
+    font-size:32px;
+    margin:0 0 10px;
+}
+
+.close{
+    position:absolute;
+    top:10px;
+    right:14px;
+    font-size:30px;
+    color:#ffd86b;
+    cursor:pointer;
+    z-index:100;
 }
 
 .hidden{display:none;}
 
 @media(max-width:600px){
-    header h1{font-size:32px;}
-    .raven-icon{width:44px;height:44px;}
+    header h1{font-size:34px;letter-spacing:4px;}
+    header p{font-size:16px;}
+    .raven-icon{width:48px;height:48px;}
 }
 </style>
 </head>
@@ -202,36 +270,31 @@ input,select{
 <header>
     <div class="logo-title">
         <svg class="raven-icon" viewBox="0 0 100 100">
-            <path d="M75 18 C58 18 47 28 41 39 C31 41 23 48 20 59 C29 55 36 55 43 60 C35 65 28 75 24 88 C38 78 52 73 67 75 C59 67 61 58 70 51 C77 45 83 34 75 18Z" fill="#050505"/>
-            <path d="M70 23 L94 30 L73 36 Z" fill="#050505"/>
-            <circle cx="66" cy="28" r="3" fill="#d6b15e"/>
+            <path d="M18 72 C28 49 42 35 62 24 C55 23 46 25 38 31 C49 15 68 11 82 19 C72 24 69 33 73 42 C77 50 70 61 58 65 C48 68 36 73 24 90 C26 80 31 72 38 66 C31 64 25 66 18 72Z" fill="#050505"/>
+            <path d="M77 23 L96 30 L78 37 Z" fill="#050505"/>
+            <circle cx="72" cy="27" r="3" fill="#ffd86b"/>
+            <path d="M38 31 C24 30 12 22 6 10 C19 14 32 18 45 28 Z" fill="#050505"/>
         </svg>
         <h1>鴉宅桌遊館</h1>
     </div>
-    <p>以緣相聚、以遊會友</p>
+    <p>新莊在地桌遊團</p>
 </header>
 
 <div class="tabs">
     <button class="tab active" onclick="switchTab('games', this)">🎲 桌遊列表</button>
-    <button class="tab" onclick="switchTab('recommend', this)">⭐ 推薦名單</button>
-    <button class="tab" onclick="switchTab('rules', this)">📜 團規範</button>
+    <button class="tab" onclick="switchTab('recommend', this)">👑 團長推薦</button>
+    <button class="tab" onclick="switchTab('rules', this)">📜 注意事項</button>
 </div>
 
 <div id="filterBox" class="filter-box">
     <div class="filter-bar">
-        <input id="search" placeholder="搜尋桌遊...">
-
         <select id="playerFilter">
             <option value="">全部人數</option>
-            <option value="1">1人</option>
             <option value="2">2人</option>
             <option value="3">3人</option>
             <option value="4">4人</option>
             <option value="5">5人</option>
-            <option value="6">6人</option>
-            <option value="7">7人</option>
-            <option value="8">8人</option>
-            <option value="9">9人以上</option>
+            <option value="6+">6人以上</option>
         </select>
 
         <select id="timeFilter">
@@ -248,7 +311,21 @@ input,select{
 <div id="grid" class="grid"></div>
 
 <div id="rules" class="rules-wrap hidden">
-    <img class="rule-img" src="https://i.meee.com.tw/vK19Mqx.png" alt="鴉宅桌遊館規範">
+    <img class="rule-img" src="https://i.meee.com.tw/vK19Mqx.png" alt="鴉宅桌遊館注意事項">
+</div>
+
+<div id="modal" class="modal hidden" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="close" onclick="hideModal()">×</div>
+        <img id="modalImg" src="">
+        <div class="modal-body">
+            <h2 id="modalName"></h2>
+            <div id="modalMeta" class="info"></div>
+            <div id="modalTags"></div>
+            <p id="modalFeature" class="info"></p>
+            <p id="modalNote" class="info"></p>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -259,28 +336,22 @@ let currentTab = "games";
 
 function parseCSV(text){
     const rows = [];
-    let row = [];
-    let cell = "";
-    let quote = false;
+    let row = [], cell = "", quote = false;
 
     for(let i=0;i<text.length;i++){
-        const c = text[i];
-        const n = text[i+1];
+        const c = text[i], n = text[i+1];
 
         if(c === '"' && quote && n === '"'){
-            cell += '"';
-            i++;
+            cell += '"'; i++;
         }else if(c === '"'){
             quote = !quote;
         }else if(c === "," && !quote){
-            row.push(cell.trim());
-            cell = "";
+            row.push(cell.trim()); cell = "";
         }else if((c === "\n" || c === "\r") && !quote){
             if(cell || row.length){
                 row.push(cell.trim());
                 rows.push(row);
-                row = [];
-                cell = "";
+                row = []; cell = "";
             }
             if(c === "\r" && n === "\n") i++;
         }else{
@@ -297,10 +368,7 @@ function parseCSV(text){
 }
 
 function splitTags(str){
-    return (str || "")
-        .split(/[|,，、]/)
-        .map(t => t.trim())
-        .filter(Boolean);
+    return (str || "").split(/[|,，、]/).map(t=>t.trim()).filter(Boolean);
 }
 
 function parseTime(str){
@@ -309,7 +377,7 @@ function parseTime(str){
     return Math.max(...nums.map(Number));
 }
 
-function getHeaderIndex(headers, name){
+function idx(headers, name){
     return headers.findIndex(h => h.trim() === name);
 }
 
@@ -322,18 +390,18 @@ function render(list){
         return;
     }
 
-    list.forEach(g=>{
+    list.forEach((g, i)=>{
         const card = document.createElement("div");
         card.className = "card";
+        card.onclick = () => openModal(g);
 
         card.innerHTML = `
+            ${g.note.includes("推薦") ? `<div class="badge">👑 推薦</div>` : ""}
             <img src="${g.img || 'https://picsum.photos/400/250'}" alt="${g.name}">
             <div class="card-body">
                 <h3>${g.name}</h3>
                 <div class="info">👥 ${g.minPlayers}–${g.maxPlayers}人 ｜ ⏱ ${g.timeText}</div>
-                <div>
-                    ${g.tags.map(t => `<span class="tag">${t}</span>`).join("")}
-                </div>
+                <div>${g.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
                 <div class="info">${g.feature || ""}</div>
             </div>
         `;
@@ -344,47 +412,29 @@ function render(list){
 
 function filter(){
     let list = [...games];
-
-    const keyword = document.getElementById("search").value.trim().toLowerCase();
     const player = document.getElementById("playerFilter").value;
     const time = document.getElementById("timeFilter").value;
-
-    const checkedTags = [...document.querySelectorAll(".tagOption:checked")]
-        .map(i => i.value);
+    const checkedTags = [...document.querySelectorAll(".tagOption:checked")].map(i=>i.value);
 
     if(currentTab === "recommend"){
-        list = list.filter(g => (g.note || "").includes("推薦"));
-    }
-
-    if(keyword){
-        list = list.filter(g =>
-            g.name.toLowerCase().includes(keyword) ||
-            g.feature.toLowerCase().includes(keyword) ||
-            g.tags.join(" ").toLowerCase().includes(keyword)
-        );
+        list = list.filter(g => g.note.includes("推薦"));
     }
 
     if(player){
-        const p = Number(player);
-        if(p >= 9){
-            list = list.filter(g => g.maxPlayers >= 9);
+        if(player === "6+"){
+            list = list.filter(g => g.maxPlayers >= 6);
         }else{
+            const p = Number(player);
             list = list.filter(g => p >= g.minPlayers && p <= g.maxPlayers);
         }
     }
 
-    if(time === "30"){
-        list = list.filter(g => g.time <= 30);
-    }else if(time === "60"){
-        list = list.filter(g => g.time > 30 && g.time <= 60);
-    }else if(time === "120"){
-        list = list.filter(g => g.time > 60);
-    }
+    if(time === "30") list = list.filter(g => g.time <= 30);
+    if(time === "60") list = list.filter(g => g.time > 30 && g.time <= 60);
+    if(time === "120") list = list.filter(g => g.time > 60);
 
     if(checkedTags.length){
-        list = list.filter(g =>
-            checkedTags.every(tag => g.tags.includes(tag))
-        );
+        list = list.filter(g => checkedTags.every(tag => g.tags.includes(tag)));
     }
 
     render(list);
@@ -392,8 +442,7 @@ function filter(){
 
 function switchTab(tab, btn){
     currentTab = tab;
-
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
     btn.classList.add("active");
 
     const filterBox = document.getElementById("filterBox");
@@ -412,54 +461,65 @@ function switchTab(tab, btn){
     }
 }
 
+function openModal(g){
+    document.getElementById("modalImg").src = g.img || "https://picsum.photos/800/400";
+    document.getElementById("modalName").textContent = g.name;
+    document.getElementById("modalMeta").textContent = `適合人數：${g.minPlayers}–${g.maxPlayers}人　｜　遊戲時間：${g.timeText}`;
+    document.getElementById("modalTags").innerHTML = g.tags.map(t=>`<span class="tag">${t}</span>`).join("");
+    document.getElementById("modalFeature").textContent = `特色：${g.feature || "尚未填寫"}`;
+    document.getElementById("modalNote").textContent = `備註：${g.note || "無"}`;
+    document.getElementById("modal").classList.remove("hidden");
+}
+
+function hideModal(){
+    document.getElementById("modal").classList.add("hidden");
+}
+
+function closeModal(e){
+    if(e.target.id === "modal") hideModal();
+}
+
 fetch(CSV_URL)
-.then(r => r.text())
-.then(text => {
+.then(r=>r.text())
+.then(text=>{
     const rows = parseCSV(text);
     const headers = rows[0];
 
-    const idxName = getHeaderIndex(headers, "桌遊名稱");
-    const idxMin = getHeaderIndex(headers, "最少人數");
-    const idxMax = getHeaderIndex(headers, "最多人數");
-    const idxTime = getHeaderIndex(headers, "時間");
-    const idxTags = getHeaderIndex(headers, "標籤");
-    const idxFeature = getHeaderIndex(headers, "特點");
-    const idxNote = getHeaderIndex(headers, "備註");
-    const idxImg = getHeaderIndex(headers, "圖片");
+    const idxName = idx(headers,"桌遊名稱");
+    const idxMin = idx(headers,"最少人數");
+    const idxMax = idx(headers,"最多人數");
+    const idxTime = idx(headers,"時間");
+    const idxTags = idx(headers,"標籤");
+    const idxFeature = idx(headers,"特點");
+    const idxNote = idx(headers,"備註");
+    const idxImg = idx(headers,"圖片");
 
-    games = rows.slice(1).map(r => ({
-        name: r[idxName] || "",
-        minPlayers: Number(r[idxMin]) || 1,
-        maxPlayers: Number(r[idxMax]) || Number(r[idxMin]) || 99,
-        timeText: r[idxTime] || "",
-        time: parseTime(r[idxTime]),
-        tags: splitTags(r[idxTags]),
-        feature: r[idxFeature] || "",
-        note: r[idxNote] || "",
-        img: r[idxImg] || ""
-    })).filter(g => g.name);
+    games = rows.slice(1).map(r=>({
+        name:r[idxName] || "",
+        minPlayers:Number(r[idxMin]) || 1,
+        maxPlayers:Number(r[idxMax]) || Number(r[idxMin]) || 99,
+        timeText:r[idxTime] || "",
+        time:parseTime(r[idxTime]),
+        tags:splitTags(r[idxTags]),
+        feature:r[idxFeature] || "",
+        note:r[idxNote] || "",
+        img:r[idxImg] || ""
+    })).filter(g=>g.name);
 
-    const allTags = [...new Set(games.flatMap(g => g.tags))].sort();
-    const tagFilter = document.getElementById("tagFilter");
-
-    tagFilter.innerHTML = allTags.map(tag => `
+    const allTags = [...new Set(games.flatMap(g=>g.tags))].sort();
+    document.getElementById("tagFilter").innerHTML = allTags.map(tag=>`
         <label class="tag-check">
             <input class="tagOption" type="checkbox" value="${tag}">
             ${tag}
         </label>
     `).join("");
 
-    document.querySelectorAll("input,select").forEach(el=>{
+    document.querySelectorAll("select,input").forEach(el=>{
         el.addEventListener("input", filter);
         el.addEventListener("change", filter);
     });
 
     render(games);
-})
-.catch(err => {
-    document.getElementById("grid").innerHTML =
-        `<div class="info">資料載入失敗，請確認 Google Sheet 是否已發布為 CSV。</div>`;
-    console.error(err);
 });
 </script>
 
