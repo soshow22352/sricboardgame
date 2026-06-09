@@ -41,8 +41,7 @@
       color: var(--ink);
       min-height: 100vh;
       background:
-        radial-gradient(circle at top, rgba(255, 238, 205, 0.20), transparent 360px),
-        linear-gradient(180deg, #3a2416 0%, #2a1a11 100%);
+        linear-gradient(180deg, #3a2416 0%, #2b1b12 48%, #20130c 100%);
       overflow-x: hidden;
     }
 
@@ -53,8 +52,8 @@
       z-index: -2;
       pointer-events: none;
       background:
-        linear-gradient(90deg, rgba(255,255,255,0.025), transparent 45%, rgba(0,0,0,0.035));
-      opacity: 0.45;
+        linear-gradient(90deg, rgba(255,255,255,0.018), transparent 55%, rgba(0,0,0,0.026));
+      opacity: 0.32;
     }
 
     body::after {
@@ -63,7 +62,7 @@
       inset: 0;
       z-index: -1;
       pointer-events: none;
-      background: radial-gradient(circle at 50% 0%, rgba(255, 231, 185, 0.08), transparent 42%);
+      background: radial-gradient(circle at 50% 0%, rgba(255, 231, 185, 0.045), transparent 45%);
     }
 
     header {
@@ -258,14 +257,14 @@
       margin: 26px auto 56px;
       padding: 0 15px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
-      gap: 22px;
+      grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+      gap: 16px;
     }
 
     .card {
       position: relative;
       overflow: hidden;
-      border-radius: 24px;
+      border-radius: 18px;
       background:
         linear-gradient(180deg, #fff7e6, #e5c391);
       border: 1px solid rgba(105, 65, 30, 0.36);
@@ -286,7 +285,7 @@
     }
 
     .card::after {
-      content: "✦";
+      content: "";
       position: absolute;
       right: 14px;
       bottom: 10px;
@@ -296,17 +295,17 @@
     }
 
     .card:hover {
-      transform: translateY(-8px) rotate(-0.35deg);
+      transform: translateY(-5px) rotate(-0.2deg);
       box-shadow: 0 26px 54px rgba(0,0,0,0.42);
       border-color: rgba(217, 170, 98, 0.72);
     }
 
     .card img {
       width: 100%;
-      height: 195px;
+      height: 155px;
       display: block;
       object-fit: contain;
-      padding: 14px;
+      padding: 10px;
       background:
         radial-gradient(circle at 50% 38%, #fffaf0 0%, #e1bd82 76%),
         linear-gradient(135deg, rgba(255,255,255,.2), rgba(0,0,0,.08));
@@ -315,34 +314,34 @@
     }
 
     .card-body {
-      padding: 16px 17px 20px;
+      padding: 12px 13px 14px;
       position: relative;
       z-index: 2;
     }
 
     .card h3 {
       margin: 0 0 8px;
-      font-size: 20px;
-      line-height: 1.35;
+      font-size: 18px;
+      line-height: 1.3;
       color: #2f1a0f;
       letter-spacing: .03em;
     }
 
     .info {
-      font-size: 13px;
-      line-height: 1.72;
+      font-size: 12px;
+      line-height: 1.55;
       color: #735033;
       margin-top: 7px;
     }
 
     .tag {
       display: inline-block;
-      margin: 4px 4px 0 0;
-      padding: 4px 9px;
+      margin: 3px 3px 0 0;
+      padding: 3px 7px;
       border-radius: 999px;
       background: linear-gradient(180deg, #8b5630, #5c321b);
       color: #fff3d8;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.2);
     }
@@ -382,8 +381,8 @@
       width: 100%;
       display: block;
       border-radius: 18px;
-      border: 1px solid rgba(105, 65, 30, 0.16);
-      box-shadow: 0 8px 18px rgba(76,45,20,.18);
+      border: 1px solid rgba(105, 65, 30, 0.10);
+      box-shadow: 0 4px 10px rgba(76,45,20,.10);
       position: relative;
       z-index: 1;
     }
@@ -393,13 +392,13 @@
       margin: 26px auto 56px;
       padding: 0 15px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 14px;
     }
 
     .photo-wall img {
       width: 100%;
-      height: 225px;
+      height: 180px;
       object-fit: cover;
       border-radius: 12px;
       border: 10px solid #fff3d8;
@@ -442,7 +441,7 @@
       height: min(280px, 78vw);
       margin: 0 auto 18px;
       padding: 14px;
-      border-radius: 24px;
+      border-radius: 18px;
       background:
         linear-gradient(135deg, #7b4a29, #d9aa62, #4a2a18);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 16px 30px rgba(0,0,0,.22);
@@ -460,24 +459,35 @@
 
     .card-actions,
     .photo-actions {
-      margin-top: 13px;
-      padding-top: 12px;
-      border-top: 1px dashed rgba(105, 65, 30, 0.24);
+      margin-top: 10px;
+      padding-top: 9px;
+      border-top: 1px dashed rgba(105, 65, 30, 0.18);
+    }
+
+    .interaction-controls {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 7px;
     }
 
     .like-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      border: 1px solid rgba(141, 47, 32, 0.28);
+      justify-content: center;
+      gap: 4px;
+      min-height: 32px;
+      border: 1px solid rgba(141, 47, 32, 0.24);
       border-radius: 999px;
-      padding: 7px 12px;
+      padding: 6px 9px;
       background: linear-gradient(180deg, #fff6e7, #eacb9a);
       color: #70321f;
       font-family: inherit;
+      font-size: 12px;
       font-weight: 900;
       cursor: pointer;
-      box-shadow: 0 5px 12px rgba(80, 45, 22, .14);
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(80, 45, 22, .12);
       transition: .18s ease;
     }
 
@@ -487,20 +497,22 @@
     }
 
     .comment-box {
-      display: flex;
-      gap: 7px;
-      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 5px;
+      min-width: 0;
     }
 
     .comment-box input {
       width: 100%;
       min-width: 0;
-      border: 1px solid rgba(105, 65, 30, 0.28);
+      border: 1px solid rgba(105, 65, 30, 0.24);
       border-radius: 999px;
-      padding: 8px 11px;
+      padding: 7px 9px;
       background: rgba(255, 250, 238, .86);
       color: #3b2416;
       font-family: inherit;
+      font-size: 12px;
       outline: none;
     }
 
@@ -508,36 +520,57 @@
       flex: 0 0 auto;
       border: 0;
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 7px 9px;
       background: #6f4326;
       color: #fff3d8;
       font-family: inherit;
+      font-size: 12px;
       font-weight: 900;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .comment-list {
-      margin-top: 9px;
+      margin-top: 7px;
       display: grid;
-      gap: 6px;
+      gap: 5px;
+    }
+
+    .comment-list.is-empty {
+      display: none;
     }
 
     .comment-item {
-      padding: 6px 9px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, .38);
+      padding: 5px 8px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .34);
       color: #634124;
-      font-size: 12px;
-      line-height: 1.45;
+      font-size: 11px;
+      line-height: 1.4;
       word-break: break-word;
     }
 
+    .comment-more {
+      color: #8d2f20;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .modal-interaction {
+      margin-top: 14px;
+    }
+
+    .modal-interaction .comment-list {
+      max-height: 220px;
+      overflow: auto;
+      padding-right: 3px;
+    }
 
     .interaction-status {
-      min-height: 18px;
-      margin-top: 6px;
+      min-height: 16px;
+      margin-top: 5px;
       color: #8d2f20;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
     }
 
@@ -602,7 +635,7 @@
       width: 100%;
       max-width: 850px;
       overflow: hidden;
-      border-radius: 24px;
+      border-radius: 18px;
       background: linear-gradient(180deg, #fff5df, #e4c79a);
       box-shadow: 0 28px 60px rgba(0,0,0,0.45);
     }
@@ -612,7 +645,7 @@
       max-height: 410px;
       display: block;
       object-fit: contain;
-      padding: 14px;
+      padding: 10px;
       background: radial-gradient(circle, #fff8e8 0%, #dcb987 82%);
     }
 
@@ -667,6 +700,15 @@
       padding: 0;
     }
 
+    .photo-modal-content {
+      background: linear-gradient(180deg, #fff5df, #e4c79a);
+      padding-bottom: 14px;
+    }
+
+    #photoModalInteraction {
+      padding: 0 16px 4px;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -713,16 +755,16 @@
       }
 
       .grid {
-        grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 14px;
       }
 
       .card img {
-        height: 145px;
+        height: 125px;
       }
 
       .card h3 {
-        font-size: 17px;
+        font-size: 16px;
       }
 
       .rules-wrap,
@@ -730,14 +772,6 @@
         margin-left: 12px;
         margin-right: 12px;
         padding: 18px;
-      }
-
-      .comment-box {
-        flex-direction: column;
-      }
-
-      .comment-box button {
-        width: 100%;
       }
 
       .rules-title,
@@ -816,6 +850,7 @@
         <div id="modalTags"></div>
         <p id="modalFeature" class="info"></p>
         <a id="youtubeLink" class="youtube-btn" target="_blank">▶ YouTube 介紹影片</a>
+        <div id="modalInteraction" class="modal-interaction"></div>
       </div>
     </div>
   </div>
@@ -824,6 +859,7 @@
     <div class="modal-content photo-modal-content">
       <div class="close" onclick="hidePhotoModal()">×</div>
       <img id="photoModalImg" src="" alt="活動相片">
+      <div id="photoModalInteraction" class="modal-interaction"></div>
     </div>
   </div>
 
@@ -946,16 +982,25 @@
       const value = box.dataset.value;
       const list = box.querySelector('.comment-list');
       const comments = getComments(type, value);
-      list.innerHTML = comments.slice(0, 5).map(c => `<div class="comment-item">${safe(c)}</div>`).join('');
+      const isFull = box.dataset.view === 'full';
+      const limit = isFull ? 20 : 1;
+      const shown = comments.slice(0, limit);
+      list.classList.toggle('is-empty', shown.length === 0);
+      list.innerHTML = shown.map(c => `<div class="comment-item">${safe(c)}</div>`).join('');
+      if (!isFull && comments.length > 1) {
+        list.innerHTML += `<div class="comment-more">點開查看全部 ${comments.length} 則留言</div>`;
+      }
     }
 
-    function interactionBlock(type, value) {
+    function interactionBlock(type, value, view = 'compact') {
       return `
-        <div class="${type === 'photo' ? 'photo-actions' : 'card-actions'}" data-interaction data-type="${safe(type)}" data-value="${safe(value)}" onclick="event.stopPropagation()">
-          <button class="like-btn" onclick="handleLike(this)">♡ 讚 <span class="like-count">${getLikeCount(type, value)}</span></button>
-          <div class="comment-box">
-            <input maxlength="20" placeholder="留言或心得，最多20字" onkeydown="if(event.key === 'Enter') handleComment(this.nextElementSibling)">
-            <button onclick="handleComment(this)">送出</button>
+        <div class="${type === 'photo' ? 'photo-actions' : 'card-actions'}" data-interaction data-type="${safe(type)}" data-value="${safe(value)}" data-view="${safe(view)}" onclick="event.stopPropagation()">
+          <div class="interaction-controls">
+            <button class="like-btn" onclick="handleLike(this)">♡ <span class="like-count">${getLikeCount(type, value)}</span></button>
+            <div class="comment-box">
+              <input maxlength="20" placeholder="留言20字內" onkeydown="if(event.key === 'Enter') handleComment(this.nextElementSibling)">
+              <button onclick="handleComment(this)">留言</button>
+            </div>
           </div>
           <div class="interaction-status" aria-live="polite"></div>
           <div class="comment-list"></div>
@@ -1137,6 +1182,9 @@
       document.getElementById("modalTags").innerHTML = g.tags.map(t => `<span class="tag">${safe(t)}</span>`).join("");
       document.getElementById("modalFeature").textContent = `特色：${g.feature || "尚未填寫"}`;
       document.getElementById("youtubeLink").href = `https://www.youtube.com/results?search_query=${encodeURIComponent(g.name + " 桌遊 教學 介紹")}`;
+      const modalInteraction = document.getElementById("modalInteraction");
+      modalInteraction.innerHTML = interactionBlock('game', g.name, 'full');
+      modalInteraction.querySelectorAll('[data-interaction]').forEach(renderCommentList);
       document.getElementById("modal").classList.remove("hidden");
     }
 
@@ -1146,6 +1194,9 @@
 
     function openPhotoModal(src) {
       document.getElementById("photoModalImg").src = src;
+      const photoModalInteraction = document.getElementById("photoModalInteraction");
+      photoModalInteraction.innerHTML = interactionBlock('photo', src, 'full');
+      photoModalInteraction.querySelectorAll('[data-interaction]').forEach(renderCommentList);
       document.getElementById("photoModal").classList.remove("hidden");
     }
 
