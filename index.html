@@ -852,6 +852,340 @@
         max-height: 55vh;
       }
     }
+  
+
+    /* v7：取消互動功能後的精簡排版與統一美術 */
+    body {
+      background:
+        radial-gradient(circle at 50% -12%, rgba(255, 239, 202, 0.10), transparent 38%),
+        linear-gradient(180deg, #332115 0%, #2a1a11 54%, #21140d 100%);
+    }
+
+    body::before,
+    body::after {
+      opacity: 0.18;
+    }
+
+    header {
+      max-width: 1120px;
+      padding: 18px 14px 6px;
+    }
+
+    .hero-box {
+      padding: 7px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(221, 177, 111, .92), rgba(95, 55, 29, .9));
+    }
+
+    .hero-box::before,
+    .hero-box::after {
+      display: none !important;
+    }
+
+    .hero-box img {
+      border-radius: 18px;
+    }
+
+    .tabs {
+      gap: 8px;
+      margin: 12px auto 18px;
+      padding: 10px 12px;
+    }
+
+    .tabs button {
+      padding: 9px 16px;
+      font-size: 14px;
+    }
+
+    .filter-box {
+      max-width: 1060px;
+      padding: 16px 18px;
+      border-radius: 22px;
+    }
+
+    .grid {
+      max-width: 1220px;
+      grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+      gap: 16px;
+      margin: 20px auto 48px;
+    }
+
+    .card {
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,.26), transparent 30%),
+        linear-gradient(180deg, #fff5df, #e3c396);
+    }
+
+    .card img {
+      height: 156px;
+      padding: 10px;
+    }
+
+    .card-body {
+      padding: 12px 13px 14px;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .info {
+      font-size: 12.5px;
+      line-height: 1.55;
+      margin-top: 6px;
+    }
+
+    .tag {
+      font-size: 11.5px;
+      padding: 3px 8px;
+    }
+
+    .photo-wall {
+      max-width: 1220px;
+      grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+      gap: 16px;
+      margin: 22px auto 52px;
+      padding: 0 15px;
+    }
+
+    .photo-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,.26), transparent 30%),
+        linear-gradient(180deg, #fff5df, #e3c396);
+      border: 1px solid rgba(105, 65, 30, 0.32);
+      box-shadow: var(--shadow);
+      padding: 10px;
+      cursor: pointer;
+      transition: .22s ease;
+    }
+
+    .photo-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 42px rgba(18, 9, 4, 0.34);
+    }
+
+    .photo-item img,
+    .photo-wall img {
+      width: 100%;
+      height: 156px;
+      object-fit: cover;
+      display: block;
+      border-radius: 12px;
+      border: 0;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35);
+      transform: none !important;
+      background: radial-gradient(circle, #fff9eb 0%, #d9b176 80%);
+    }
+
+    .official-wrap {
+      max-width: 720px;
+      padding: 22px 18px 28px;
+    }
+
+    .official-title {
+      margin-bottom: 14px;
+      font-size: 30px;
+      letter-spacing: 4px;
+    }
+
+    .official-card {
+      max-width: 390px;
+      padding: 18px 18px 22px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,.26), transparent 30%),
+        linear-gradient(180deg, #fff5df, #e3c396);
+      border: 1px solid rgba(105, 65, 30, 0.32);
+      box-shadow: var(--shadow);
+    }
+
+    .qr-frame {
+      width: min(248px, 74vw);
+      height: min(248px, 74vw);
+      padding: 10px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,255,255,.22), transparent 32%),
+        linear-gradient(180deg, #fff5df, #e3c396);
+      border: 1px solid rgba(105, 65, 30, 0.32);
+      box-shadow: 0 12px 26px rgba(72,43,21,.20);
+    }
+
+    .qr-frame img {
+      border-radius: 12px;
+      padding: 8px;
+      box-shadow: inset 0 0 0 1px rgba(105,65,30,.14);
+    }
+
+    .rules-wrap {
+      max-width: 860px;
+      padding: 18px;
+      border-radius: 22px;
+    }
+
+    .rules-title {
+      display: none;
+    }
+
+    .rule-img {
+      border-radius: 14px;
+      border: 1px solid rgba(105, 65, 30, 0.16);
+      box-shadow: 0 6px 16px rgba(76,45,20,.14);
+    }
+
+    .modal-content {
+      max-width: 760px;
+      border-radius: 20px;
+    }
+
+    .modal-content img {
+      max-height: 360px;
+      padding: 12px;
+    }
+
+    .modal-body {
+      padding: 18px 20px 22px;
+    }
+
+    .modal-body h2 {
+      font-size: 30px;
+    }
+
+    .photo-modal-content {
+      max-width: 920px;
+      padding: 0;
+    }
+
+    .photo-modal-content img {
+      max-height: 84vh;
+      border: 6px solid #fff3d8;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding-top: 10px;
+      }
+
+      .tabs {
+        position: relative;
+        gap: 7px;
+        padding: 9px 8px;
+        margin-bottom: 14px;
+      }
+
+      .tabs button {
+        flex: 1 1 calc(50% - 8px);
+        padding: 9px 8px;
+        font-size: 13.5px;
+        letter-spacing: .04em;
+      }
+
+      .filter-box {
+        margin: 0 10px 16px;
+        padding: 14px 12px;
+      }
+
+      .filter-bar {
+        gap: 8px;
+      }
+
+      select {
+        min-width: 0;
+        width: calc(50% - 4px);
+        padding: 10px 8px;
+        font-size: 13px;
+      }
+
+      .tag-filter {
+        gap: 6px;
+        margin-top: 10px;
+      }
+
+      .tag-check {
+        font-size: 12px;
+        padding: 5px 9px;
+      }
+
+      .grid,
+      .photo-wall {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px;
+        padding: 0 10px;
+        margin-top: 16px;
+      }
+
+      .card,
+      .photo-item {
+        border-radius: 15px;
+      }
+
+      .card img,
+      .photo-item img,
+      .photo-wall img {
+        height: 122px;
+        padding: 8px;
+      }
+
+      .photo-item {
+        padding: 8px;
+      }
+
+      .card-body {
+        padding: 10px 10px 12px;
+      }
+
+      .card h3 {
+        font-size: 16px;
+      }
+
+      .info {
+        font-size: 12px;
+      }
+
+      .badge {
+        top: 8px;
+        right: 8px;
+        font-size: 11px;
+        padding: 5px 8px;
+      }
+
+      .rules-wrap,
+      .official-wrap {
+        margin: 18px 10px 36px;
+        padding: 12px;
+        border-radius: 18px;
+      }
+
+      .official-title {
+        font-size: 25px;
+      }
+
+      .official-card {
+        padding: 14px 12px 18px;
+      }
+
+      .modal {
+        padding: 10px;
+      }
+
+      .modal-content img {
+        max-height: 290px;
+      }
+
+      .modal-body {
+        padding: 15px 16px 18px;
+      }
+
+      .modal-body h2 {
+        font-size: 24px;
+      }
+    }
+
   </style>
 </head>
 
@@ -922,7 +1256,6 @@
         <div id="modalTags"></div>
         <p id="modalFeature" class="info"></p>
         <a id="youtubeLink" class="youtube-btn" target="_blank">▶ YouTube 介紹影片</a>
-        <div id="modalInteraction" class="modal-interaction"></div>
       </div>
     </div>
   </div>
@@ -931,154 +1264,16 @@
     <div class="modal-content photo-modal-content">
       <div class="close" onclick="hidePhotoModal()">×</div>
       <img id="photoModalImg" src="" alt="活動相片">
-      <div id="photoModalInteraction" class="modal-interaction"></div>
     </div>
   </div>
 
   <script>
     const GAME_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
     const PHOTO_CSV_URL = "https://docs.google.com/spreadsheets/d/11B2F_OC-8NTJyalXLWZc6yYIPHyzSKej0V4u3QpbGDg/gviz/tq?tqx=out:csv&sheet=%E6%B4%BB%E5%8B%95%E7%9B%B8%E7%89%87";
-    const INTERACTION_API_URL = "https://script.google.com/macros/s/AKfycbwVKwJur4x7mh2XbNPmqEj3FRGxNg1i7q2vLSl3MFI8GmQ2CbhM1RZng1NpXgxZbnCS/exec";
 
     let games = [];
     let currentTab = "games";
     let photosLoaded = false;
-
-    function makeKey(type, value) {
-      return `sricBoardgame_${type}_${encodeURIComponent(String(value || '').slice(0, 160))}`;
-    }
-
-    function getVisitorId() {
-      let id = localStorage.getItem('sricBoardgame_visitorId');
-      if (!id) {
-        id = `visitor_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
-        localStorage.setItem('sricBoardgame_visitorId', id);
-      }
-      return id;
-    }
-
-    function getLikeCount(type, value) {
-      return Number(localStorage.getItem(makeKey(type + '_likes', value))) || 0;
-    }
-
-    function getItemName(type, value) {
-      if (type === 'photo') return '活動照片';
-      return String(value || '未命名桌遊');
-    }
-
-    function getItemId(type, value) {
-      return `${type}_${encodeURIComponent(String(value || '').slice(0, 80))}`;
-    }
-
-    function saveInteraction(record) {
-      // 寫入 Google 試算表。使用 no-cors 可避免瀏覽器 CORS 阻擋；送出後無法讀取回應，但資料會進表格。
-      return fetch(INTERACTION_API_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(record)
-      });
-    }
-
-    function showInteractionStatus(box, message) {
-      const status = box.querySelector('.interaction-status');
-      if (!status) return;
-      status.textContent = message;
-      clearTimeout(status._timer);
-      status._timer = setTimeout(() => status.textContent = '', 1800);
-    }
-
-    function handleLike(btn) {
-      const box = btn.closest('[data-interaction]');
-      const type = box.dataset.type;
-      const value = box.dataset.value;
-      const key = makeKey(type + '_likes', value);
-      const next = (Number(localStorage.getItem(key)) || 0) + 1;
-      localStorage.setItem(key, String(next));
-      box.querySelector('.like-count').textContent = next;
-      btn.disabled = true;
-      showInteractionStatus(box, '已送出按讚');
-
-      saveInteraction({
-        type: type === 'photo' ? 'photo_like' : 'game_like',
-        itemId: getItemId(type, value),
-        itemName: getItemName(type, value),
-        content: 'like',
-        visitorId: getVisitorId()
-      }).finally(() => {
-        setTimeout(() => btn.disabled = false, 900);
-      });
-    }
-
-    function getComments(type, value) {
-      try {
-        return JSON.parse(localStorage.getItem(makeKey(type + '_comments', value)) || '[]');
-      } catch {
-        return [];
-      }
-    }
-
-    function handleComment(btn) {
-      const box = btn.closest('[data-interaction]');
-      const type = box.dataset.type;
-      const value = box.dataset.value;
-      const input = box.querySelector('input');
-      const text = String(input.value || '').trim().slice(0, 20);
-      if (!text) {
-        showInteractionStatus(box, '請先輸入留言');
-        return;
-      }
-
-      const key = makeKey(type + '_comments', value);
-      const comments = getComments(type, value);
-      comments.unshift(text);
-      localStorage.setItem(key, JSON.stringify(comments.slice(0, 20)));
-      input.value = '';
-      renderCommentList(box);
-      btn.disabled = true;
-      showInteractionStatus(box, '留言已送出');
-
-      saveInteraction({
-        type: type === 'photo' ? 'photo_comment' : 'game_comment',
-        itemId: getItemId(type, value),
-        itemName: getItemName(type, value),
-        content: text,
-        visitorId: getVisitorId()
-      }).finally(() => {
-        setTimeout(() => btn.disabled = false, 900);
-      });
-    }
-
-    function renderCommentList(box) {
-      const type = box.dataset.type;
-      const value = box.dataset.value;
-      const list = box.querySelector('.comment-list');
-      const comments = getComments(type, value);
-      const isFull = box.dataset.view === 'full';
-      const limit = isFull ? 20 : 1;
-      const shown = comments.slice(0, limit);
-      list.classList.toggle('is-empty', shown.length === 0);
-      list.innerHTML = shown.map(c => `<div class="comment-item">${safe(c)}</div>`).join('');
-      if (!isFull && comments.length > 1) {
-        list.innerHTML += `<div class="comment-more">點開查看全部 ${comments.length} 則留言</div>`;
-      }
-    }
-
-    function interactionBlock(type, value, view = 'compact') {
-      return `
-        <div class="${type === 'photo' ? 'photo-actions' : 'card-actions'}" data-interaction data-type="${safe(type)}" data-value="${safe(value)}" data-view="${safe(view)}" onclick="event.stopPropagation()">
-          <div class="interaction-controls">
-            <button class="like-btn" onclick="handleLike(this)">♡ <span class="like-count">${getLikeCount(type, value)}</span></button>
-            <div class="comment-box">
-              <input maxlength="20" placeholder="留言20字內" onkeydown="if(event.key === 'Enter') handleComment(this.nextElementSibling)">
-              <button onclick="handleComment(this)">留言</button>
-            </div>
-          </div>
-          <div class="interaction-status" aria-live="polite"></div>
-          <div class="comment-list"></div>
-        </div>
-      `;
-    }
 
     function parseCSV(text) {
       const rows = [];
@@ -1189,12 +1384,10 @@
             <div class="info">${g.minPlayers}–${g.maxPlayers}人 ｜ ⏱ ${safe(g.timeText)}</div>
             <div>${g.tags.map(t => `<span class="tag">${safe(t)}</span>`).join("")}</div>
             <div class="info">${safe(g.feature)}</div>
-            ${interactionBlock('game', g.name)}
           </div>
         `;
 
         grid.appendChild(card);
-        card.querySelectorAll('[data-interaction]').forEach(renderCommentList);
       });
     }
 
@@ -1254,9 +1447,6 @@
       document.getElementById("modalTags").innerHTML = g.tags.map(t => `<span class="tag">${safe(t)}</span>`).join("");
       document.getElementById("modalFeature").textContent = `特色：${g.feature || "尚未填寫"}`;
       document.getElementById("youtubeLink").href = `https://www.youtube.com/results?search_query=${encodeURIComponent(g.name + " 桌遊 教學 介紹")}`;
-      const modalInteraction = document.getElementById("modalInteraction");
-      modalInteraction.innerHTML = interactionBlock('game', g.name, 'full');
-      modalInteraction.querySelectorAll('[data-interaction]').forEach(renderCommentList);
       document.getElementById("modal").classList.remove("hidden");
     }
 
@@ -1266,9 +1456,6 @@
 
     function openPhotoModal(src) {
       document.getElementById("photoModalImg").src = src;
-      const photoModalInteraction = document.getElementById("photoModalInteraction");
-      photoModalInteraction.innerHTML = interactionBlock('photo', src, 'full');
-      photoModalInteraction.querySelectorAll('[data-interaction]').forEach(renderCommentList);
       document.getElementById("photoModal").classList.remove("hidden");
     }
 
@@ -1311,12 +1498,10 @@
             item.className = "photo-item";
             item.innerHTML = `
               <img src="${safe(src)}" loading="lazy" alt="活動相片" onerror="this.style.display='none'">
-              ${interactionBlock('photo', src)}
             `;
             const img = item.querySelector("img");
             img.onclick = () => openPhotoModal(src);
             photosBox.appendChild(item);
-            item.querySelectorAll('[data-interaction]').forEach(renderCommentList);
           });
 
           photosLoaded = true;
