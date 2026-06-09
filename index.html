@@ -41,9 +41,8 @@
       color: var(--ink);
       min-height: 100vh;
       background:
-        radial-gradient(circle at 18% 8%, rgba(255, 230, 175, 0.22), transparent 28%),
-        radial-gradient(circle at 82% 0%, rgba(213, 157, 92, 0.16), transparent 32%),
-        linear-gradient(135deg, #1b0f08 0%, #4b2c18 42%, #24130a 100%);
+        radial-gradient(circle at top, rgba(255, 238, 205, 0.20), transparent 360px),
+        linear-gradient(180deg, #3a2416 0%, #2a1a11 100%);
       overflow-x: hidden;
     }
 
@@ -54,38 +53,17 @@
       z-index: -2;
       pointer-events: none;
       background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255, 239, 202, 0.045) 0px,
-          rgba(255, 239, 202, 0.045) 2px,
-          rgba(88, 47, 20, 0.16) 6px,
-          rgba(88, 47, 20, 0.16) 18px
-        ),
-        repeating-linear-gradient(
-          0deg,
-          rgba(255, 255, 255, 0.018) 0px,
-          rgba(255, 255, 255, 0.018) 1px,
-          transparent 1px,
-          transparent 9px
-        );
-      opacity: 0.95;
+        linear-gradient(90deg, rgba(255,255,255,0.025), transparent 45%, rgba(0,0,0,0.035));
+      opacity: 0.45;
     }
 
     body::after {
-      content: "✦  ⚄  ☕  ✒  🜂  ⚂  ✦";
+      content: "";
       position: fixed;
-      left: 50%;
-      bottom: 2vh;
+      inset: 0;
       z-index: -1;
-      transform: translateX(-50%);
-      width: 100%;
-      text-align: center;
-      color: rgba(255, 235, 195, 0.09);
-      font-size: clamp(58px, 9vw, 128px);
-      letter-spacing: 0.28em;
-      white-space: nowrap;
       pointer-events: none;
-      filter: blur(0.2px);
+      background: radial-gradient(circle at 50% 0%, rgba(255, 231, 185, 0.08), transparent 42%);
     }
 
     header {
@@ -404,8 +382,8 @@
       width: 100%;
       display: block;
       border-radius: 18px;
-      border: 1px solid rgba(105, 65, 30, 0.3);
-      box-shadow: 0 12px 28px rgba(76,45,20,.26);
+      border: 1px solid rgba(105, 65, 30, 0.16);
+      box-shadow: 0 8px 18px rgba(76,45,20,.18);
       position: relative;
       z-index: 1;
     }
@@ -477,6 +455,110 @@
       border-radius: 14px;
       background: #fff;
       padding: 8px;
+    }
+
+
+    .card-actions,
+    .photo-actions {
+      margin-top: 13px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(105, 65, 30, 0.24);
+    }
+
+    .like-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(141, 47, 32, 0.28);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: linear-gradient(180deg, #fff6e7, #eacb9a);
+      color: #70321f;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 5px 12px rgba(80, 45, 22, .14);
+      transition: .18s ease;
+    }
+
+    .like-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .comment-box {
+      display: flex;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .comment-box input {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid rgba(105, 65, 30, 0.28);
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255, 250, 238, .86);
+      color: #3b2416;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .comment-box button {
+      flex: 0 0 auto;
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #6f4326;
+      color: #fff3d8;
+      font-family: inherit;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .comment-list {
+      margin-top: 9px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .comment-item {
+      padding: 6px 9px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .38);
+      color: #634124;
+      font-size: 12px;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+
+    .interaction-status {
+      min-height: 18px;
+      margin-top: 6px;
+      color: #8d2f20;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .like-btn:disabled,
+    .comment-box button:disabled {
+      opacity: .62;
+      cursor: wait;
+      transform: none;
+    }
+
+    .photo-item {
+      padding: 10px;
+      border-radius: 20px;
+      background: rgba(255, 247, 229, .86);
+      border: 1px solid rgba(105, 65, 30, .22);
+      box-shadow: var(--shadow);
+    }
+
+    .photo-item img {
+      border-width: 5px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
     }
 
     .official-card p {
@@ -650,6 +732,14 @@
         padding: 18px;
       }
 
+      .comment-box {
+        flex-direction: column;
+      }
+
+      .comment-box button {
+        width: 100%;
+      }
+
       .rules-title,
       .official-title {
         font-size: 28px;
@@ -702,7 +792,6 @@
   <section id="photos" class="photo-wall hidden"></section>
 
   <section id="rules" class="rules-wrap hidden">
-    <h2 class="rules-title">冒險者須知</h2>
     <img class="rule-img" src="images/rules/rules-v2.png" alt="鴉宅桌遊館注意事項" onerror="this.outerHTML='<div class=&quot;empty-state&quot;>注意事項圖片尚未上傳或路徑錯誤。</div>'">
   </section>
 
@@ -741,10 +830,138 @@
   <script>
     const GAME_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
     const PHOTO_CSV_URL = "https://docs.google.com/spreadsheets/d/11B2F_OC-8NTJyalXLWZc6yYIPHyzSKej0V4u3QpbGDg/gviz/tq?tqx=out:csv&sheet=%E6%B4%BB%E5%8B%95%E7%9B%B8%E7%89%87";
+    const INTERACTION_API_URL = "https://script.google.com/macros/s/AKfycbwVKwJur4x7mh2XbNPmqEj3FRGxNg1i7q2vLSl3MFI8GmQ2CbhM1RZng1NpXgxZbnCS/exec";
 
     let games = [];
     let currentTab = "games";
     let photosLoaded = false;
+
+    function makeKey(type, value) {
+      return `sricBoardgame_${type}_${encodeURIComponent(String(value || '').slice(0, 160))}`;
+    }
+
+    function getVisitorId() {
+      let id = localStorage.getItem('sricBoardgame_visitorId');
+      if (!id) {
+        id = `visitor_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+        localStorage.setItem('sricBoardgame_visitorId', id);
+      }
+      return id;
+    }
+
+    function getLikeCount(type, value) {
+      return Number(localStorage.getItem(makeKey(type + '_likes', value))) || 0;
+    }
+
+    function getItemName(type, value) {
+      if (type === 'photo') return '活動照片';
+      return String(value || '未命名桌遊');
+    }
+
+    function getItemId(type, value) {
+      return `${type}_${encodeURIComponent(String(value || '').slice(0, 80))}`;
+    }
+
+    function saveInteraction(record) {
+      // 寫入 Google 試算表。使用 no-cors 可避免瀏覽器 CORS 阻擋；送出後無法讀取回應，但資料會進表格。
+      return fetch(INTERACTION_API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(record)
+      });
+    }
+
+    function showInteractionStatus(box, message) {
+      const status = box.querySelector('.interaction-status');
+      if (!status) return;
+      status.textContent = message;
+      clearTimeout(status._timer);
+      status._timer = setTimeout(() => status.textContent = '', 1800);
+    }
+
+    function handleLike(btn) {
+      const box = btn.closest('[data-interaction]');
+      const type = box.dataset.type;
+      const value = box.dataset.value;
+      const key = makeKey(type + '_likes', value);
+      const next = (Number(localStorage.getItem(key)) || 0) + 1;
+      localStorage.setItem(key, String(next));
+      box.querySelector('.like-count').textContent = next;
+      btn.disabled = true;
+      showInteractionStatus(box, '已送出按讚');
+
+      saveInteraction({
+        type: type === 'photo' ? 'photo_like' : 'game_like',
+        itemId: getItemId(type, value),
+        itemName: getItemName(type, value),
+        content: 'like',
+        visitorId: getVisitorId()
+      }).finally(() => {
+        setTimeout(() => btn.disabled = false, 900);
+      });
+    }
+
+    function getComments(type, value) {
+      try {
+        return JSON.parse(localStorage.getItem(makeKey(type + '_comments', value)) || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function handleComment(btn) {
+      const box = btn.closest('[data-interaction]');
+      const type = box.dataset.type;
+      const value = box.dataset.value;
+      const input = box.querySelector('input');
+      const text = String(input.value || '').trim().slice(0, 20);
+      if (!text) {
+        showInteractionStatus(box, '請先輸入留言');
+        return;
+      }
+
+      const key = makeKey(type + '_comments', value);
+      const comments = getComments(type, value);
+      comments.unshift(text);
+      localStorage.setItem(key, JSON.stringify(comments.slice(0, 20)));
+      input.value = '';
+      renderCommentList(box);
+      btn.disabled = true;
+      showInteractionStatus(box, '留言已送出');
+
+      saveInteraction({
+        type: type === 'photo' ? 'photo_comment' : 'game_comment',
+        itemId: getItemId(type, value),
+        itemName: getItemName(type, value),
+        content: text,
+        visitorId: getVisitorId()
+      }).finally(() => {
+        setTimeout(() => btn.disabled = false, 900);
+      });
+    }
+
+    function renderCommentList(box) {
+      const type = box.dataset.type;
+      const value = box.dataset.value;
+      const list = box.querySelector('.comment-list');
+      const comments = getComments(type, value);
+      list.innerHTML = comments.slice(0, 5).map(c => `<div class="comment-item">${safe(c)}</div>`).join('');
+    }
+
+    function interactionBlock(type, value) {
+      return `
+        <div class="${type === 'photo' ? 'photo-actions' : 'card-actions'}" data-interaction data-type="${safe(type)}" data-value="${safe(value)}" onclick="event.stopPropagation()">
+          <button class="like-btn" onclick="handleLike(this)">♡ 讚 <span class="like-count">${getLikeCount(type, value)}</span></button>
+          <div class="comment-box">
+            <input maxlength="20" placeholder="留言或心得，最多20字" onkeydown="if(event.key === 'Enter') handleComment(this.nextElementSibling)">
+            <button onclick="handleComment(this)">送出</button>
+          </div>
+          <div class="interaction-status" aria-live="polite"></div>
+          <div class="comment-list"></div>
+        </div>
+      `;
+    }
 
     function parseCSV(text) {
       const rows = [];
@@ -842,7 +1059,7 @@
         return;
       }
 
-      list.forEach(g => {
+      list.forEach((g, index) => {
         const card = document.createElement("article");
         card.className = "card";
         card.onclick = () => openModal(g);
@@ -855,10 +1072,12 @@
             <div class="info">${g.minPlayers}–${g.maxPlayers}人 ｜ ⏱ ${safe(g.timeText)}</div>
             <div>${g.tags.map(t => `<span class="tag">${safe(t)}</span>`).join("")}</div>
             <div class="info">${safe(g.feature)}</div>
+            ${interactionBlock('game', g.name)}
           </div>
         `;
 
         grid.appendChild(card);
+        card.querySelectorAll('[data-interaction]').forEach(renderCommentList);
       });
     }
 
@@ -964,14 +1183,17 @@
 
           photosBox.innerHTML = "";
 
-          photoList.forEach(src => {
-            const img = document.createElement("img");
-            img.src = src;
-            img.loading = "lazy";
-            img.alt = "活動相片";
+          photoList.forEach((src, index) => {
+            const item = document.createElement("article");
+            item.className = "photo-item";
+            item.innerHTML = `
+              <img src="${safe(src)}" loading="lazy" alt="活動相片" onerror="this.style.display='none'">
+              ${interactionBlock('photo', src)}
+            `;
+            const img = item.querySelector("img");
             img.onclick = () => openPhotoModal(src);
-            img.onerror = () => img.style.display = "none";
-            photosBox.appendChild(img);
+            photosBox.appendChild(item);
+            item.querySelectorAll('[data-interaction]').forEach(renderCommentList);
           });
 
           photosLoaded = true;
