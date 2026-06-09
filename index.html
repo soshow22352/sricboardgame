@@ -1,882 +1,746 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>鴉宅桌遊館</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鴉宅桌遊館</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Zen+Old+Mincho:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --bg:#1b120b;
-  --wood-dark:#2a1a10;
-  --wood:#5a3721;
-  --wood-light:#9a6a3e;
-  --paper:#f3e2c6;
-  --paper-deep:#dfc49a;
-  --coffee:#3b2416;
-  --ink:#2a1a12;
-  --muted:#7a5c3b;
-  --line:#b98a55;
-  --gold:#c99a57;
-  --cream:#fff6e4;
-  --shadow:0 18px 45px rgba(28,16,7,.38);
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-*{
-  box-sizing:border-box;
-}
+    body {
+      margin: 0;
+      font-family: "Noto Serif TC", serif;
+      color: #3b2618;
+      background:
+        radial-gradient(circle at top, rgba(255, 245, 220, 0.35), transparent 35%),
+        linear-gradient(135deg, #2a180d, #6b4326 45%, #2f1b10);
+      min-height: 100vh;
+    }
 
-html{
-  scroll-behavior:smooth;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255,255,255,0.035) 0px,
+          rgba(255,255,255,0.035) 2px,
+          rgba(0,0,0,0.055) 5px,
+          rgba(0,0,0,0.055) 14px
+        );
+      opacity: 0.85;
+    }
 
-body{
-  margin:0;
-  color:var(--ink);
-  font-family:"Noto Serif TC","Zen Old Mincho",serif;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(255,233,190,.25), transparent 30%),
-    radial-gradient(circle at 80% 0%, rgba(176,113,54,.18), transparent 26%),
-    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(0,0,0,.035) 1px, transparent 1px),
-    linear-gradient(135deg,#2a1a10 0%,#5a3721 42%,#2b1a10 100%);
-  background-size:auto,auto,42px 42px,42px 42px,auto;
-  min-height:100vh;
-}
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px 14px 8px;
+      text-align: center;
+    }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:-1;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,231,181,.045) 0px,
-      rgba(255,231,181,.045) 2px,
-      rgba(88,47,20,.08) 5px,
-      rgba(88,47,20,.08) 13px
-    ),
-    radial-gradient(circle at 50% 20%, rgba(255,245,222,.16), transparent 42%),
-    rgba(20,10,4,.22);
-  mix-blend-mode:soft-light;
-}
+    .hero-box {
+      padding: 8px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, #e8c58e, #7b4a29, #d6a968);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.38);
+    }
 
-header{
-  max-width:1180px;
-  margin:0 auto;
-  padding:22px 14px 8px;
-  text-align:center;
-}
+    .hero-box img {
+      width: 100%;
+      display: block;
+      border-radius: 20px;
+      border: none;
+    }
 
-.hero-frame{
-  position:relative;
-  max-width:1150px;
-  margin:auto;
-  padding:10px;
-  border-radius:28px;
-  background:
-    linear-gradient(135deg,rgba(255,244,215,.75),rgba(174,116,61,.45)),
-    linear-gradient(45deg,#5d371f,#c09055,#4a2a18);
-  box-shadow:var(--shadow);
-}
+    .site-subtitle {
+      margin-top: 14px;
+      color: #fff1cf;
+      letter-spacing: 0.2em;
+      font-size: 14px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
 
-.hero-frame::after{
-  content:"";
-  position:absolute;
-  inset:17px;
-  border-radius:20px;
-  border:1px solid rgba(255,245,220,.45);
-  pointer-events:none;
-}
+    .tabs {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px;
+      margin: 12px auto 22px;
+      background: rgba(45, 27, 15, 0.82);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255,240,210,0.22);
+      border-bottom: 1px solid rgba(255,240,210,0.18);
+    }
 
-.hero-banner{
-  width:100%;
-  height:auto;
-  display:block;
-  border:none;
-  border-radius:20px;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
-}
+    .tabs button,
+    .tabs a {
+      border: 1px solid rgba(198, 151, 91, 0.75);
+      border-radius: 999px;
+      padding: 10px 18px;
+      background: linear-gradient(180deg, #fff4dc, #e5c18c);
+      color: #3b2416;
+      font-family: inherit;
+      font-weight: 900;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+      transition: 0.22s ease;
+    }
 
-.site-note{
-  margin:14px auto 2px;
-  color:#f9e9cb;
-  letter-spacing:.18em;
-  font-size:14px;
-  text-shadow:0 2px 8px rgba(0,0,0,.45);
-}
+    .tabs button:hover,
+    .tabs a:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(180deg, #fff9ea, #f1ce95);
+    }
 
-.tabs{
-  position:sticky;
-  top:0;
-  z-index:50;
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-  max-width:1180px;
-  margin:14px auto 22px;
-  padding:12px 14px;
-  backdrop-filter:blur(14px);
-  background:rgba(49,30,17,.72);
-  border-top:1px solid rgba(255,235,196,.24);
-  border-bottom:1px solid rgba(255,235,196,.18);
-}
+    .tabs button.active {
+      background: linear-gradient(180deg, #80502e, #3a2113);
+      color: #fff3d8;
+    }
 
-.tab,.official-tab{
-  appearance:none;
-  border:1px solid rgba(185,138,85,.75);
-  background:
-    linear-gradient(180deg,rgba(255,248,232,.96),rgba(226,196,150,.92));
-  color:var(--coffee);
-  border-radius:999px;
-  padding:10px 20px;
-  cursor:pointer;
-  text-decoration:none;
-  font-size:15px;
-  font-family:inherit;
-  font-weight:900;
-  letter-spacing:.08em;
-  box-shadow:0 5px 14px rgba(0,0,0,.18);
-  transition:.22s ease;
-}
+    .tabs a {
+      background: linear-gradient(180deg, #8b3d2b, #5c2718);
+      color: #fff3d8;
+    }
 
-.tab:hover,.official-tab:hover{
-  transform:translateY(-2px);
-  background:linear-gradient(180deg,#fff8e8,#f0cc91);
-  box-shadow:0 8px 22px rgba(0,0,0,.25);
-}
+    .filter-box {
+      max-width: 1120px;
+      margin: 0 auto 22px;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,248,232,0.96), rgba(226,201,160,0.95));
+      border: 1px solid rgba(105, 65, 30, 0.35);
+      box-shadow: 0 16px 38px rgba(0,0,0,0.28);
+    }
 
-.tab.active{
-  background:
-    linear-gradient(180deg,#7b4a29,#3a2113);
-  color:#fff3d6;
-  border-color:#e4be7d;
-}
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-.official-tab{
-  background:linear-gradient(180deg,#8b3d2b,#582516);
-  color:#fff3d6;
-}
+    select {
+      min-width: 150px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(105, 65, 30, 0.45);
+      background: #fff8ea;
+      color: #3b2416;
+      font-family: inherit;
+      font-weight: 700;
+    }
 
-.filter-box{
-  max-width:1120px;
-  margin:0 auto 20px;
-  padding:18px;
-  border-radius:22px;
-  background:
-    linear-gradient(180deg,rgba(255,247,226,.94),rgba(232,208,169,.93));
-  border:1px solid rgba(116,72,35,.34);
-  box-shadow:var(--shadow);
-}
+    .tag-filter {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
 
-.filter-bar{
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-  justify-content:center;
-}
+    .tag-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(105, 65, 30, 0.25);
+      background: rgba(255,255,255,0.45);
+      font-size: 13px;
+      cursor: pointer;
+    }
 
-select{
-  min-width:150px;
-  padding:10px 14px;
-  border-radius:999px;
-  border:1px solid rgba(121,78,38,.5);
-  background:#fff8ea;
-  color:var(--coffee);
-  font-family:inherit;
-  font-weight:700;
-  outline:none;
-}
+    .tag-check input {
+      accent-color: #7b4a29;
+    }
 
-.tag-filter{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  margin-top:14px;
-}
+    .grid {
+      max-width: 1200px;
+      margin: 24px auto 52px;
+      padding: 0 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+      gap: 20px;
+    }
 
-.tag-check{
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid rgba(121,78,38,.28);
-  background:rgba(255,255,255,.38);
-  color:#5f3a20;
-  font-size:13px;
-  cursor:pointer;
-}
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fff6e3, #e3c294);
+      border: 1px solid rgba(105, 65, 30, 0.32);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
 
-.tag-check input{
-  accent-color:#7b4a29;
-}
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.38);
+    }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(245px,1fr));
-  gap:20px;
-  max-width:1200px;
-  margin:24px auto 46px;
-  padding:0 15px;
-}
+    .card img {
+      width: 100%;
+      height: 190px;
+      display: block;
+      object-fit: contain;
+      padding: 12px;
+      background: radial-gradient(circle, #fff9eb 0%, #d9b176 80%);
+    }
 
-.card{
-  position:relative;
-  overflow:hidden;
-  border-radius:22px;
-  background:
-    linear-gradient(180deg,rgba(255,248,232,.96),rgba(227,203,164,.96));
-  border:1px solid rgba(120,77,38,.32);
-  box-shadow:var(--shadow);
-  cursor:pointer;
-  transition:.25s ease;
-}
+    .card-body {
+      padding: 15px 16px 18px;
+    }
 
-.card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(90deg,rgba(255,255,255,.22),transparent 20%,transparent 80%,rgba(90,50,22,.08)),
-    repeating-linear-gradient(0deg,rgba(95,55,24,.035) 0 1px,transparent 1px 7px);
-}
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.35;
+      color: #3b2416;
+    }
 
-.card:hover{
-  transform:translateY(-7px) rotate(-.2deg);
-  box-shadow:0 22px 42px rgba(22,12,5,.38);
-  border-color:rgba(171,117,61,.65);
-}
+    .info {
+      font-size: 13px;
+      line-height: 1.65;
+      color: #735033;
+      margin-top: 7px;
+    }
 
-.card img{
-  width:100%;
-  height:190px;
-  display:block;
-  object-fit:contain;
-  object-position:center;
-  padding:12px;
-  background:
-    radial-gradient(circle at 50% 35%,#fff8e8 0%,#e6c79c 70%);
-}
+    .tag {
+      display: inline-block;
+      margin: 4px 4px 0 0;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #7c4a29;
+      color: #fff3d8;
+      font-size: 12px;
+      font-weight: 700;
+    }
 
-.card-body{
-  position:relative;
-  padding:15px 16px 18px;
-}
+    .badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #8d2f20;
+      color: #fff4de;
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.26);
+    }
 
-.card h3{
-  margin:0 0 8px;
-  color:#3b2416;
-  font-size:20px;
-  line-height:1.35;
-  letter-spacing:.03em;
-}
+    .rules-wrap {
+      max-width: 900px;
+      margin: 28px auto 52px;
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #fff6e3, #dfbf8f);
+      border: 1px solid rgba(105, 65, 30, 0.35);
+      box-shadow: 0 16px 38px rgba(0,0,0,0.3);
+    }
 
-.info{
-  font-size:13px;
-  color:#765537;
-  line-height:1.65;
-  margin-top:7px;
-}
+    .rules-title {
+      margin: 0 0 18px;
+      text-align: center;
+      color: #4a2a18;
+      font-size: 34px;
+      letter-spacing: 6px;
+    }
 
-.tag{
-  display:inline-block;
-  margin:4px 4px 0 0;
-  padding:4px 9px;
-  border-radius:999px;
-  background:#7c4a29;
-  color:#fff3d8;
-  font-size:12px;
-  font-weight:700;
-}
+    .rule-img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+      border: 1px solid rgba(105, 65, 30, 0.3);
+    }
 
-.badge{
-  position:absolute;
-  top:12px;
-  right:12px;
-  z-index:2;
-  padding:6px 10px;
-  border-radius:999px;
-  background:#8d2f20;
-  color:#fff4de;
-  font-size:12px;
-  font-weight:900;
-  box-shadow:0 6px 14px rgba(0,0,0,.26);
-}
+    .photo-wall {
+      max-width: 1200px;
+      margin: 24px auto 52px;
+      padding: 0 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
 
-.rules-wrap{
-  max-width:900px;
-  margin:28px auto 52px;
-  padding:24px;
-  border-radius:28px;
-  background:
-    linear-gradient(180deg,rgba(255,248,232,.96),rgba(229,203,162,.95));
-  border:1px solid rgba(121,78,38,.35);
-  box-shadow:var(--shadow);
-}
+    .photo-wall img {
+      width: 100%;
+      height: 225px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 8px solid #fff3d8;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
 
-.rules-title{
-  margin:0 0 18px;
-  text-align:center;
-  color:#4a2a18;
-  font-size:34px;
-  letter-spacing:6px;
-}
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(26,13,5,0.78);
+      backdrop-filter: blur(10px);
+    }
 
-.rule-img{
-  width:100%;
-  display:block;
-  border-radius:18px;
-  border:1px solid rgba(121,78,38,.32);
-  box-shadow:0 10px 30px rgba(37,20,8,.28);
-}
+    .modal-content {
+      position: relative;
+      width: 100%;
+      max-width: 850px;
+      overflow: hidden;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #fff5df, #e4c79a);
+      box-shadow: 0 28px 60px rgba(0,0,0,0.45);
+    }
 
-.photo-wall{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:16px;
-  max-width:1200px;
-  margin:24px auto 52px;
-  padding:0 15px;
-}
+    .modal-content img {
+      width: 100%;
+      max-height: 410px;
+      display: block;
+      object-fit: contain;
+      padding: 14px;
+      background: radial-gradient(circle, #fff8e8 0%, #dcb987 82%);
+    }
 
-.photo-wall img{
-  width:100%;
-  height:225px;
-  object-fit:cover;
-  border-radius:20px;
-  border:8px solid rgba(255,244,220,.9);
-  box-shadow:var(--shadow);
-  cursor:pointer;
-  transition:.22s ease;
-}
+    .modal-body {
+      padding: 22px 24px 26px;
+    }
 
-.photo-wall img:hover{
-  transform:scale(1.025) rotate(-.4deg);
-}
+    .modal-body h2 {
+      margin: 0 0 8px;
+      color: #3b2416;
+      font-size: 34px;
+    }
 
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:99;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:rgba(26,13,5,.78);
-  backdrop-filter:blur(10px);
-}
+    .youtube-btn {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 11px 18px;
+      border-radius: 999px;
+      background: #8d2f20;
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+    }
 
-.modal-content{
-  position:relative;
-  width:100%;
-  max-width:850px;
-  overflow:hidden;
-  border-radius:24px;
-  background:
-    linear-gradient(180deg,#fff5df,#e4c79a);
-  border:1px solid rgba(255,235,196,.55);
-  box-shadow:0 28px 60px rgba(0,0,0,.45);
-}
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      z-index: 100;
+      width: 38px;
+      height: 38px;
+      line-height: 34px;
+      text-align: center;
+      border-radius: 50%;
+      background: rgba(59,36,22,0.86);
+      color: #fff4de;
+      font-size: 30px;
+      cursor: pointer;
+    }
 
-.modal-content img{
-  width:100%;
-  max-height:410px;
-  display:block;
-  object-fit:contain;
-  padding:14px;
-  background:
-    radial-gradient(circle,#fff8e8 0%,#dcb987 82%);
-}
+    .photo-modal-content {
+      max-width: 1000px;
+      background: transparent;
+      box-shadow: none;
+    }
 
-.modal-body{
-  padding:22px 24px 26px;
-}
+    .photo-modal-content img {
+      max-height: 86vh;
+      border-radius: 20px;
+      border: 8px solid #fff3d8;
+      background: #fff3d8;
+      padding: 0;
+    }
 
-.modal-body h2{
-  margin:0 0 8px;
-  color:#3b2416;
-  font-size:34px;
-}
+    .hidden {
+      display: none !important;
+    }
 
-.youtube-btn{
-  display:inline-block;
-  margin-top:16px;
-  padding:11px 18px;
-  border-radius:999px;
-  background:#8d2f20;
-  color:white;
-  text-decoration:none;
-  font-weight:900;
-}
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 35px 20px;
+      border-radius: 22px;
+      background: rgba(255,248,232,0.92);
+      color: #5f3a20;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.3);
+    }
 
-.close{
-  position:absolute;
-  top:10px;
-  right:14px;
-  z-index:100;
-  width:38px;
-  height:38px;
-  line-height:34px;
-  text-align:center;
-  border-radius:50%;
-  background:rgba(59,36,22,.86);
-  color:#fff4de;
-  font-size:30px;
-  cursor:pointer;
-}
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+        gap: 14px;
+      }
 
-.photo-modal-content{
-  max-width:1000px;
-  background:transparent;
-  border:none;
-  box-shadow:none;
-}
+      .card img {
+        height: 145px;
+      }
 
-.photo-modal-content img{
-  max-height:86vh;
-  border-radius:20px;
-  border:8px solid #fff3d8;
-  background:#fff3d8;
-  padding:0;
-}
+      .card h3 {
+        font-size: 17px;
+      }
 
-.hidden{
-  display:none !important;
-}
+      .tabs button,
+      .tabs a {
+        padding: 9px 13px;
+        font-size: 14px;
+      }
 
-.empty-state{
-  grid-column:1/-1;
-  text-align:center;
-  padding:35px 20px;
-  border-radius:22px;
-  background:rgba(255,248,232,.9);
-  color:#5f3a20;
-  box-shadow:var(--shadow);
-}
+      .rules-wrap {
+        margin-left: 12px;
+        margin-right: 12px;
+        padding: 16px;
+      }
 
-@media(max-width:700px){
-  header{
-    padding-top:14px;
-  }
-
-  .hero-frame{
-    border-radius:20px;
-    padding:6px;
-  }
-
-  .hero-banner{
-    border-radius:15px;
-  }
-
-  .site-note{
-    font-size:12px;
-    letter-spacing:.1em;
-  }
-
-  .tabs{
-    position:relative;
-    gap:8px;
-    margin-top:10px;
-  }
-
-  .tab,.official-tab{
-    padding:9px 13px;
-    font-size:14px;
-  }
-
-  .filter-box{
-    margin-left:12px;
-    margin-right:12px;
-    padding:14px;
-  }
-
-  .grid{
-    grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
-    gap:14px;
-  }
-
-  .card img{
-    height:145px;
-  }
-
-  .card h3{
-    font-size:17px;
-  }
-
-  .rules-wrap{
-    margin-left:12px;
-    margin-right:12px;
-    padding:16px;
-  }
-
-  .rules-title{
-    font-size:28px;
-  }
-
-  .modal-body h2{
-    font-size:28px;
-  }
-}
-</style>
+      .rules-title {
+        font-size: 28px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="hero-frame">
-    <img src="images/banner/banner.jpg" class="hero-banner" alt="鴉宅桌遊館">
-  </div>
-  <div class="site-note">WOODEN CAFE BOARDGAME SPACE</div>
-</header>
+  <header>
+    <div class="hero-box">
+      <img src="images/banner/banner.jpg" alt="鴉宅桌遊館" onerror="this.style.display='none'">
+    </div>
+    <div class="site-subtitle">WOODEN CAFE BOARDGAME SPACE</div>
+  </header>
 
-<nav class="tabs">
-  <button class="tab active" onclick="switchTab('games', this)">桌遊列表</button>
-  <button class="tab" onclick="switchTab('recommend', this)">團長推薦</button>
-  <button class="tab" onclick="switchTab('photos', this)">活動相片</button>
-  <button class="tab" onclick="switchTab('rules', this)">注意事項</button>
-  <a class="official-tab" href="https://line.me/R/ti/p/@187jgojd" target="_blank">加入官方帳號</a>
-</nav>
+  <nav class="tabs">
+    <button class="active" onclick="switchTab('games', this)">桌遊列表</button>
+    <button onclick="switchTab('recommend', this)">團長推薦</button>
+    <button onclick="switchTab('photos', this)">活動相片</button>
+    <button onclick="switchTab('rules', this)">注意事項</button>
+    <a href="https://line.me/R/ti/p/@187jgojd" target="_blank">加入官方帳號</a>
+  </nav>
 
-<section id="filterBox" class="filter-box">
-  <div class="filter-bar">
-    <select id="playerFilter">
-      <option value="">全部人數</option>
-      <option value="2">2人</option>
-      <option value="3">3人</option>
-      <option value="4">4人</option>
-      <option value="5">5人</option>
-      <option value="6+">6人以上</option>
-    </select>
+  <section id="filterBox" class="filter-box">
+    <div class="filter-bar">
+      <select id="playerFilter">
+        <option value="">全部人數</option>
+        <option value="2">2人</option>
+        <option value="3">3人</option>
+        <option value="4">4人</option>
+        <option value="5">5人</option>
+        <option value="6+">6人以上</option>
+      </select>
 
-    <select id="timeFilter">
-      <option value="">全部時間</option>
-      <option value="30">30分鐘內</option>
-      <option value="60">31–60分鐘</option>
-      <option value="120">61分鐘以上</option>
-    </select>
-  </div>
+      <select id="timeFilter">
+        <option value="">全部時間</option>
+        <option value="30">30分鐘內</option>
+        <option value="60">31–60分鐘</option>
+        <option value="120">61分鐘以上</option>
+      </select>
+    </div>
 
-  <div id="tagFilter" class="tag-filter"></div>
-</section>
+    <div id="tagFilter" class="tag-filter"></div>
+  </section>
 
-<main id="grid" class="grid"></main>
+  <main id="grid" class="grid"></main>
 
-<section id="photos" class="photo-wall hidden"></section>
+  <section id="photos" class="photo-wall hidden"></section>
 
-<section id="rules" class="rules-wrap hidden">
-  <h2 class="rules-title">冒險者須知</h2>
-  <img class="rule-img" src="images/rules/rules-v2.png" alt="鴉宅桌遊館注意事項">
-</section>
+  <section id="rules" class="rules-wrap hidden">
+    <h2 class="rules-title">冒險者須知</h2>
+    <img class="rule-img" src="images/rules/rules-v2.png" alt="鴉宅桌遊館注意事項" onerror="this.outerHTML='<div class=&quot;empty-state&quot;>注意事項圖片尚未上傳或路徑錯誤。</div>'">
+  </section>
 
-<div id="modal" class="modal hidden" onclick="closeModal(event)">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <div class="close" onclick="hideModal()">×</div>
-    <img id="modalImg" src="" alt="">
-    <div class="modal-body">
-      <h2 id="modalName"></h2>
-      <div id="modalMeta" class="info"></div>
-      <div id="modalTags"></div>
-      <p id="modalFeature" class="info"></p>
-      <a id="youtubeLink" class="youtube-btn" target="_blank">▶ YouTube 介紹影片</a>
+  <div id="modal" class="modal hidden" onclick="hideModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="close" onclick="hideModal()">×</div>
+      <img id="modalImg" src="" alt="">
+      <div class="modal-body">
+        <h2 id="modalName"></h2>
+        <div id="modalMeta" class="info"></div>
+        <div id="modalTags"></div>
+        <p id="modalFeature" class="info"></p>
+        <a id="youtubeLink" class="youtube-btn" target="_blank">▶ YouTube 介紹影片</a>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="photoModal" class="modal hidden" onclick="hidePhotoModal()">
-  <div class="modal-content photo-modal-content">
-    <div class="close" onclick="hidePhotoModal()">×</div>
-    <img id="photoModalImg" src="" alt="活動相片">
+  <div id="photoModal" class="modal hidden" onclick="hidePhotoModal()">
+    <div class="modal-content photo-modal-content">
+      <div class="close" onclick="hidePhotoModal()">×</div>
+      <img id="photoModalImg" src="" alt="活動相片">
+    </div>
   </div>
-</div>
 
-<script>
-const GAME_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
-const PHOTO_CSV_URL = "https://docs.google.com/spreadsheets/d/11B2F_OC-8NTJyalXLWZc6yYIPHyzSKej0V4u3QpbGDg/gviz/tq?tqx=out:csv&sheet=%E6%B4%BB%E5%8B%95%E7%9B%B8%E7%89%87";
+  <script>
+    const GAME_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSvXQzsi9vdZ-YmwD0DimRjHiutiDA9aoqy8Fb6R4muk5344G1xWL__MCxP8BcQuW1PQd9lFePCHlrc/pub?gid=1220295718&single=true&output=csv";
+    const PHOTO_CSV_URL = "https://docs.google.com/spreadsheets/d/11B2F_OC-8NTJyalXLWZc6yYIPHyzSKej0V4u3QpbGDg/gviz/tq?tqx=out:csv&sheet=%E6%B4%BB%E5%8B%95%E7%9B%B8%E7%89%87";
 
-let games = [];
-let currentTab = "games";
-let photosLoaded = false;
+    let games = [];
+    let currentTab = "games";
+    let photosLoaded = false;
 
-function parseCSV(text){
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let quote = false;
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let quote = false;
 
-  for(let i = 0; i < text.length; i++){
-    const c = text[i];
-    const n = text[i + 1];
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        const next = text[i + 1];
 
-    if(c === '"' && quote && n === '"'){
-      cell += '"';
-      i++;
-    }else if(c === '"'){
-      quote = !quote;
-    }else if(c === "," && !quote){
-      row.push(cell.trim());
-      cell = "";
-    }else if((c === "\n" || c === "\r") && !quote){
-      if(cell || row.length){
+        if (c === '"' && quote && next === '"') {
+          cell += '"';
+          i++;
+        } else if (c === '"') {
+          quote = !quote;
+        } else if (c === "," && !quote) {
+          row.push(cell.trim());
+          cell = "";
+        } else if ((c === "\n" || c === "\r") && !quote) {
+          if (cell || row.length) {
+            row.push(cell.trim());
+            rows.push(row);
+            row = [];
+            cell = "";
+          }
+          if (c === "\r" && next === "\n") i++;
+        } else {
+          cell += c;
+        }
+      }
+
+      if (cell || row.length) {
         row.push(cell.trim());
         rows.push(row);
-        row = [];
-        cell = "";
       }
-      if(c === "\r" && n === "\n") i++;
-    }else{
-      cell += c;
+
+      return rows;
     }
-  }
 
-  if(cell || row.length){
-    row.push(cell.trim());
-    rows.push(row);
-  }
+    function safe(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-  return rows;
-}
+    function getIndex(headers, possibleNames) {
+      for (const name of possibleNames) {
+        const found = headers.findIndex(h => String(h || "").trim() === name);
+        if (found !== -1) return found;
+      }
+      return -1;
+    }
 
-function idx(headers, name){
-  return headers.findIndex(h => String(h || "").trim() === name);
-}
+    function normalizeImageUrl(url) {
+      if (!url) return "";
+      url = String(url).trim();
 
-function safe(value){
-  return String(value || "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+      const driveFile = url.match(/\/file\/d\/([^/]+)/);
+      const driveId = url.match(/[?&]id=([^&]+)/);
 
-function splitTags(str){
-  return String(str || "")
-    .split(/[|,，、]/)
-    .map(t => t.trim())
-    .filter(Boolean);
-}
-
-function parseTime(str){
-  const nums = String(str || "").match(/\d+/g);
-  if(!nums) return 0;
-  return Math.max(...nums.map(Number));
-}
-
-function normalizeImageUrl(url){
-  if(!url) return "";
-  url = String(url).trim();
-
-  const driveMatch1 = url.match(/\/file\/d\/([^/]+)/);
-  const driveMatch2 = url.match(/[?&]id=([^&]+)/);
-
-  if(driveMatch1){
-    return `https://drive.google.com/thumbnail?id=${driveMatch1[1]}&sz=w1600`;
-  }
-
-  if(driveMatch2){
-    return `https://drive.google.com/thumbnail?id=${driveMatch2[1]}&sz=w1600`;
-  }
-
-  return url;
-}
-
-function render(list){
-  const grid = document.getElementById("grid");
-  grid.innerHTML = "";
-
-  if(list.length === 0){
-    grid.innerHTML = `<div class="empty-state">沒有符合條件的桌遊。</div>`;
-    return;
-  }
-
-  list.forEach(g => {
-    const card = document.createElement("article");
-    card.className = "card";
-    card.onclick = () => openModal(g);
-
-    card.innerHTML = `
-      ${g.note.includes("推薦") ? `<div class="badge">團長推薦</div>` : ""}
-      <img src="${safe(normalizeImageUrl(g.img) || 'https://picsum.photos/400/250')}" alt="${safe(g.name)}" loading="lazy">
-      <div class="card-body">
-        <h3>${safe(g.name)}</h3>
-        <div class="info">${g.minPlayers}–${g.maxPlayers}人 ｜ ⏱ ${safe(g.timeText)}</div>
-        <div>${g.tags.map(t => `<span class="tag">${safe(t)}</span>`).join("")}</div>
-        <div class="info">${safe(g.feature || "")}</div>
-      </div>
-    `;
-
-    grid.appendChild(card);
-  });
-}
-
-function loadPhotos(){
-  const photosBox = document.getElementById("photos");
-
-  if(photosLoaded) return;
-
-  photosBox.innerHTML = `<div class="empty-state">活動相片載入中...</div>`;
-
-  fetch(PHOTO_CSV_URL)
-    .then(r => r.text())
-    .then(text => {
-      const rows = parseCSV(text);
-      const headers = rows[0] || [];
-      const imgIndex = idx(headers, "圖片");
-
-      if(imgIndex === -1){
-        photosBox.innerHTML = `<div class="empty-state">找不到「圖片」欄位。</div>`;
-        return;
+      if (driveFile) {
+        return `https://drive.google.com/thumbnail?id=${driveFile[1]}&sz=w1600`;
       }
 
-      const photoList = rows.slice(1)
-        .map(r => normalizeImageUrl(r[imgIndex]))
+      if (driveId) {
+        return `https://drive.google.com/thumbnail?id=${driveId[1]}&sz=w1600`;
+      }
+
+      return url;
+    }
+
+    function splitTags(str) {
+      return String(str || "")
+        .split(/[|,，、]/)
+        .map(t => t.trim())
         .filter(Boolean);
+    }
 
-      if(photoList.length === 0){
-        photosBox.innerHTML = `<div class="empty-state">目前尚無活動相片。</div>`;
+    function parseTime(str) {
+      const nums = String(str || "").match(/\d+/g);
+      if (!nums) return 0;
+      return Math.max(...nums.map(Number));
+    }
+
+    function render(list) {
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+
+      if (!list.length) {
+        grid.innerHTML = `<div class="empty-state">沒有符合條件的桌遊。</div>`;
         return;
       }
 
-      photosBox.innerHTML = "";
+      list.forEach(g => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.onclick = () => openModal(g);
 
-      photoList.forEach(src => {
-        const img = document.createElement("img");
-        img.src = src;
-        img.loading = "lazy";
-        img.alt = "鴉宅桌遊館活動相片";
-        img.onclick = () => openPhotoModal(src);
-        img.onerror = () => img.style.display = "none";
-        photosBox.appendChild(img);
+        card.innerHTML = `
+          ${g.note.includes("推薦") ? `<div class="badge">團長推薦</div>` : ""}
+          <img src="${safe(normalizeImageUrl(g.img))}" alt="${safe(g.name)}" loading="lazy" onerror="this.src='https://picsum.photos/500/350?blur=1'">
+          <div class="card-body">
+            <h3>${safe(g.name)}</h3>
+            <div class="info">${g.minPlayers}–${g.maxPlayers}人 ｜ ⏱ ${safe(g.timeText)}</div>
+            <div>${g.tags.map(t => `<span class="tag">${safe(t)}</span>`).join("")}</div>
+            <div class="info">${safe(g.feature)}</div>
+          </div>
+        `;
+
+        grid.appendChild(card);
       });
-
-      photosLoaded = true;
-    })
-    .catch(() => {
-      photosBox.innerHTML = `<div class="empty-state">活動相片讀取失敗。</div>`;
-    });
-}
-
-function filter(){
-  let list = [...games];
-
-  const player = document.getElementById("playerFilter").value;
-  const time = document.getElementById("timeFilter").value;
-  const checkedTags = [...document.querySelectorAll(".tagOption:checked")].map(i => i.value);
-
-  if(currentTab === "recommend"){
-    list = list.filter(g => g.note.includes("推薦"));
-  }
-
-  if(player){
-    if(player === "6+"){
-      list = list.filter(g => g.maxPlayers >= 6);
-    }else{
-      const p = Number(player);
-      list = list.filter(g => p >= g.minPlayers && p <= g.maxPlayers);
     }
-  }
 
-  if(time === "30"){
-    list = list.filter(g => g.time <= 30);
-  }
+    function filter() {
+      let list = [...games];
 
-  if(time === "60"){
-    list = list.filter(g => g.time > 30 && g.time <= 60);
-  }
+      const player = document.getElementById("playerFilter").value;
+      const time = document.getElementById("timeFilter").value;
+      const checkedTags = [...document.querySelectorAll(".tagOption:checked")].map(i => i.value);
 
-  if(time === "120"){
-    list = list.filter(g => g.time > 60);
-  }
+      if (currentTab === "recommend") {
+        list = list.filter(g => g.note.includes("推薦"));
+      }
 
-  if(checkedTags.length){
-    list = list.filter(g => checkedTags.every(tag => g.tags.includes(tag)));
-  }
+      if (player) {
+        if (player === "6+") {
+          list = list.filter(g => g.maxPlayers >= 6);
+        } else {
+          const p = Number(player);
+          list = list.filter(g => p >= g.minPlayers && p <= g.maxPlayers);
+        }
+      }
 
-  render(list);
-}
+      if (time === "30") list = list.filter(g => g.time <= 30);
+      if (time === "60") list = list.filter(g => g.time > 30 && g.time <= 60);
+      if (time === "120") list = list.filter(g => g.time > 60);
 
-function switchTab(tab, btn){
-  currentTab = tab;
+      if (checkedTags.length) {
+        list = list.filter(g => checkedTags.every(tag => g.tags.includes(tag)));
+      }
 
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  btn.classList.add("active");
+      render(list);
+    }
 
-  const isStaticTab = tab === "rules" || tab === "photos";
+    function switchTab(tab, btn) {
+      currentTab = tab;
 
-  document.getElementById("filterBox").classList.toggle("hidden", isStaticTab);
-  document.getElementById("grid").classList.toggle("hidden", isStaticTab);
-  document.getElementById("rules").classList.toggle("hidden", tab !== "rules");
-  document.getElementById("photos").classList.toggle("hidden", tab !== "photos");
+      document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
 
-  if(tab === "photos") loadPhotos();
-  if(tab === "games" || tab === "recommend") filter();
-}
+      const isStatic = tab === "rules" || tab === "photos";
 
-function openModal(g){
-  document.getElementById("modalImg").src = normalizeImageUrl(g.img) || "https://picsum.photos/800/400";
-  document.getElementById("modalImg").alt = g.name;
-  document.getElementById("modalName").textContent = g.name;
-  document.getElementById("modalMeta").textContent = `適合人數：${g.minPlayers}–${g.maxPlayers}人 ｜ 遊戲時間：${g.timeText}`;
-  document.getElementById("modalTags").innerHTML = g.tags.map(t => `<span class="tag">${safe(t)}</span>`).join("");
-  document.getElementById("modalFeature").textContent = `特色：${g.feature || "尚未填寫"}`;
-  document.getElementById("youtubeLink").href = `https://www.youtube.com/results?search_query=${encodeURIComponent(g.name + " 桌遊 教學 介紹")}`;
-  document.getElementById("modal").classList.remove("hidden");
-}
+      document.getElementById("filterBox").classList.toggle("hidden", isStatic);
+      document.getElementById("grid").classList.toggle("hidden", isStatic);
+      document.getElementById("rules").classList.toggle("hidden", tab !== "rules");
+      document.getElementById("photos").classList.toggle("hidden", tab !== "photos");
 
-function hideModal(){
-  document.getElementById("modal").classList.add("hidden");
-}
+      if (tab === "photos") loadPhotos();
+      if (tab === "games" || tab === "recommend") filter();
+    }
 
-function closeModal(e){
-  if(e.target.id === "modal") hideModal();
-}
+    function openModal(g) {
+      document.getElementById("modalImg").src = normalizeImageUrl(g.img) || "https://picsum.photos/800/500?blur=1";
+      document.getElementById("modalName").textContent = g.name;
+      document.getElementById("modalMeta").textContent = `適合人數：${g.minPlayers}–${g.maxPlayers}人 ｜ 遊戲時間：${g.timeText}`;
+      document.getElementById("modalTags").innerHTML = g.tags.map(t => `<span class="tag">${safe(t)}</span>`).join("");
+      document.getElementById("modalFeature").textContent = `特色：${g.feature || "尚未填寫"}`;
+      document.getElementById("youtubeLink").href = `https://www.youtube.com/results?search_query=${encodeURIComponent(g.name + " 桌遊 教學 介紹")}`;
+      document.getElementById("modal").classList.remove("hidden");
+    }
 
-function openPhotoModal(src){
-  document.getElementById("photoModalImg").src = src;
-  document.getElementById("photoModal").classList.remove("hidden");
-}
+    function hideModal() {
+      document.getElementById("modal").classList.add("hidden");
+    }
 
-function hidePhotoModal(){
-  document.getElementById("photoModal").classList.add("hidden");
-}
+    function openPhotoModal(src) {
+      document.getElementById("photoModalImg").src = src;
+      document.getElementById("photoModal").classList.remove("hidden");
+    }
 
-fetch(GAME_CSV_URL)
-  .then(r => r.text())
-  .then(text => {
-    const rows = parseCSV(text);
-    const headers = rows[0] || [];
+    function hidePhotoModal() {
+      document.getElementById("photoModal").classList.add("hidden");
+    }
 
-    const idxName = idx(headers, "桌遊名稱");
-    const idxMin = idx(headers, "最少人數");
-    const idxMax = idx(headers, "最多人數");
-    const idxTime = idx(headers, "時間");
-    const idxTags = idx(headers, "標籤");
-    const idxFeature = idx(headers, "特點");
-    const idxNote = idx(headers, "備註");
-    const idxImg = idx(headers, "圖片");
+    function loadPhotos() {
+      const photosBox = document.getElementById("photos");
 
-    games = rows.slice(1).map(r => ({
-      name:r[idxName] || "",
-      minPlayers:Number(r[idxMin]) || 1,
-      maxPlayers:Number(r[idxMax]) || Number(r[idxMin]) || 99,
-      timeText:r[idxTime] || "",
-      time:parseTime(r[idxTime]),
-      tags:splitTags(r[idxTags]),
-      feature:r[idxFeature] || "",
-      note:r[idxNote] || "",
-      img:r[idxImg] || ""
-    })).filter(g => g.name);
+      if (photosLoaded) return;
 
-    const allTags = [...new Set(games.flatMap(g => g.tags))].sort();
+      photosBox.innerHTML = `<div class="empty-state">活動相片載入中...</div>`;
 
-    document.getElementById("tagFilter").innerHTML = allTags.map(tag => `
-      <label class="tag-check">
-        <input class="tagOption" typ
+      fetch(PHOTO_CSV_URL)
+        .then(r => r.text())
+        .then(text => {
+          const rows = parseCSV(text);
+          const headers = rows[0] || [];
+          const imgIndex = getIndex(headers, ["圖片", "照片", "圖片網址", "相片"]);
+
+          if (imgIndex === -1) {
+            photosBox.innerHTML = `<div class="empty-state">找不到活動相片欄位。</div>`;
+            return;
+          }
+
+          const photoList = rows.slice(1)
+            .map(r => normalizeImageUrl(r[imgIndex]))
+            .filter(Boolean);
+
+          if (!photoList.length) {
+            photosBox.innerHTML = `<div class="empty-state">目前尚無活動相片。</div>`;
+            return;
+          }
+
+          photosBox.innerHTML = "";
+
+          photoList.forEach(src => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.loading = "lazy";
+            img.alt = "活動相片";
+            img.onclick = () => openPhotoModal(src);
+            img.onerror = () => img.style.display = "none";
+            photosBox.appendChild(img);
+          });
+
+          photosLoaded = true;
+        })
+        .catch(() => {
+          photosBox.innerHTML = `<div class="empty-state">活動相片讀取失敗。</div>`;
+        });
+    }
+
+    fetch(GAME_CSV_URL)
+      .then(r => r.text())
+      .then(text => {
+        const rows = parseCSV(text);
+        const headers = rows[0] || [];
+
+        const idxName = getIndex(headers, ["桌遊名稱", "名稱", "遊戲名稱"]);
+        const idxMin = getIndex(headers, ["最少人數", "最小人數"]);
+        const idxMax = getIndex(headers, ["最多人數", "最大人數"]);
+        const idxTime = getIndex(headers, ["時間", "遊戲時間"]);
+        const idxTags = getIndex(headers, ["標籤", "類型", "分類"]);
+        const idxFeature = getIndex(headers, ["特點", "特色", "介紹"]);
+        const idxNote = getIndex(headers, ["備註", "推薦"]);
+ 
