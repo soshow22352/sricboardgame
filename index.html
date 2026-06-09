@@ -743,4 +743,44 @@
         const idxTags = getIndex(headers, ["標籤", "類型", "分類"]);
         const idxFeature = getIndex(headers, ["特點", "特色", "介紹"]);
         const idxNote = getIndex(headers, ["備註", "推薦"]);
- 
+        const idxImg = getIndex(headers, ["圖片", "圖片網址", "封面"]);
+
+        games = rows.slice(1).map(r => ({
+          name: r[idxName] || "",
+          minPlayers: Number(r[idxMin]) || 1,
+          maxPlayers: Number(r[idxMax]) || Number(r[idxMin]) || 99,
+          timeText: r[idxTime] || "",
+          time: parseTime(r[idxTime]),
+          tags: splitTags(r[idxTags]),
+          feature: r[idxFeature] || "",
+          note: r[idxNote] || "",
+          img: r[idxImg] || ""
+        })).filter(g => g.name);
+
+        const allTags = [...new Set(games.flatMap(g => g.tags))].sort();
+
+        document.getElementById("tagFilter").innerHTML = allTags.map(tag => `
+          <label class="tag-check">
+            <input class="tagOption" type="checkbox" value="${safe(tag)}">
+            ${safe(tag)}
+          </label>
+        `).join("");
+
+        document.querySelectorAll("select, .tagOption").forEach(el => {
+          el.addEventListener("input", filter);
+          el.addEventListener("change", filter);
+        });
+
+        render(games);
+      })
+      .catch(() => {
+        document.getElementById("grid").innerHTML = `
+          <div class="empty-state">
+            桌遊資料讀取失敗。請確認 Google 試算表是否已公開發布為 CSV。
+          </div>
+        `;
+      });
+  </script>
+
+</body>
+</html>
